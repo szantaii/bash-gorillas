@@ -32,6 +32,8 @@ bash_gorillas()
 	player2_name=""
 	player1_points_num=""
 	player2_points_num=""
+	declare -a player1_position
+	declare -a player2_position
 	player1_building_height=""
 	player2_building_height=""
 	max_points_num=""
@@ -55,7 +57,11 @@ bash_gorillas()
 	source "${script_directory}/quit.sh"
 	source "${script_directory}/read-player-data.sh"
 	source "${script_directory}/generate-buildings.sh"
+	source "${script_directory}/place-players.sh"
 	source "${script_directory}/init-game.sh"
+	source "${script_directory}/init-game.sh"
+	source "${script_directory}/print-player-names.sh"
+	source "${script_directory}/clear-player-names.sh"
 	source "${script_directory}/print-scene.sh"
 	source "${script_directory}/main-loop.sh"
 	

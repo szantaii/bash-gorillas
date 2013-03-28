@@ -32,5 +32,9 @@ init_game()
 	
 	# Generate the buildings, and save the buildings into 'grid'
 	generate_buildings
+	
+	# Place payers into 'grid'
+	place_player1
+	place_player2
 }
 

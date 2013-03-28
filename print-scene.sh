@@ -20,5 +20,13 @@ print_scene()
 	refresh_screen
 	
 	sleep 5
+	
+	print_player_names
+	
+	sleep 5
+	
+	clear_player_names
+	
+	sleep 5
 }
 
