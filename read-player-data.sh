@@ -113,7 +113,6 @@ read_menu_choice()
 	
 	case ${menu_choice} in
 		'p'|'P')
-			break
 			;;
 		*)
 			quit
@@ -143,7 +142,7 @@ read_player_data()
 	refresh_screen
 	read_menu_choice
 	
-	# clear >> ${buffer}
-	# refresh_screen
+	clear >> ${buffer}
+	refresh_screen
 }
 
