@@ -27,7 +27,7 @@ generate_buildings()
 	
 	for ((i=1; i <= building_count; i++))
 	do
-		current_building_height=$((RANDOM % building_max_height))
+		current_building_height=$((RANDOM % max_building_height))
 		
 		for ((j=0; j < building_width; j++))
 		do

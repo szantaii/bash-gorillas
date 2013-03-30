@@ -17,15 +17,8 @@ print_scene()
 		done
 	done
 	
-	refresh_screen
-	
-	sleep 5
-	
 	print_player_names
-	
-	sleep 5
-	
-	clear_player_names
+	refresh_screen
 	
 	sleep 5
 }

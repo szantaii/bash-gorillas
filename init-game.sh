@@ -8,7 +8,7 @@ init_game()
 	refresh_screen
 	
 	building_width=8
-	building_max_height=$(($((term_height * 3)) / 4))
+	max_building_height=$(($((term_height * 3)) / 4))
 	
 	grid_width=$(($((term_width / building_width)) * building_width))
 	grid_height=$((term_height - 1))

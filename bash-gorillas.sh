@@ -25,7 +25,7 @@ bash_gorillas()
 	top_padding_height=$(($((term_height - min_term_height)) / 2))
 	
 	building_width=""
-	building_max_height=""
+	max_building_height=""
 	building_count=""
 	
 	player1_name=""
