@@ -13,8 +13,7 @@ init_game()
 	grid_width=$(($((term_width / building_width)) * building_width))
 	grid_height=$((term_height - 1))
 	
-	building_count=$((grid_width - $((2 * building_width))))
-	building_count=$((building_count / building_width))
+	building_count=$((grid_width / building_width))
 	
 	left_padding=""
 	top_padding=""
@@ -34,7 +33,7 @@ init_game()
 	generate_buildings
 	
 	# Place payers into 'grid'
-	place_player1
-	place_player2
+#	place_player1
+#	place_player2
 }
 
