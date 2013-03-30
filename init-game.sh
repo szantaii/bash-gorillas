@@ -3,6 +3,13 @@
 # Initializes variables for a new game or new round in the game
 init_game()
 {
+	# Init player scores
+	if [[ "${player1_score}" == "" && "${player2_score}" == "" ]]
+	then
+		player1_score=0
+		player2_score=0
+	fi
+	
 	tput cup 0 0 >> ${buffer}
 	printf "Initializing game..." >> ${buffer}
 	refresh_screen
