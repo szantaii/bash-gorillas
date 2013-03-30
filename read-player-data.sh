@@ -143,8 +143,7 @@ read_player_data()
 	refresh_screen
 	read_menu_choice
 	
-	# tput reset >> ${buffer}
-	clear >> ${buffer}
-	refresh_screen
+	# clear >> ${buffer}
+	# refresh_screen
 }
 

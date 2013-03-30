@@ -33,7 +33,7 @@ init_game()
 	generate_buildings
 	
 	# Place payers into 'grid'
-#	place_player1
-#	place_player2
+	place_player1
+	place_player2
 }
 

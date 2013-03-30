@@ -13,7 +13,12 @@ place_player1()
 		unset player1_position[${i}]
 	done
 	
-	i=$(($((building_width - 3)) / 2))
+	if ((building_count <= 15))
+	then
+		i=$((building_width + $(($((building_width - 3)) / 2))))
+	else
+		i=$(($((building_width * 2)) + $(($((building_width - 3)) / 2))))
+	fi
 	j=${player1_building_height}
 	grid["${i},${j}"]="/"
 	
@@ -59,7 +64,14 @@ place_player2()
 		unset player2_position[${i}]
 	done
 	
-	i=$(($((grid_width - building_width)) + $(($((building_width - 3)) / 2))))
+	if ((building_count <= 15))
+	then
+		i=$((grid_width - $((2 * building_width))))
+		i=$((i + $(($((building_width - 3)) / 2))))
+	else
+		i=$((grid_width - $((3 * building_width))))
+		i=$((i + $(($((building_width - 3)) / 2))))
+	fi
 	j=${player2_building_height}
 	grid["${i},${j}"]="/"
 	
