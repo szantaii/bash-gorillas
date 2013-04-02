@@ -22,6 +22,13 @@ init_game()
 		max_speed=200
 	fi
 	
+	# Set wind value
+	wind_value=$((RANDOM % 6))
+	if ((wind_value != 0 && (RANDOM % 2) != 0))
+	then
+		wind_value="-${wind_value}"
+	fi
+	
 	tput cup 0 0 >> ${buffer}
 	printf "Initializing game..." >> ${buffer}
 	refresh_screen

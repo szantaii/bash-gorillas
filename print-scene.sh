@@ -11,7 +11,7 @@ print_scene()
 	do
 		for ((j=0; j < grid_height; j++))
 		do
-			tput cup $(($(($((top_padding_height + grid_height)) - j)) -1)) \
+			tput cup $(($(($((top_padding_height + grid_height)) - j)) - 1)) \
 				$((left_padding_width + i)) >> ${buffer}
 			
 			printf "${grid["${i},${j}"]}" >> ${buffer}
@@ -21,6 +21,7 @@ print_scene()
 	print_sun
 	print_player_names
 	print_score
+	print_wind
 	
 	tput cup $((term_height - 1)) $((term_width - 1)) >> ${buffer}
 	refresh_screen

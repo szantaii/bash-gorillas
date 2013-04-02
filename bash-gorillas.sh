@@ -53,6 +53,7 @@ bash_gorillas()
 	menu_choice=""
 	
 	max_speed=""
+	wind_value=""
 	
 	declare -A grid
 	grid_width=""
@@ -73,8 +74,8 @@ bash_gorillas()
 	source "${script_directory}/generate-buildings.sh"
 	source "${script_directory}/place-players.sh"
 	source "${script_directory}/init-game.sh"
-	source "${script_directory}/init-game.sh"
 	source "${script_directory}/print-sun.sh"
+	source "${script_directory}/print-wind.sh"
 	source "${script_directory}/print-player-names.sh"
 	source "${script_directory}/clear-player-names.sh"
 	source "${script_directory}/print-score.sh"
