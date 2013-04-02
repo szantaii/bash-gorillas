@@ -22,6 +22,8 @@ main_loop()
 	# Display game on screen
 	print_scene
 	
+	read_throw_data
+	
 	# Clean up and exit with 0
 	quit
 }

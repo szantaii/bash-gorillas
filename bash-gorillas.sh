@@ -40,9 +40,19 @@ bash_gorillas()
 	player1_building_height=""
 	player2_building_height=""
 	
+	player1_throw_angle=""
+	player2_throw_angle=""
+	
+	player1_throw_speed=""
+	player2_throw_speed=""
+	
+	next_player=""
+	
 	max_score=""
 	gravity_value=""
 	menu_choice=""
+	
+	max_speed=""
 	
 	declare -A grid
 	grid_width=""
@@ -69,6 +79,7 @@ bash_gorillas()
 	source "${script_directory}/clear-player-names.sh"
 	source "${script_directory}/print-score.sh"
 	source "${script_directory}/print-scene.sh"
+	source "${script_directory}/read-throw-data.sh"
 	source "${script_directory}/main-loop.sh"
 	
 	check_prerequisites ${term_width} ${term_height}

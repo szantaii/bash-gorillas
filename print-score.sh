@@ -8,5 +8,7 @@ print_score()
 		$((left_padding_width + $((grid_width / 2)) - $((${#score_text} / 2)))) >> ${buffer}
 	
 	printf "${score_text}" >> ${buffer}
+	
+	# refresh_screen
 }
 

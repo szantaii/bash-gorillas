@@ -25,6 +25,6 @@ print_scene()
 	tput cup $((term_height - 1)) $((term_width - 1)) >> ${buffer}
 	refresh_screen
 	
-	sleep 5
+	# sleep 5
 }
 

@@ -10,6 +10,18 @@ init_game()
 		player2_score=0
 	fi
 	
+	# Set first player
+	if [[ "${next_player}" = "" ]]
+	then
+		next_player=$(($((RANDOM % 2)) + 1))
+	fi
+	
+	# Set maximum throw velocity
+	if [[ "${max_speed}" = "" ]]
+	then
+		max_speed=200
+	fi
+	
 	tput cup 0 0 >> ${buffer}
 	printf "Initializing game..." >> ${buffer}
 	refresh_screen
