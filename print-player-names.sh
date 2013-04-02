@@ -9,6 +9,6 @@ print_player_names()
 		$(($((left_padding_width + grid_width)) - ${#player2_name}))>> ${buffer}
 	printf "${player2_name}" >> ${buffer}
 	
-	# refresh_screen
+	refresh_screen
 }
 
