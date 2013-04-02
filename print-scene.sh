@@ -17,8 +17,10 @@ print_scene()
 		done
 	done
 	
+	print_sun
 	print_player_names
 	print_score
+	
 	tput cup $((term_height - 1)) $((term_width - 1)) >> ${buffer}
 	refresh_screen
 	

@@ -60,6 +60,7 @@ bash_gorillas()
 	source "${script_directory}/place-players.sh"
 	source "${script_directory}/init-game.sh"
 	source "${script_directory}/init-game.sh"
+	source "${script_directory}/print-sun.sh"
 	source "${script_directory}/print-player-names.sh"
 	source "${script_directory}/clear-player-names.sh"
 	source "${script_directory}/print-score.sh"
