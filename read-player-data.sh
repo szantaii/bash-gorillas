@@ -109,15 +109,19 @@ read_gravity_value()
 
 read_menu_choice()
 {
-	read -sn1 menu_choice
-	
-	case ${menu_choice} in
-		'p'|'P')
-			;;
-		*)
-			quit
-			;;
-	esac
+	while [[ "${menu_choice}" != "p" && "${menu_choice}" != "P" && \
+		"${menu_choice}" != "q" && "${menu_choice}" != "Q" ]]
+	do
+		read -sn1 menu_choice
+		
+		case ${menu_choice} in
+			'p'|'P')
+				;;
+			'q'|'Q')
+				quit
+				;;
+		esac
+	done
 }
 
 read_player_data()
