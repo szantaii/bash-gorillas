@@ -18,7 +18,5 @@ print_sun()
 		
 		printf "%s${sun_text[${i}]}" >> ${buffer}
 	done
-	
-	# refresh_screen
 }
 
