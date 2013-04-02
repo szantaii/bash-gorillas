@@ -13,6 +13,7 @@ print_scene()
 		do
 			tput cup $(($(($((top_padding_height + grid_height)) - j)) -1)) \
 				$((left_padding_width + i)) >> ${buffer}
+			
 			printf "${grid["${i},${j}"]}" >> ${buffer}
 		done
 	done

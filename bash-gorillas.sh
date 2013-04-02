@@ -30,12 +30,16 @@ bash_gorillas()
 	
 	player1_name=""
 	player2_name=""
+	
 	player1_score=""
 	player2_score=""
+	
 	declare -a player1_position
 	declare -a player2_position
+	
 	player1_building_height=""
 	player2_building_height=""
+	
 	max_score=""
 	gravity_value=""
 	menu_choice=""
