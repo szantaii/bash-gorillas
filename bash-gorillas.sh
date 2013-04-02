@@ -28,6 +28,8 @@ bash_gorillas()
 	max_building_height=""
 	building_count=""
 	
+	banana=""
+	
 	player1_name=""
 	player2_name=""
 	
