@@ -26,6 +26,8 @@ throw_banana()
 		y=${player1_throw_start_coordinates#*","}
 		x_0=${x}
 		y_0=${y}
+		
+		print_player1_throw_frame1
 	else
 		throw_angle=$((180 - player2_throw_angle))
 		throw_angle=$(echo "scale=20; ${throw_angle} * ${pi} / 180" | \
@@ -37,17 +39,25 @@ throw_banana()
 		y=${player2_throw_start_coordinates#*","}
 		x_0=${x}
 		y_0=${y}
+		
+		print_player2_throw_frame1
 	fi
 	
-	# TODO: Add player throw animation
 	tput cup $(($((top_padding_height + grid_height)) - y)) ${x} >> ${buffer}
 	printf "${banana}" >> ${buffer}
 	refresh_screen
 	next_banana_frame
 	
-	for ((t=0; x >= 1 && x < grid_width && y >= 0 && y < (grid_height * 5); ))
+	if ((next_player == 1))
+	then
+		print_player1_throw_frame0
+	else
+		print_player2_throw_frame0
+	fi
+	
+	for ((t=0; x >= 0 && x < grid_width && y >= 1 && y < (grid_height * 5); ))
 	do
-		sleep 0.1
+		# sleep 0.1
 		
 		# Clear previous banana frame from screen
 		if [[ "${prev_x}" != "" && "${prev_y}" != "" ]]
@@ -57,9 +67,10 @@ throw_banana()
 			refresh_screen
 		fi
 		
-		# TODO: Collision detection
 		x=$(echo "scale=20; ${x_0} + (${throw_speed} * ${t} * c(${throw_angle}))" | bc -l | xargs printf "%1.0f\n")
 		y=$(echo "scale=20; ${y_0} + (${throw_speed} * ${t} * s(${throw_angle}) - (${gravity_value} / 2) * ${t} * ${t})" | bc -l | xargs printf "%1.0f\n")
+		
+		# TODO: Add collision detection
 		
 		# Print banana to screen
 		tput cup $(($((top_padding_height + grid_height)) - y)) ${x} >> ${buffer}
