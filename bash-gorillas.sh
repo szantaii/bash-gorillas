@@ -93,6 +93,7 @@ bash_gorillas()
 	source "${script_directory}/read-throw-data.sh"
 	source "${script_directory}/animate-players.sh"
 	source "${script_directory}/animate-banana.sh"
+	source "${script_directory}/switch-player.sh"
 	source "${script_directory}/throw-banana.sh"
 	source "${script_directory}/main-loop.sh"
 	

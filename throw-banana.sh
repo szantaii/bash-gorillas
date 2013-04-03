@@ -82,13 +82,31 @@ throw_banana()
 		# If the thrown banana gets out of boundaries
 		# then the next player can throw
 		#
-		# If the banana hits a building the building block
-		# will be erased and then comes the next player
 		#
 		# If a banana hits a player, than add a point to that
-		# player's scrote who is not hit and set next_player
+		# player's score who is not hit and set next_player
 		# to the player who was hit, and execute a break to
 		# start a new round
+		
+		# If the banana hits a building the building block
+		# will be erased and then comes the next player
+		if [[ "${grid["${x},$((y - 1))"]}" == "X" ]]
+		then
+			# Erase block from 'grid'
+			grid["${x},$((y - 1))"]=""
+			
+			# Erase block from screen
+			tput cup $(($((top_padding_height + grid_height)) - y)) \
+				$((left_padding_width + x)) >> ${buffer}
+			printf " " >> ${buffer}
+			refresh_screen
+			
+			# Switch to the other player
+			switch_player
+			
+			# Exit the loop
+			break
+		fi
 		
 		# Print banana to screen
 		if ((x >= 0 && x < grid_width && y >= 1 && y <= grid_height))
