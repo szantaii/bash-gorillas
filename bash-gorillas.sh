@@ -36,8 +36,16 @@ bash_gorillas()
 	player1_score=""
 	player2_score=""
 	
-	declare -a player1_position
-	declare -a player2_position
+	declare -a player1_coordinates
+	declare -a player2_coordinates
+	
+	player1_throw_start_coordinates=""
+	player2_throw_start_coordinates=""
+	
+	declare -A player1_throw_animation_frame0
+	declare -A player1_throw_animation_frame1
+	declare -A player2_throw_animation_frame0
+	declare -A player2_throw_animation_frame1
 	
 	player1_building_height=""
 	player2_building_height=""
