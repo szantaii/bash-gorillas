@@ -24,6 +24,10 @@ main_loop()
 	
 	read_throw_data
 	
+	throw_banana
+	
+	# TODO: Add end game animation
+	
 	# Clean up and exit with 0
 	quit
 }
