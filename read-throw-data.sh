@@ -241,34 +241,25 @@ clear_player2_throw_speed()
 
 read_throw_data()
 {
-	for ((z=0; z < 4; z++))
-	do
-		if ((next_player == 1))
-		then
-			prompt_player1_throw_angle
-			read_player1_throw_angle
-			prompt_player1_throw_speed
-			read_player1_throw_speed
-			
-			sleep 1
-			
-			clear_player1_throw_angle
-			clear_player1_throw_speed
-			
-			next_player=2
-		else
-			prompt_player2_throw_angle
-			read_player2_throw_angle
-			prompt_player2_throw_speed
-			read_player2_throw_speed
-			
-			sleep 1
-			
-			clear_player2_throw_angle
-			clear_player2_throw_speed
-			
-			next_player=1
-		fi
-	done
+	if ((next_player == 1))
+	then
+		prompt_player1_throw_angle
+		read_player1_throw_angle
+		
+		prompt_player1_throw_speed
+		read_player1_throw_speed
+		
+		clear_player1_throw_angle
+		clear_player1_throw_speed
+	else
+		prompt_player2_throw_angle
+		read_player2_throw_angle
+		
+		prompt_player2_throw_speed
+		read_player2_throw_speed
+		
+		clear_player2_throw_angle
+		clear_player2_throw_speed
+	fi
 }
 
