@@ -22,16 +22,6 @@ place_player1()
 		unset player1_throw_animation_frame1["${key}"]
 	done
 	
-	for key in "${!player2_throw_animation_frame0}"
-	do
-		unset player2_throw_animation_frame0["${key}"]
-	done
-	
-	for key in "${!player2_throw_animation_frame1}"
-	do
-		unset player2_throw_animation_frame1["${key}"]
-	done
-	
 	if ((building_count <= 15))
 	then
 		i=$((building_width + $(($((building_width - 3)) / 2))))
@@ -86,6 +76,16 @@ place_player2()
 	for ((i=0; i < j; i++))
 	do
 		unset player2_coordinates[${i}]
+	done
+	
+	for key in "${!player2_throw_animation_frame0}"
+	do
+		unset player2_throw_animation_frame0["${key}"]
+	done
+	
+	for key in "${!player2_throw_animation_frame1}"
+	do
+		unset player2_throw_animation_frame1["${key}"]
 	done
 	
 	if ((building_count <= 15))
