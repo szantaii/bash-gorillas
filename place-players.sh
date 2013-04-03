@@ -12,14 +12,14 @@ place_player1()
 		unset player1_coordinates[${i}]
 	done
 	
-	for key in "${!player1_throw_animation_frame0[@]}"
-	do
-		unset player1_throw_animation_frame0["${key}"]
-	done
-	
 	for key in "${!player1_throw_animation_frame1[@]}"
 	do
 		unset player1_throw_animation_frame1["${key}"]
+	done
+	
+	for key in "${!player1_throw_animation_frame2[@]}"
+	do
+		unset player1_throw_animation_frame2["${key}"]
 	done
 	
 	if ((building_count <= 15))
@@ -41,8 +41,8 @@ place_player1()
 	i=$((i - 2))
 	j=$((j + 1))
 	grid["${i},${j}"]="("
-	player1_throw_animation_frame0["${i},${j}"]="("
 	player1_throw_animation_frame1["${i},${j}"]=" "
+	player1_throw_animation_frame2["${i},${j}"]="("
 	
 	player1_coordinates=("${player1_coordinates[@]}" "${i},${j}")
 	
@@ -59,8 +59,8 @@ place_player1()
 	i=$((i - 1))
 	j=$((j + 1))
 	grid["${i},${j}"]="o"
-	player1_throw_animation_frame0["$((i - 1)),${j}"]=" "
 	player1_throw_animation_frame1["$((i - 1)),${j}"]="("
+	player1_throw_animation_frame2["$((i - 1)),${j}"]=" "
 	
 	player1_coordinates=("${player1_coordinates[@]}" "${i},${j}")
 	player1_throw_start_coordinates="${i},$((j + 2))"
@@ -78,14 +78,14 @@ place_player2()
 		unset player2_coordinates[${i}]
 	done
 	
-	for key in "${!player2_throw_animation_frame0[@]}"
-	do
-		unset player2_throw_animation_frame0["${key}"]
-	done
-	
 	for key in "${!player2_throw_animation_frame1[@]}"
 	do
 		unset player2_throw_animation_frame1["${key}"]
+	done
+	
+	for key in "${!player2_throw_animation_frame2[@]}"
+	do
+		unset player2_throw_animation_frame2["${key}"]
 	done
 	
 	if ((building_count <= 15))
@@ -119,16 +119,16 @@ place_player2()
 	
 	i=$((i + 1))
 	grid["${i},${j}"]=")"
-	player2_throw_animation_frame0["${i},${j}"]=")"
 	player2_throw_animation_frame1["${i},${j}"]=" "
+	player2_throw_animation_frame2["${i},${j}"]=")"
 	
 	player2_coordinates=("${player2_coordinates[@]}" "${i},${j}")
 	
 	i=$((i - 1))
 	j=$((j + 1))
 	grid["${i},${j}"]="o"
-	player2_throw_animation_frame0["$((i + 1)),${j}"]=" "
 	player2_throw_animation_frame1["$((i + 1)),${j}"]=")"
+	player2_throw_animation_frame2["$((i + 1)),${j}"]=" "
 	
 	player2_coordinates=("${player2_coordinates[@]}" "${i},${j}")
 	player2_throw_start_coordinates="${i},$((j + 2))"

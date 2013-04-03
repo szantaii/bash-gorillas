@@ -85,13 +85,13 @@ read_player2_name()
 	fi
 }
 
-read_max_points_num()
+read_total_points()
 {
-	read -n2 max_points_num
+	read -n2 total_points
 	
-	case ${max_points_num} in
+	case ${total_points} in
 		''|*[!0-9]*)
-			max_points_num="3"
+			total_points="3"
 			;;
 	esac
 }
@@ -136,7 +136,7 @@ read_player_data()
 	
 	prompt_max_points_num
 	refresh_screen
-	read_max_points_num
+	read_total_points
 	
 	prompt_gravity_value
 	refresh_screen

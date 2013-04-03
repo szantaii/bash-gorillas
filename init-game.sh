@@ -19,7 +19,7 @@ init_game()
 	# Set maximum throw velocity
 	if [[ "${max_speed}" = "" ]]
 	then
-		max_speed=200
+		max_speed=100
 	fi
 	
 	# Set wind value
@@ -28,6 +28,8 @@ init_game()
 	then
 		wind_value="-${wind_value}"
 	fi
+	
+	player_hit=false
 	
 	tput cup 0 0 >> ${buffer}
 	printf "Initializing game..." >> ${buffer}

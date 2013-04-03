@@ -43,24 +43,31 @@ throw_banana()
 		print_player2_throw_frame1
 	fi
 	
-	tput cup $(($((top_padding_height + grid_height)) - y)) ${x} >> ${buffer}
+	tput cup $(($((top_padding_height + grid_height)) - y)) \
+		$((left_padding_width + x)) >> ${buffer}
 	printf "${banana}" >> ${buffer}
 	refresh_screen
 	next_banana_frame
 	
 	if ((next_player == 1))
 	then
-		print_player1_throw_frame0
+		print_player1_throw_frame2
 	else
-		print_player2_throw_frame0
+		print_player2_throw_frame2
 	fi
 	
-	for ((t=0; x >= 0 && x < grid_width && y >= 1 && y < (grid_height * 5); ))
+	for ((t=0; x >= 0 && x < grid_width && y >= 1 && y <= (grid_height * 5); ))
 	do
 		# sleep 0.1
 		
 		# Clear previous banana frame from screen
-		if [[ "${prev_x}" != "" && "${prev_y}" != "" ]]
+#		if [[ "${prev_x}" != "" && "${prev_y}" != "" ]] && \
+#			((prev_x >= 0 && prev_x < grid_width && \
+#			prev_y >= 0 && prev_y <= grid_height))
+		if [[ "${prev_x}" != "" && "${prev_y}" != "" ]] && \
+			((prev_x >= left_padding_width && \
+			prev_x < (grid_width + left_padding_width) && \
+			prev_y >= 0 && prev_y <= grid_height))
 		then
 			tput cup ${prev_y} ${prev_x} >> ${buffer}
 			printf " " >> ${buffer}
@@ -68,17 +75,33 @@ throw_banana()
 		fi
 		
 		x=$(echo "scale=20; ${x_0} + (${throw_speed} * ${t} * c(${throw_angle}))" | bc -l | xargs printf "%1.0f\n")
-		y=$(echo "scale=20; ${y_0} + (${throw_speed} * ${t} * s(${throw_angle}) - (${gravity_value} / 2) * ${t} * ${t})" | bc -l | xargs printf "%1.0f\n")
+		y=$(echo "scale=20; ${y_0} + (${throw_speed} * ${t} * s(${throw_angle}) - (2 * ${gravity_value} / 2) * ${t} * ${t})" | bc -l | xargs printf "%1.0f\n")
 		
 		# TODO: Add collision detection
+		#
+		# If the thrown banana gets out of boundaries
+		# then the next player can throw
+		#
+		# If the banana hits a building the building block
+		# will be erased and then comes the next player
+		#
+		# If a banana hits a player, than add a point to that
+		# player's scrote who is not hit and set next_player
+		# to the player who was hit, and execute a break to
+		# start a new round
 		
 		# Print banana to screen
-		tput cup $(($((top_padding_height + grid_height)) - y)) ${x} >> ${buffer}
-		printf "${banana}" >> ${buffer}
-		refresh_screen
-		next_banana_frame
+		if ((x >= 0 && x < grid_width && y >= 1 && y <= grid_height))
+		then
+			tput cup $(($((top_padding_height + grid_height)) - y)) \
+				$((left_padding_width + x)) >> ${buffer}
+			printf "${banana}" >> ${buffer}
+			refresh_screen
+			next_banana_frame
+			sleep 0.1
+		fi
 		
-		prev_x=${x}
+		prev_x=$((left_padding_width + x))
 		prev_y=$(($((top_padding_height + grid_height)) - y))
 		
 		t=$(echo "scale=20; ${t} + 0.01" | bc -l)

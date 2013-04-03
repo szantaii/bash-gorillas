@@ -14,17 +14,30 @@ main_loop()
 	# Read players' names, max points, gravity
 	read_player_data
 	
-	# Initialize necessary variables before every round,
-	# generate buildings, place players on map, etc.
-	# (not everything implemented yet)
-	init_game
+	while [[ "${player1_score}" == "" && "${player2_score}" == "" ]] \
+		|| (((player1_score + player2_score) <= total_points))
+	do
+		# Initialize necessary variables before every round,
+		# generate buildings, place players on map, etc.
+		# (not everything implemented yet)
+		init_game
 	
-	# Display game on screen
-	print_scene
+		# Display game on screen
+		print_scene
 	
-	read_throw_data
-	
-	throw_banana
+		while true
+		do
+			print_sun
+			print_player_names
+			print_score
+			print_wind
+			
+			read_throw_data
+			clear_player_names
+			
+			throw_banana
+		done
+	done
 	
 	# TODO: Add end game animation
 	

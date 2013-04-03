@@ -42,10 +42,10 @@ bash_gorillas()
 	player1_throw_start_coordinates=""
 	player2_throw_start_coordinates=""
 	
-	declare -A player1_throw_animation_frame0
 	declare -A player1_throw_animation_frame1
-	declare -A player2_throw_animation_frame0
+	declare -A player1_throw_animation_frame2
 	declare -A player2_throw_animation_frame1
+	declare -A player2_throw_animation_frame2
 	
 	player1_building_height=""
 	player2_building_height=""
@@ -58,7 +58,7 @@ bash_gorillas()
 	
 	next_player=""
 	
-	max_score=""
+	total_points=""
 	gravity_value=""
 	menu_choice=""
 	
