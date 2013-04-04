@@ -96,9 +96,6 @@ throw_banana()
 			printf " " >> ${buffer}
 			refresh_screen
 			
-			# Switch to the other player
-			switch_player
-			
 			# Exit the loop
 			break
 		fi
@@ -117,7 +114,7 @@ throw_banana()
 				$((left_padding_width + x)) >> ${buffer}
 			printf "${banana}" >> ${buffer}
 			refresh_screen
-			sleep 0.1
+			sleep 0.05
 		fi
 		
 		prev_x=$((left_padding_width + x))
@@ -127,7 +124,8 @@ throw_banana()
 	done
 	
 	# If the thrown banana gets out of boundaries
-	# then the next player can throw
+	# or the banana hits a building then the next
+	# player can throw
 	switch_player
 }
 
