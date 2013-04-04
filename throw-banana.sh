@@ -47,7 +47,6 @@ throw_banana()
 		$((left_padding_width + x)) >> ${buffer}
 	printf "${banana}" >> ${buffer}
 	refresh_screen
-	next_banana_frame
 	
 	if ((next_player == 1))
 	then
@@ -79,10 +78,6 @@ throw_banana()
 		
 		# TODO: Add collision detection
 		#
-		# If the thrown banana gets out of boundaries
-		# then the next player can throw
-		#
-		#
 		# If a banana hits a player, than add a point to that
 		# player's score who is not hit and set next_player
 		# to the player who was hit, and execute a break to
@@ -108,6 +103,13 @@ throw_banana()
 			break
 		fi
 		
+		# Change banana character only if cursor is moved to another place
+		if [[ "${prev_x}" != "" && "${prev_y}" != "" ]] && \
+			((prev_x != x && prev_y != y))
+		then
+			next_banana_frame
+		fi
+		
 		# Print banana to screen
 		if ((x >= 0 && x < grid_width && y >= 1 && y <= grid_height))
 		then
@@ -115,7 +117,6 @@ throw_banana()
 				$((left_padding_width + x)) >> ${buffer}
 			printf "${banana}" >> ${buffer}
 			refresh_screen
-			next_banana_frame
 			sleep 0.1
 		fi
 		
@@ -124,5 +125,9 @@ throw_banana()
 		
 		t=$(echo "scale=20; ${t} + 0.01" | bc -l)
 	done
+	
+	# If the thrown banana gets out of boundaries
+	# then the next player can throw
+	switch_player
 }
 
