@@ -60,21 +60,22 @@ throw_banana()
 		# sleep 0.1
 		
 		# Clear previous banana frame from screen
-#		if [[ "${prev_x}" != "" && "${prev_y}" != "" ]] && \
-#			((prev_x >= 0 && prev_x < grid_width && \
-#			prev_y >= 0 && prev_y <= grid_height))
 		if [[ "${prev_x}" != "" && "${prev_y}" != "" ]] && \
-			((prev_x >= left_padding_width && \
-			prev_x < (grid_width + left_padding_width) && \
-			prev_y >= 0 && prev_y <= grid_height))
+			((x >= 0 && x < grid_width && y >= 1 && y <= grid_height))
 		then
-			tput cup ${prev_y} ${prev_x} >> ${buffer}
+			tput cup $(($((top_padding_height + grid_height)) - y)) \
+				$((left_padding_width + x)) >> ${buffer}
 			printf " " >> ${buffer}
 			refresh_screen
 		fi
 		
-		x=$(echo "scale=20; ${x_0} + (${throw_speed} * ${t} * c(${throw_angle}))" | bc -l | xargs printf "%1.0f\n")
-		y=$(echo "scale=20; ${y_0} + (${throw_speed} * ${t} * s(${throw_angle}) - (2 * ${gravity_value} / 2) * ${t} * ${t})" | bc -l | xargs printf "%1.0f\n")
+		x=$(echo "scale=20; ${x_0} + \
+			(${throw_speed} * ${t} * c(${throw_angle}) + \
+			(${wind_value} * ${t} * ${t}))" | bc -l | xargs printf "%1.0f\n")
+		y=$(echo "scale=20; ${y_0} + \
+			(${throw_speed} * ${t} * s(${throw_angle}) - \
+			(2 * ${gravity_value} / 2) * ${t} * ${t})" | \
+			bc -l | xargs printf "%1.0f\n")
 		
 		# TODO: Add collision detection
 		#
@@ -107,14 +108,13 @@ throw_banana()
 			then
 				player2_score=$((player2_score + 1))
 				
-				if ((next_player == 1))
+				if ((next_player == 2))
 				then
-					
-					break 3
-				else
 					switch_player
-					break 3
 				fi
+				
+				break 3
+				
 			elif [[ "${player2_coordinates[${i}]}" == "${x},$((y - 1))" ]]
 			then
 				player1_score=$((player1_score + 1))
@@ -122,16 +122,14 @@ throw_banana()
 				if ((next_player == 1))
 				then
 					switch_player
-					break 3
-				else
-					break 3
 				fi
+				
+				break 3
 			fi
 		done
 		
 		# Change banana character only if cursor is moved to another place
-		if [[ "${prev_x}" != "" && "${prev_y}" != "" ]] && \
-			((prev_x != x && prev_y != y))
+		if ((prev_x != x || prev_y != y))
 		then
 			next_banana_frame
 		fi
@@ -146,8 +144,8 @@ throw_banana()
 			sleep 0.05
 		fi
 		
-		prev_x=$((left_padding_width + x))
-		prev_y=$(($((top_padding_height + grid_height)) - y))
+		prev_x=${x}
+		prev_y=${y}
 		
 		t=$(echo "scale=20; ${t} + 0.01" | bc -l)
 	done
