@@ -15,7 +15,7 @@ main_loop()
 	read_player_data
 	
 	while [[ "${player1_score}" == "" && "${player2_score}" == "" ]] \
-		|| (((player1_score + player2_score) <= total_points))
+		|| (((player1_score + player2_score) < total_points))
 	do
 		# Initialize necessary variables before every round,
 		# generate buildings, place players on map, etc.

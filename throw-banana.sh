@@ -100,6 +100,35 @@ throw_banana()
 			break
 		fi
 		
+		# Banana hits player
+		for ((i=0; i < ${#player1_coordinates[@]}; i++))
+		do
+			if [[ "${player1_coordinates[${i}]}" == "${x},$((y - 1))" ]]
+			then
+				player2_score=$((player2_score + 1))
+				
+				if ((next_player == 1))
+				then
+					
+					break 3
+				else
+					switch_player
+					break 3
+				fi
+			elif [[ "${player2_coordinates[${i}]}" == "${x},$((y - 1))" ]]
+			then
+				player1_score=$((player1_score + 1))
+				
+				if ((next_player == 1))
+				then
+					switch_player
+					break 3
+				else
+					break 3
+				fi
+			fi
+		done
+		
 		# Change banana character only if cursor is moved to another place
 		if [[ "${prev_x}" != "" && "${prev_y}" != "" ]] && \
 			((prev_x != x && prev_y != y))

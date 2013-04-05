@@ -15,7 +15,8 @@ play_intro()
 	
 	local intro_text="\n\n${top_padding}${left_padding}                       \
     B a s h   G O R I L L A S\n\n\n${left_padding}            Copyright (C) \
-Istvan Szantai <szantaii@sidenote.hu> 2013\n\n${left_padding}     This game \
+Istvan Szantai \x3c\x73\x7a\x61\x6e\x74\x61\x69\x69\x40\x73\x69\x64\x65\x6e\
+\x6f\x74\x65\x2e\x68\x75\x3e 2013\n\n${left_padding}     This game \
 is a demake of QBasic GORILLAS rewritten completely in Bash.\n\n\n${left_padding}\
              Your mission is to hit your opponent with the exploding\n\
 ${left_padding}           banana by varying the angle and power of your \
