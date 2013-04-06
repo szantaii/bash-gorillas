@@ -106,6 +106,7 @@ throw_banana()
 		do
 			if [[ "${player1_coordinates[${i}]}" == "${x},$((y - 1))" ]]
 			then
+				clear_player1
 				player2_score=$((player2_score + 1))
 				
 				if ((next_player == 2))
@@ -117,6 +118,7 @@ throw_banana()
 				
 			elif [[ "${player2_coordinates[${i}]}" == "${x},$((y - 1))" ]]
 			then
+				clear_player2
 				player1_score=$((player1_score + 1))
 				
 				if ((next_player == 1))

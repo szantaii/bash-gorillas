@@ -32,7 +32,12 @@ init_game()
 	player_hit=false
 	
 	tput cup 0 0 >> ${buffer}
-	printf "Initializing game..." >> ${buffer}
+	if ((player1_score == 0 && player2_score == 0))
+	then
+		printf "Starting new game..." >> ${buffer}
+	else
+		printf "Starting new round..." >> ${buffer}
+	fi
 	refresh_screen
 	
 	building_width=8

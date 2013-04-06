@@ -23,6 +23,16 @@ init_players()
 		unset player1_throw_animation_frame2["${key}"]
 	done
 	
+	for key in "${!player1_victory_animation_frame1[@]}"
+	do
+		unset player1_victory_animation_frame1["${key}"]
+	done
+	
+	for key in "${!player1_victory_animation_frame2[@]}"
+	do
+		unset player1_victory_animation_frame2["${key}"]
+	done
+	
 	if ((building_count <= 15))
 	then
 		i=$((building_width + $(($((building_width - 3)) / 2))))
@@ -54,6 +64,8 @@ init_players()
 	
 	i=$((i + 1))
 	grid["${i},${j}"]=")"
+	player1_victory_animation_frame1["${i},${j}"]=")"
+	player1_victory_animation_frame2["${i},${j}"]=" "
 	
 	player1_coordinates=("${player1_coordinates[@]}" "${i},${j}")
 	
@@ -62,6 +74,9 @@ init_players()
 	grid["${i},${j}"]="o"
 	player1_throw_animation_frame1["$((i - 1)),${j}"]="("
 	player1_throw_animation_frame2["$((i - 1)),${j}"]=" "
+	player1_victory_animation_frame1["$((i + 1)),${j}"]=" "
+	player1_victory_animation_frame2["$((i + 1)),${j}"]=")"
+	
 	
 	player1_coordinates=("${player1_coordinates[@]}" "${i},${j}")
 	player1_throw_start_coordinates="${i},$((j + 2))"
@@ -88,6 +103,16 @@ init_players()
 		unset player2_throw_animation_frame2["${key}"]
 	done
 	
+	for key in "${!player2_victory_animation_frame1[@]}"
+	do
+		unset player2_victory_animation_frame1["${key}"]
+	done
+	
+	for key in "${!player2_victory_animation_frame2[@]}"
+	do
+		unset player2_victory_animation_frame2["${key}"]
+	done
+	
 	if ((building_count <= 15))
 	then
 		i=$((grid_width - $((2 * building_width))))
@@ -109,6 +134,8 @@ init_players()
 	i=$((i - 2))
 	j=$((j + 1))
 	grid["${i},${j}"]="("
+	player2_victory_animation_frame1["${i},${j}"]="("
+	player2_victory_animation_frame2["${i},${j}"]=" "
 	
 	player2_coordinates=("${player2_coordinates[@]}" "${i},${j}")
 	
@@ -129,6 +156,8 @@ init_players()
 	grid["${i},${j}"]="o"
 	player2_throw_animation_frame1["$((i + 1)),${j}"]=")"
 	player2_throw_animation_frame2["$((i + 1)),${j}"]=" "
+	player2_victory_animation_frame1["$((i - 1)),${j}"]=" "
+	player2_victory_animation_frame2["$((i - 1)),${j}"]="("
 	
 	player2_coordinates=("${player2_coordinates[@]}" "${i},${j}")
 	player2_throw_start_coordinates="${i},$((j + 2))"

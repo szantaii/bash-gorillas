@@ -2,8 +2,6 @@
 
 bash_gorillas()
 {
-	# TODO: capture Ctrl+C key combination
-	
 	# Save terminal screen
 	tput smcup
 	
@@ -46,6 +44,11 @@ bash_gorillas()
 	declare -A player1_throw_animation_frame2
 	declare -A player2_throw_animation_frame1
 	declare -A player2_throw_animation_frame2
+	
+	declare -A player1_victory_animation_frame1
+	declare -A player1_victory_animation_frame2
+	declare -A player2_victory_animation_frame1
+	declare -A player2_victory_animation_frame2
 	
 	player1_building_height=""
 	player2_building_height=""
@@ -90,11 +93,13 @@ bash_gorillas()
 	source "${script_directory}/clear-player-names.sh"
 	source "${script_directory}/print-score.sh"
 	source "${script_directory}/print-scene.sh"
+	source "${script_directory}/print-help.sh"
 	source "${script_directory}/read-throw-data.sh"
 	source "${script_directory}/animate-players.sh"
 	source "${script_directory}/animate-banana.sh"
 	source "${script_directory}/switch-player.sh"
 	source "${script_directory}/throw-banana.sh"
+	source "${script_directory}/play-outro.sh"
 	source "${script_directory}/main-loop.sh"
 	
 	check_prerequisites ${term_width} ${term_height}
