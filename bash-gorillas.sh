@@ -82,7 +82,7 @@ bash_gorillas()
 	source "${script_directory}/quit.sh"
 	source "${script_directory}/read-player-data.sh"
 	source "${script_directory}/generate-buildings.sh"
-	source "${script_directory}/place-players.sh"
+	source "${script_directory}/init-players.sh"
 	source "${script_directory}/init-game.sh"
 	source "${script_directory}/print-sun.sh"
 	source "${script_directory}/print-wind.sh"

@@ -1,7 +1,8 @@
 #!/bin/bash
 
-place_player1()
+init_players()
 {
+	# Init player1
 	local i=""
 	local j=""
 	
@@ -64,12 +65,11 @@ place_player1()
 	
 	player1_coordinates=("${player1_coordinates[@]}" "${i},${j}")
 	player1_throw_start_coordinates="${i},$((j + 2))"
-}
-
-place_player2()
-{
-	local i=""
-	local j=""
+	
+	
+	# Init player2
+	i=""
+	j=""
 	
 	j=${#player2_coordinates[@]}
 	
