@@ -97,7 +97,7 @@ bash_gorillas()
 	source "${script_directory}/create-buffer.sh"
 	source "${script_directory}/init-main.sh"
 	source "${script_directory}/refresh-screen.sh"
-	source "${script_directory}/print-intro-frames.sh"
+	source "${script_directory}/print-intro-outro-frames.sh"
 	source "${script_directory}/read-intro-continue-key.sh"
 	source "${script_directory}/play-intro.sh"
 	source "${script_directory}/quit.sh"
