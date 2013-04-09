@@ -20,7 +20,7 @@ This game is a demake of [QBasic GORILLAS](http://en.wikipedia.org/wiki/Gorillas
 
 ## 2. License
 
-This project is licensed under GNU General Public License Version 3. For the full license, see `LICENSE`.
+This project is licensed under GNU General Public License Version 3+. For the full license, see `LICENSE`.
 
 ## 3. Prerequisites
 
