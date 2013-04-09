@@ -14,7 +14,7 @@
 
 ## 1. About
 
-This game is a demake of [QBasic GORILLAS](http://en.wikipedia.org/wiki/Gorillas_%28video_game%29) completely rewritten in Bash.
+This game is a demake of [QBasic GORILLAS](http://en.wikipedia.org/wiki/Gorillas_%28video_game%29) completely written in Bash.
 
 *Your mission is to hit your opponent with the exploding banana by varying the angle and power of your throw, taking into account wind speed, gravity, and the city skyline. The wind speed is show by a directional arrow at the bottom of the playing field, its length relative to its strength.*
 
