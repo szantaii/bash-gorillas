@@ -26,12 +26,13 @@ This project is licensed under GNU General Public License Version 3. For the ful
 
  * Bash shell ≥ 4.2
  * `bc` basic calculator for floating point arithmetic. Can be found in the `bc` package on major Linux distributions.
- * `tput` for terminal handling. Can be found in different `ncurses` packages on Linux distributions (see the table below for major distros). | Distrbution | Package name    |
-| ----------- | --------------- |
-| Arch Linux  | `ncurses`       |
-| Fedora      | `ncurses`       |
-| openSUSE    | `ncurses-utils` |
-| Ubuntu      | `ncurses-bin`   |
+ * `tput` for terminal handling. Can be found in different `ncurses` packages on Linux distributions (see the table below for major distros).
+  | Distrbution | Package name    |
+  | ----------- | --------------- |
+  | Arch Linux  | `ncurses`       |
+  | Fedora      | `ncurses`       |
+  | openSUSE    | `ncurses-utils` |
+  | Ubuntu      | `ncurses-bin`   |
 
 ## 4. Exit status
  * `0` bash-gorillas exited successfully.
