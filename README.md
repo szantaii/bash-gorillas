@@ -37,7 +37,7 @@ This project is licensed under GNU General Public License Version 3. For the ful
 
 ## 4. Exit status
  * `0` bash-gorillas exited successfully.
- * `1` bash-gorillas was called with wrong or missing parameters. (not yet implemented).
+ * `1` bash-gorillas was called with wrong or missing parameters. (not yet implemented)
  * `2` Missing necessary programs to run bash-gorillas.
  * `3` Too small terminal size (width×height).
 
