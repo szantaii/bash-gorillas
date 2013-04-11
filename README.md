@@ -8,6 +8,8 @@
  3. Prerequisites
  4. Exit status
  5. How to play
+  * Get bash-gorillas
+  * Gameplay
  6. Further development
 
 ***
@@ -42,6 +44,28 @@ This project is licensed under GNU General Public License Version 3+. For the fu
  * `3` Too small terminal size (width×height).
 
 ## 5. How to play
+
+### Get bash-gorillas
+
+First you have to acquire bash-gorillas:
+
+```bash
+git clone https://github.com/szantaii/bash-gorillas.git
+```
+
+Enter bash-gorillas' directory:
+
+```bash
+cd bash-gorillas
+```
+
+Start bash-gorillas
+
+```bash
+bash bash-gorillas
+```
+
+### Gameplay
 
 `TODO`
 
