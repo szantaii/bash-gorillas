@@ -9,6 +9,6 @@ print_score()
 	
 	printf "${score_text}" >> ${buffer}
 	
-	# refresh_screen
+	refresh_screen
 }
 
