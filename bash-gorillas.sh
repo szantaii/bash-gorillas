@@ -1,5 +1,23 @@
 #!/bin/bash
 
+# bash-gorillas is a demake of QBasic GORILLAS completely rewritten
+# in Bash.
+# Copyright (C) 2013 Istvan Szantai <szantaii at sidenote dot hu>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program (LICENSE).
+# If not, see <http://www.gnu.org/licenses/>.
+
 bash_gorillas()
 {
 	# Save terminal screen
@@ -79,8 +97,8 @@ bash_gorillas()
 	source "${script_directory}/create-buffer.sh"
 	source "${script_directory}/init-main.sh"
 	source "${script_directory}/refresh-screen.sh"
-	source "${script_directory}/print-intro-frames.sh"
-	source "${script_directory}/read-intro-continue-key.sh"
+	source "${script_directory}/print-intro-outro-frames.sh"
+	source "${script_directory}/read-intro-outro-continue-key.sh"
 	source "${script_directory}/play-intro.sh"
 	source "${script_directory}/quit.sh"
 	source "${script_directory}/read-player-data.sh"
