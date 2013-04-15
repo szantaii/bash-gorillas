@@ -55,6 +55,8 @@ init_game()
 	else
 		printf "Starting new round..." >> ${buffer}
 	fi
+	
+	# Refresh the screen
 	refresh_screen
 	
 	# Set the width of a building (number of characters on the terminal screen)
