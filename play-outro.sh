@@ -75,19 +75,19 @@ ${left_padding}                            Press any key to continue"
 	do
 		print_frame_stage1
 		refresh_screen
-		read_intro_continue_key
+		read_intro_outro_continue_key
 		print_frame_stage2
 		refresh_screen
-		read_intro_continue_key
+		read_intro_outro_continue_key
 		print_frame_stage3
 		refresh_screen
-		read_intro_continue_key
+		read_intro_outro_continue_key
 		print_frame_stage4
 		refresh_screen
-		read_intro_continue_key
+		read_intro_outro_continue_key
 		print_frame_stage5
 		refresh_screen
-		read_intro_continue_key
+		read_intro_outro_continue_key
 	done
 	
 	# Clear and refresh screen

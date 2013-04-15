@@ -59,19 +59,19 @@ field, its length relative to its strength.\n\n\n\n\n\n${left_padding}    \
 	do
 		print_frame_stage1
 		refresh_screen
-		read_intro_continue_key
+		read_intro_outro_continue_key
 		print_frame_stage2
 		refresh_screen
-		read_intro_continue_key
+		read_intro_outro_continue_key
 		print_frame_stage3
 		refresh_screen
-		read_intro_continue_key
+		read_intro_outro_continue_key
 		print_frame_stage4
 		refresh_screen
-		read_intro_continue_key
+		read_intro_outro_continue_key
 		print_frame_stage5
 		refresh_screen
-		read_intro_continue_key
+		read_intro_outro_continue_key
 	done
 	
 	# Clear and refresh screen
