@@ -33,10 +33,10 @@ check_prerequisites()
 		
 		printf "Your system is missing the program 'tput' which is necessary \
 for bash-gorillas\nto run. 'tput' can be found in the following packages on \
-the following distributions:\n    distribution        package\n\
+the following distributions:\n    Distribution        Package name\n\
     ---------------------------------\n    Arch Linux          ncurses\n    \
-Fedora              ncurses\n    openSUSE            ncurses-utils\n    Ubuntu\
-              ncurses-bin\n"
+Debian              ncurses-bin\n    Fedora              ncurses\n    \
+openSUSE            ncurses-utils\n    Ubuntu              ncurses-bin\n"
 		
 		exit 2
 	fi
