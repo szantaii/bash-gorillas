@@ -191,7 +191,7 @@ throw_banana()
 		prev_y=${y}
 		
 		# Step time
-		t=$(echo "scale=20; ${t} + 0.01" | bc -l)
+		t=$(echo "scale=20; ${t} + 0.005" | bc -l)
 	done
 	
 	# If the thrown banana gets out of boundaries
