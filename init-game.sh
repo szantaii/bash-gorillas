@@ -40,8 +40,14 @@ init_game()
 		max_speed=100
 	fi
 	
+	# Set maximum wind speed
+	if [[ "${max_wind_value}" == "" ]]
+	then
+		max_wind_value=6
+	fi
+	
 	# Set wind value
-	wind_value=$((RANDOM % 6))
+	wind_value=$((RANDOM % max_wind_value))
 	if ((wind_value != 0 && (RANDOM % 2) != 0))
 	then
 		wind_value="-${wind_value}"

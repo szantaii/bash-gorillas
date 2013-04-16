@@ -28,12 +28,16 @@ check_prerequisites()
 	# error message and exit with status code '2'
 	if (($? != 0))
 	then
+		# Restore terminal screen
+		tput rmcup
+		
 		printf "Your system is missing the program 'tput' which is necessary \
 for bash-gorillas\nto run. 'tput' can be found in the following packages on \
 the following distributions:\n    distribution        package\n\
     ---------------------------------\n    Arch Linux          ncurses\n    \
 Fedora              ncurses\n    openSUSE            ncurses-utils\n    Ubuntu\
               ncurses-bin\n"
+		
 		exit 2
 	fi
 	
@@ -44,9 +48,13 @@ Fedora              ncurses\n    openSUSE            ncurses-utils\n    Ubuntu\
 	# error message and exit with status code '2'
 	if (($? != 0))
 	then
+		# Restore terminal screen
+		tput rmcup
+		
 		printf "Your system is missing the program 'bc' which is necessary \
 for bash-gorillas\nto run. 'bc' can be found in the 'bc' package on most Linux \
 distributions.\n"
+		
 		exit 2
 	fi
 	
@@ -58,9 +66,13 @@ distributions.\n"
 	# and exit with status code '3'
 	if ((term_width < min_term_width || term_height < min_term_height))
 	then
+		# Restore terminal screen
+		tput rmcup
+		
 		printf "bash-gorillas needs a terminal with size of at least \
 ${min_term_width}x${min_term_height} (${min_term_width} columns, \
 ${min_term_height} lines).\n"
+		
 		exit 3
 	fi
 }
