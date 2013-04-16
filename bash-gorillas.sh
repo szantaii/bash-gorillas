@@ -33,8 +33,6 @@ buffer_name=""
 buffer_directory=""
 buffer=""
 
-message_timer=""
-
 left_padding=""
 left_padding_width=$(($((term_width - min_term_width)) / 2))
 top_padding=""
@@ -148,12 +146,6 @@ Specify a number between 0 and 10.\n"
 				exit 1
 			fi
 			
-			if [[ "${message_timer}" == "" ]]
-			then
-				message_timer=2
-			fi
-			
-			printf "Maximum wind speed set to: +-${max_wind_value}.\n"
 			max_wind_value=$((max_wind_value + 1))
 			;;
 		s)
@@ -177,13 +169,6 @@ Specify a number between 100 and 200.\n"
 Specify a number between 100 and 200.\n"
 				exit 1
 			fi
-			
-			if [[ "${message_timer}" == "" ]]
-			then
-				message_timer=2
-			fi
-			
-			printf "Maximum throw speed set to: ${max_speed}.\n"
 			;;
 		:)
 			tput rmcup
@@ -207,11 +192,6 @@ Specify a number between 100 and 200.\n"
 			;;
 	esac
 done
-
-if [[ "${message_timer}" != "" ]]
-then
-	sleep ${message_timer}
-fi
 
 main_loop
 
