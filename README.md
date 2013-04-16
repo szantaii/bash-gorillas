@@ -33,6 +33,7 @@ This project is licensed under GNU General Public License Version 3+. For the fu
 | Distrbution | Package name    |
 | ----------- | --------------- |
 | Arch Linux  | `ncurses`       |
+| Debian      | `ncurses-bin`   |
 | Fedora      | `ncurses`       |
 | openSUSE    | `ncurses-utils` |
 | Ubuntu      | `ncurses-bin`   |
@@ -71,6 +72,6 @@ bash bash-gorillas
 
 ## 6. Further development
 
+ * Update section *5. How to play*. (high priority)
  * Let player correct entered throw angle and speed. (high priority)
- * Make `max_speed` and `wind_value` adjustable through command-line options (using `getopts`). (normal priority)
 
