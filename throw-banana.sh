@@ -118,7 +118,6 @@ throw_banana()
 			bc -l | xargs printf "%1.0f\n")
 		
 		# Collision detection START --------------------------------------------
-		
 		# If the banana hits a building the building block
 		# will be erased and then comes the next player
 		if [[ "${grid["${x},$((y - 1))"]}" == "X" ]]
@@ -173,7 +172,6 @@ throw_banana()
 		then
 			next_banana_frame
 		fi
-		
 		# Collision detection END ----------------------------------------------
 		
 		# Print banana to screen
