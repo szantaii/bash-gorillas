@@ -72,6 +72,6 @@ bash bash-gorillas
 
 ## 6. Further development
 
+ * Update section *5. How to play*. (high priority)
  * Let player correct entered throw angle and speed. (high priority)
- * Make `max_speed` and `wind_value` adjustable through command-line options (using `getopts`). (normal priority)
 
