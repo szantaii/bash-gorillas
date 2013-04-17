@@ -29,7 +29,7 @@ This project is licensed under GNU General Public License Version 3+. For the fu
 
 ## 3. Prerequisites
 
- * Bash shell ≥ 4.2
+ * Bash shell ≥ 4.2.
  * `bc` basic calculator for floating point arithmetic. Can be found in the `bc` package on major Linux distributions.
  * `tput` for terminal handling. Can be found in different `ncurses` packages on Linux distributions (see the table below for major distros).
 
@@ -43,7 +43,7 @@ This project is licensed under GNU General Public License Version 3+. For the fu
 
 ## 4. Exit status
  * `0` bash-gorillas exited successfully.
- * `1` bash-gorillas was called with wrong or missing parameters. (not yet implemented)
+ * `1` bash-gorillas was called with wrong or missing parameters.
  * `2` Missing necessary programs to run bash-gorillas.
  * `3` Too small terminal size (width×height).
 
@@ -111,5 +111,5 @@ Once the playing field loaded players can start throwing bananas at each other. 
 
 ## 6. Further development
 
- * Let player correct entered throw angle and speed. (high priority)
+ * Let player to correct entered throw angle and speed. (high priority)
 
