@@ -122,9 +122,17 @@ source "${script_directory}/main-loop.sh"
 check_prerequisites ${term_width} ${term_height}
 
 # Parse option flags and their arguments
-while getopts ":w:s:" option
+while getopts ":w:s:h" option
 do
 	case ${option} in
+		h)
+			tput rmcup
+			printf "bash-gorillas Copyright (C) Istvan Szantai \
+\x3c\x73\x7a\x61\x6e\x74\x61\x69\x69\x40\x73\x69\x64\x65\x6e\x6f\
+\x74\x65\x2e\x68\x75\x3e 2013\n\
+For more detailed help please see the file 'README.md'.\n"
+			exit 0
+			;;
 		w)
 			case ${OPTARG} in
 				*[0-9]*)
