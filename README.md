@@ -11,6 +11,7 @@
   * Get bash-gorillas
   * Start bash-gorillas
      * Command-line options
+         * Examples
   * Gameplay
  6. Further development
 
@@ -78,15 +79,21 @@ bash-gorillas can be started with the following command line options:
  * `-s max_throw_speed` Sets the maximum throw speed (default value: 100) that players can use, valid values: 100–200.
  * `-w max_wind_value` Sets the maximum power of the wind (default value: 5), valid values: 0–10.
 
-Examples:
+##### Examples
+
+Set maximum throw speed to 150:
 
 ```bash
 bash bash-gorillas -s 150
 ```
 
+Set maximum wind power to 3:
+
 ```bash
 bash bash-gorillas -w 3
 ```
+
+Set maxmimum throw speed to 200 and maxmimum wind power to 10:
 
 ```bash
 bash bash-gorillas -s 200 -w 10
@@ -104,6 +111,5 @@ Once the playing field loaded players can start throwing bananas at each other. 
 
 ## 6. Further development
 
- * Update section *5. How to play*. (high priority)
  * Let player correct entered throw angle and speed. (high priority)
 
