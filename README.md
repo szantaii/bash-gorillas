@@ -9,6 +9,8 @@
  4. Exit status
  5. How to play
   * Get bash-gorillas
+  * Start bash-gorillas
+     * Command-line options
   * Gameplay
  6. Further development
 
@@ -60,15 +62,45 @@ Enter bash-gorillas' directory:
 cd bash-gorillas
 ```
 
-Start bash-gorillas
+### Start bash-gorillas
+
+Use the Bash interpreter to start the game:
 
 ```bash
 bash bash-gorillas
 ```
 
+#### Command-line options
+
+bash-gorillas can be started with the following command line options:
+
+ * `-h` Prints a simple help to the screen, and exits.
+ * `-s max_throw_speed` Sets the maximum throw speed (default value: 100) that players can use, valid values: 100–200.
+ * `-w max_wind_value` Sets the maximum power of the wind (default value: 5), valid values: 0–10.
+
+Examples:
+
+```bash
+bash bash-gorillas -s 150
+```
+
+```bash
+bash bash-gorillas -w 3
+```
+
+```bash
+bash bash-gorillas -s 200 -w 10
+```
+
 ### Gameplay
 
-`TODO`
+Upon starting the game a welcome screen will appear, press any key to get past the welcome screen.
+
+On the second screen you can specify the names of players (maxmimum 10 characters each), total points to play until, and the value of garvity in the game. If you don't want to specify either of these you can simply press Enter to use the indicated default values. At this point you can choose to play (press 'p') or to quit (press 'q').
+
+Once the playing field loaded players can start throwing bananas at each other. Throw angle and speed prompt will appear under the name (top left and right corner of the screen) of the current player. Minimum and maxmimum throw angles and throw speeds are indicated in the prompt. Your aim is simply the following:
+
+>[...] to hit your opponent with the exploding banana by varying the angle and power of your throw, taking into account wind speed, gravity, and the city skyline. The wind speed is show by a directional arrow at the bottom of the playing field, its length relative to its strength.
 
 ## 6. Further development
 
