@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # bash-gorillas is a demake of QBasic GORILLAS completely rewritten
 # in Bash.
@@ -145,7 +145,7 @@ Specify a number between 0 and 10.\n"
 					exit 1
 					;;
 			esac
-			
+
 			if ((max_wind_value < 0 || max_wind_value > 10))
 			then
 				tput rmcup
@@ -153,11 +153,11 @@ Specify a number between 0 and 10.\n"
 Specify a number between 0 and 10.\n"
 				exit 1
 			fi
-			
+
 			max_wind_value=$((max_wind_value + 1))
 			;;
 		s)
-			
+
 			case ${OPTARG} in
 				*[0-9]*)
 					max_speed=${OPTARG}
@@ -169,7 +169,7 @@ Specify a number between 100 and 200.\n"
 					exit 1
 					;;
 			esac
-			
+
 			if ((max_speed < 100 || max_speed > 200))
 			then
 				tput rmcup
@@ -180,7 +180,7 @@ Specify a number between 100 and 200.\n"
 			;;
 		:)
 			tput rmcup
-			
+
 			if [[ "${OPTARG}" == "w" ]]
 			then
 				printf "Missing argument for option: -${OPTARG}. \
@@ -190,7 +190,7 @@ Specify a number between 0 and 10.\n"
 				printf "Missing argument for option: -${OPTARG}. \
 Specify a number between 100 and 200.\n"
 			fi
-			
+
 			exit 1
 			;;
 		\?)
@@ -202,4 +202,3 @@ Specify a number between 100 and 200.\n"
 done
 
 main_loop
-
