@@ -20,17 +20,19 @@
 print_scene()
 {
     # Clear screen
-    clear >> ${buffer}
+    clear >> "${buffer}"
 
     # Print the contents of $grid to the buffer
     for((i=0; i < grid_width; i++))
     do
         for ((j=0; j < grid_height; j++))
         do
-            tput cup $(($(($((top_padding_height + grid_height)) - j)) - 1)) \
-                $((left_padding_width + i)) >> ${buffer}
+            tput cup                                          \
+                $((top_padding_height + grid_height - j - 1)) \
+                $((left_padding_width + i))                   \
+                >> "${buffer}"
 
-            printf "${grid["${i},${j}"]}" >> ${buffer}
+            printf '%s' "${grid["${i},${j}"]}" >> "${buffer}"
         done
     done
 
