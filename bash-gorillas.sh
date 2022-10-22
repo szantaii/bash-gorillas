@@ -106,7 +106,6 @@ source "${script_directory}/init-game.sh"
 source "${script_directory}/print-sun.sh"
 source "${script_directory}/print-wind.sh"
 source "${script_directory}/print-player-names.sh"
-source "${script_directory}/print-scene.sh"
 source "${script_directory}/read-throw-data.sh"
 source "${script_directory}/switch-player.sh"
 source "${script_directory}/throw-banana.sh"
@@ -462,6 +461,29 @@ print_player_victory_dance()
             print_player1_victory_frame2
         done
     fi
+}
+
+# Print the contents of 'grid' into the screen buffer, then refresh the screen
+print_scene()
+{
+    # Clear screen
+    clear >> "${buffer}"
+
+    # Print the contents of $grid to the buffer
+    for ((i=0; i < grid_width; i++))
+    do
+        for ((j=0; j < grid_height; j++))
+        do
+            tput cup                                          \
+                $((top_padding_height + grid_height - j - 1)) \
+                $((left_padding_width + i))                   \
+                >> "${buffer}"
+
+            printf '%s' "${grid["${i},${j}"]}" >> "${buffer}"
+        done
+    done
+
+    refresh_screen
 }
 
 # Print the score of the players (overlaps buildings on the screen)
