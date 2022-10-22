@@ -16,8 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Prints the contents of 'grid' into the screen buffer,
-# then refreshes the screen
+# Print the contents of 'grid' into the screen buffer, then refresh the screen
 print_scene()
 {
     # Clear screen
@@ -35,6 +34,5 @@ print_scene()
         done
     done
 
-    # Refresh screen
     refresh_screen
 }
