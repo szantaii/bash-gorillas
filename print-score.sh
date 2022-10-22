@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Prints the score of the players (overlaps buildings on the screen)
+# Print the score of the players (overlaps buildings on the screen)
 print_score()
 {
     local score_text=" ${player1_score}>SCORE<${player2_score} "
@@ -26,9 +26,7 @@ print_score()
     tput cup $(($((top_padding_height + grid_height)) - 2)) \
         $((left_padding_width + $((grid_width / 2)) - $((${#score_text} / 2)))) >> ${buffer}
 
-    # Print the score
     printf "${score_text}" >> ${buffer}
 
-    # Refresh the screen
     refresh_screen
 }
