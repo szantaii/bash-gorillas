@@ -16,8 +16,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Prints a small help how to quit the game
-# into the right bottom part of the screen
+# Print a small help how to quit the game into the right bottom part
+# of the screen
 print_help()
 {
     local help_text="Quit: ^C"
@@ -27,9 +27,7 @@ print_help()
     tput cup ${grid_height} \
         $(($((left_padding_width + grid_width)) - ${#help_text})) >> ${buffer}
 
-    # Print help
     printf "${help_text}" >> ${buffer}
 
-    # Refresh the screen
     refresh_screen
 }
