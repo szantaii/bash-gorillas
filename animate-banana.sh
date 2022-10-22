@@ -22,9 +22,9 @@ init_banana()
 {
     if ((next_player == 1))
     then
-        banana="<"
+        banana='<'
     else
-        banana=">"
+        banana='>'
     fi
 }
 
@@ -34,33 +34,33 @@ next_banana_frame()
 {
     if ((next_player == 1))
     then
-        case ${banana} in
-            "<")
-                banana="^"
+        case "${banana}" in
+            '<')
+                banana='^'
                 ;;
-            "^")
-                banana=">"
+            '^')
+                banana='>'
                 ;;
-            ">")
-                banana="v"
+            '>')
+                banana='v'
                 ;;
-            "v")
-                banana="<"
+            'v')
+                banana='<'
                 ;;
         esac
     else
-        case ${banana} in
-            ">")
-                banana="^"
+        case "${banana}" in
+            '>')
+                banana='^'
                 ;;
-            "^")
-                banana="<"
+            '^')
+                banana='<'
                 ;;
-            "<")
-                banana="v"
+            '<')
+                banana='v'
                 ;;
-            "v")
-                banana=">"
+            'v')
+                banana='>'
                 ;;
         esac
     fi
