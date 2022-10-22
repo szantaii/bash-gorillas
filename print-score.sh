@@ -23,10 +23,12 @@ print_score()
 
     # Position the cursor into the third row from the bottom of the screen,
     # and center with length of $score_text taken into account
-    tput cup $(($((top_padding_height + grid_height)) - 2)) \
-        $((left_padding_width + $((grid_width / 2)) - $((${#score_text} / 2)))) >> ${buffer}
+    tput cup                                                              \
+        $((top_padding_height + grid_height - 2))                         \
+        $((left_padding_width + (grid_width / 2) - (${#score_text} / 2))) \
+        >> "${buffer}"
 
-    printf "${score_text}" >> ${buffer}
+    printf '%s' "${score_text}" >> "${buffer}"
 
     refresh_screen
 }
