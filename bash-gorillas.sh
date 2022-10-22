@@ -111,11 +111,59 @@ source "${script_directory}/print-scene.sh"
 source "${script_directory}/print-help.sh"
 source "${script_directory}/read-throw-data.sh"
 source "${script_directory}/animate-players.sh"
-source "${script_directory}/animate-banana.sh"
 source "${script_directory}/switch-player.sh"
 source "${script_directory}/throw-banana.sh"
 source "${script_directory}/play-outro.sh"
 source "${script_directory}/main-loop.sh"
+
+# Set the first banana frame depending which player throws
+init_banana()
+{
+    if ((next_player == 1))
+    then
+        banana='<'
+    else
+        banana='>'
+    fi
+}
+
+# Set the next banana frame depending which player throws
+next_banana_frame()
+{
+    if ((next_player == 1))
+    then
+        case "${banana}" in
+            '<')
+                banana='^'
+                ;;
+            '^')
+                banana='>'
+                ;;
+            '>')
+                banana='v'
+                ;;
+            'v')
+                banana='<'
+                ;;
+        esac
+    else
+        case "${banana}" in
+            '>')
+                banana='^'
+                ;;
+            '^')
+                banana='<'
+                ;;
+            '<')
+                banana='v'
+                ;;
+            'v')
+                banana='>'
+                ;;
+        esac
+    fi
+}
+
 
 check_prerequisites ${term_width} ${term_height}
 
