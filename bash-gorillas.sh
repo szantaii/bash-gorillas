@@ -106,7 +106,6 @@ source "${script_directory}/init-game.sh"
 source "${script_directory}/print-sun.sh"
 source "${script_directory}/print-wind.sh"
 source "${script_directory}/print-player-names.sh"
-source "${script_directory}/print-score.sh"
 source "${script_directory}/print-scene.sh"
 source "${script_directory}/read-throw-data.sh"
 source "${script_directory}/switch-player.sh"
@@ -463,6 +462,23 @@ print_player_victory_dance()
             print_player1_victory_frame2
         done
     fi
+}
+
+# Print the score of the players (overlaps buildings on the screen)
+print_score()
+{
+    local score_text=" ${player1_score}>SCORE<${player2_score} "
+
+    # Position the cursor into the third row from the bottom of the screen,
+    # and center with length of $score_text taken into account
+    tput cup                                                              \
+        $((top_padding_height + grid_height - 2))                         \
+        $((left_padding_width + (grid_width / 2) - (${#score_text} / 2))) \
+        >> "${buffer}"
+
+    printf '%s' "${score_text}" >> "${buffer}"
+
+    refresh_screen
 }
 
 
