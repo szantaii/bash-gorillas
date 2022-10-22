@@ -110,11 +110,55 @@ source "${script_directory}/print-score.sh"
 source "${script_directory}/print-scene.sh"
 source "${script_directory}/print-help.sh"
 source "${script_directory}/read-throw-data.sh"
-source "${script_directory}/animate-players.sh"
 source "${script_directory}/switch-player.sh"
 source "${script_directory}/throw-banana.sh"
 source "${script_directory}/play-outro.sh"
 source "${script_directory}/main-loop.sh"
+
+
+clear_player1()
+{
+    local i=''
+    local j=''
+    local value=''
+
+    for value in "${player1_coordinates[@]}"
+    do
+        i="${value%','*}"
+        j="${value#*','}"
+
+        tput cup                                          \
+            $((top_padding_height + grid_height - j - 1)) \
+            $((left_padding_width + i))                   \
+            >> "${buffer}"
+
+        printf ' ' >> "${buffer}"
+    done
+
+    refresh_screen
+}
+
+clear_player2()
+{
+    local i=''
+    local j=''
+    local value=''
+
+    for value in "${player2_coordinates[@]}"
+    do
+        i="${value%','*}"
+        j="${value#*','}"
+
+        tput cup                                          \
+            $((top_padding_height + grid_height - j - 1)) \
+            $((left_padding_width + i))                   \
+            >> "${buffer}"
+
+        printf ' ' >> "${buffer}"
+    done
+
+    refresh_screen
+}
 
 # Set the first banana frame depending which player throws
 init_banana()
@@ -161,6 +205,220 @@ next_banana_frame()
                 banana='>'
                 ;;
         esac
+    fi
+}
+
+print_player1_throw_frame1()
+{
+    local i=''
+    local j=''
+
+    for key in "${!player1_throw_animation_frame1[@]}"
+    do
+        i="${key%','*}"
+        j="${key#*','}"
+
+        tput cup                                          \
+            $((top_padding_height + grid_height - j - 1)) \
+            $((left_padding_width + i)) \
+            >> "${buffer}"
+
+        printf '%s' "${player1_throw_animation_frame1["${key}"]}" >> "${buffer}"
+    done
+
+    refresh_screen
+
+    sleep 0.1
+}
+
+print_player1_throw_frame2()
+{
+    local i=''
+    local j=''
+
+    for key in "${!player1_throw_animation_frame2[@]}"
+    do
+        i="${key%','*}"
+        j="${key#*','}"
+
+        tput cup                                          \
+            $((top_padding_height + grid_height - j - 1)) \
+            $((left_padding_width + i))                   \
+            >> "${buffer}"
+
+        printf '%s' "${player1_throw_animation_frame2["${key}"]}" >> "${buffer}"
+    done
+
+    refresh_screen
+
+    sleep 0.1
+}
+
+print_player2_throw_frame1()
+{
+    local i=''
+    local j=''
+
+    for key in "${!player2_throw_animation_frame1[@]}"
+    do
+        i="${key%','*}"
+        j="${key#*','}"
+
+        tput cup                                          \
+            $((top_padding_height + grid_height - j - 1)) \
+            $((left_padding_width + i))                   \
+            >> "${buffer}"
+
+        printf '%s' "${player2_throw_animation_frame1["${key}"]}" >> "${buffer}"
+    done
+
+    refresh_screen
+
+    sleep 0.1
+}
+
+print_player2_throw_frame2()
+{
+    local i=''
+    local j=''
+
+    for key in "${!player2_throw_animation_frame2[@]}"
+    do
+        i="${key%','*}"
+        j="${key#*','}"
+
+        tput cup                                          \
+            $((top_padding_height + grid_height - j - 1)) \
+            $((left_padding_width + i))                   \
+            >> "${buffer}"
+
+        printf '%s' "${player2_throw_animation_frame2["${key}"]}" >> "${buffer}"
+    done
+
+    refresh_screen
+
+    sleep 0.1
+}
+
+print_player1_victory_frame1()
+{
+    local i=''
+    local j=''
+
+    for key in "${!player1_victory_animation_frame1[@]}"
+    do
+        i="${key%','*}"
+        j="${key#*','}"
+
+        tput cup                                          \
+            $((top_padding_height + grid_height - j - 1)) \
+            $((left_padding_width + i))                   \
+            >> "${buffer}"
+
+        printf '%s' "${player1_victory_animation_frame1["${key}"]}" \
+            >> "${buffer}"
+    done
+
+    refresh_screen
+
+    sleep 0.1
+}
+
+print_player1_victory_frame2()
+{
+    local i=''
+    local j=''
+
+    for key in "${!player1_victory_animation_frame2[@]}"
+    do
+        i="${key%','*}"
+        j="${key#*','}"
+
+        tput cup                                          \
+            $((top_padding_height + grid_height - j - 1)) \
+            $((left_padding_width + i))                   \
+            >> "${buffer}"
+
+        printf '%s' "${player1_victory_animation_frame2["${key}"]}" \
+            >> "${buffer}"
+    done
+
+    refresh_screen
+
+    sleep 0.1
+}
+
+print_player2_victory_frame1()
+{
+    local i=''
+    local j=''
+
+    for key in "${!player2_victory_animation_frame1[@]}"
+    do
+        i="${key%','*}"
+        j="${key#*','}"
+
+        tput cup                                          \
+            $((top_padding_height + grid_height - j - 1)) \
+            $((left_padding_width + i))                   \
+            >> "${buffer}"
+
+        printf '%s' "${player2_victory_animation_frame1["${key}"]}" \
+            >> "${buffer}"
+    done
+
+    refresh_screen
+
+    sleep 0.1
+}
+
+print_player2_victory_frame2()
+{
+    local i=''
+    local j=''
+
+    for key in "${!player2_victory_animation_frame2[@]}"
+    do
+        i="${key%','*}"
+        j="${key#*','}"
+
+        tput cup                                          \
+            $((top_padding_height + grid_height - j - 1)) \
+            $((left_padding_width + i))                   \
+            >> "${buffer}"
+
+        printf '%s' "${player2_victory_animation_frame2["${key}"]}" \
+            >> "${buffer}"
+    done
+
+    refresh_screen
+
+    sleep 0.1
+}
+
+print_player_victory_dance()
+{
+    if ((next_player == 1))
+    then
+        for ((k=0; k < 5; k++))
+        do
+            print_player2_throw_frame2
+            sleep 0.3
+            print_player2_throw_frame1
+            print_player2_victory_frame1
+            sleep 0.3
+            print_player2_victory_frame2
+        done
+    else
+        for ((k=0; k < 5; k++))
+        do
+            print_player1_throw_frame2
+            sleep 0.3
+            print_player1_throw_frame1
+            print_player1_victory_frame1
+            sleep 0.3
+            print_player1_victory_frame2
+        done
     fi
 }
 
