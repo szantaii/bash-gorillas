@@ -103,7 +103,6 @@ source "${script_directory}/read-player-data.sh"
 source "${script_directory}/generate-buildings.sh"
 source "${script_directory}/init-players.sh"
 source "${script_directory}/init-game.sh"
-source "${script_directory}/print-sun.sh"
 source "${script_directory}/print-wind.sh"
 source "${script_directory}/print-player-names.sh"
 source "${script_directory}/read-throw-data.sh"
@@ -499,6 +498,34 @@ print_score()
         >> "${buffer}"
 
     printf '%s' "${score_text}" >> "${buffer}"
+
+    refresh_screen
+}
+
+# Print the Sun to the top center of the screen
+print_sun()
+{
+    local sun_text=()
+
+    # Store the ASCII lines of the Sun
+    sun_text[0]='    |'
+    sun_text[1]='  \ _ /'
+    sun_text[2]='-= (_) =-'
+    sun_text[3]='  /   '\\
+    sun_text[4]='    |'
+
+    for ((i=0; i < ${#sun_text[@]}; i++))
+    do
+        # Position the cursor to the top of the screen + i lines
+        # and horizontally center of the screen minus the width
+        # of the ASCII Sun
+        tput cup                                                 \
+            $((top_padding_height + i))                          \
+            $((left_padding_width + (grid_width / 2) - (9 / 2))) \
+            >> "${buffer}"
+
+        printf '%s' "${sun_text[${i}]}" >> "${buffer}"
+    done
 
     refresh_screen
 }
