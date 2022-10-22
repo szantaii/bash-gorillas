@@ -16,8 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Sets the first banana frame
-# depending which player throws
+# Set the first banana frame depending which player throws
 init_banana()
 {
     if ((next_player == 1))
@@ -28,8 +27,7 @@ init_banana()
     fi
 }
 
-# Sets the next banana frame
-# depending which player throws
+# Set the next banana frame depending which player throws
 next_banana_frame()
 {
     if ((next_player == 1))
