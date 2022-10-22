@@ -16,30 +16,28 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Clears the player names from the top left and right corners of the screen
+# Clear the player names from the top left and right corners of the screen
 clear_player_names()
 {
     # Position the cursor to the top left corner of the playing field
     tput cup "${top_padding_height}" "${left_padding_width}" >> "${buffer}"
 
-    # Clear the name of player1 from the top left corner of the playing field
     for ((i=0; i < ${#player1_name}; i++))
     do
         printf ' ' >> "${buffer}"
     done
 
-    # Position the cursor to the top right corner of the playing field
+    # Position the cursor to the top right corner of the playing field right
+    # before player2's name
     tput cup                                                    \
         "${top_padding_height}"                                 \
         $((left_padding_width + grid_width - ${#player2_name})) \
         >> "${buffer}"
 
-    # Clear the name of player2 from the top right corner of the playing field
     for ((i=0; i < ${#player2_name}; i++))
     do
         printf ' ' >> "${buffer}"
     done
 
-    # Refresh the screen
     refresh_screen
 }
