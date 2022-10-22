@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Prints wind indicator arrow to the bottom row of the screen
+# Print the wind indicator arrow to the bottom row of the screen
 print_wind()
 {
     # Center the cursor in the bottom row of the screen
@@ -25,12 +25,12 @@ print_wind()
 
     printf "|" >> ${buffer}
 
-    # Print wind indicator arrow if $wind_value is not zero
+    # Print the wind indicator arrow if $wind_value is not zero
     if ((wind_value != 0))
     then
         if ((wind_value < 0))
         then
-            # If the wind blows to the left ($wind_value is negative)
+            # Wind blows to the left ($wind_value is negative)
             tput cup ${grid_height} \
                 $((left_padding_width + $(($(($((grid_width / 2)) \
                 + wind_value)) - 1)))) >> ${buffer}
@@ -44,8 +44,9 @@ print_wind()
                 printf "%s-" >> ${buffer}
             done
         else
-            # If the wind blows to the right ($wind_value is positive)
-            # then print the arrow with the length of $wind_value
+            # Wind blows to the right ($wind_value is positive)
+
+            # Print arrow with the length of $wind_value
             for ((i=0; i < wind_value; i++))
             do
                 printf "%s-" >> ${buffer}
@@ -56,6 +57,5 @@ print_wind()
         fi
     fi
 
-    # Refresh the screen
     refresh_screen
 }
