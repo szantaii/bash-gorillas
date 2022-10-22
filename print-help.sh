@@ -22,17 +22,16 @@
 # into the right bottom part of the screen
 print_help()
 {
-	local help_text="Quit: ^C"
-	
-	# Position the cursor to the bottom row of the screen,
-	# and to the right side of the $grid
-	tput cup ${grid_height} \
-		$(($((left_padding_width + grid_width)) - ${#help_text})) >> ${buffer}
-	
-	# Print help
-	printf "${help_text}" >> ${buffer}
-	
-	# Refresh the screen
-	refresh_screen
-}
+    local help_text="Quit: ^C"
 
+    # Position the cursor to the bottom row of the screen,
+    # and to the right side of the $grid
+    tput cup ${grid_height} \
+        $(($((left_padding_width + grid_width)) - ${#help_text})) >> ${buffer}
+
+    # Print help
+    printf "${help_text}" >> ${buffer}
+
+    # Refresh the screen
+    refresh_screen
+}

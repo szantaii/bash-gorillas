@@ -21,32 +21,31 @@
 # Prints the Sun to the top center of the screen
 print_sun()
 {
-	# Create a local array variable
-	local sun_text=()
-	
-	# Store the ASCII lines of the Sun
-	sun_text[0]="    |"
-	sun_text[1]="  \\ _ /"
-	sun_text[2]="-= (_) =-"
-	sun_text[3]="  /   \\"
-	sun_text[4]="    |"
-	
-	# Iterate through the local array $sun_text
-	# and print its contents to the screen
-	for ((i=0; i < ${#sun_text[@]}; i++))
-	do
-		# Position the cursor to the top of the screen + i lines
-		# and horizontally center of the screen minus the width
-		# of the ASCII Sun
-		tput cup $((top_padding_height + i)) \
-			$((left_padding_width + $((grid_width / 2)) - $((9 / 2)))) \
-			>> ${buffer}
-		
-		# Print the actual line to the screen buffer
-		printf "%s${sun_text[${i}]}" >> ${buffer}
-	done
-	
-	# Refresh the screen
-	refresh_screen
-}
+    # Create a local array variable
+    local sun_text=()
 
+    # Store the ASCII lines of the Sun
+    sun_text[0]="    |"
+    sun_text[1]="  \\ _ /"
+    sun_text[2]="-= (_) =-"
+    sun_text[3]="  /   \\"
+    sun_text[4]="    |"
+
+    # Iterate through the local array $sun_text
+    # and print its contents to the screen
+    for ((i=0; i < ${#sun_text[@]}; i++))
+    do
+        # Position the cursor to the top of the screen + i lines
+        # and horizontally center of the screen minus the width
+        # of the ASCII Sun
+        tput cup $((top_padding_height + i)) \
+            $((left_padding_width + $((grid_width / 2)) - $((9 / 2)))) \
+            >> ${buffer}
+
+        # Print the actual line to the screen buffer
+        printf "%s${sun_text[${i}]}" >> ${buffer}
+    done
+
+    # Refresh the screen
+    refresh_screen
+}

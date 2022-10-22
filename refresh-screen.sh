@@ -22,7 +22,6 @@
 # the screen then empties the buffer
 refresh_screen()
 {
-	cat "${buffer}"
-	printf "" > $buffer
+    cat "${buffer}"
+    printf "" > $buffer
 }
-

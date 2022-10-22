@@ -21,20 +21,19 @@
 # Prints the name of players to the top left and right corners of the screen
 print_player_names()
 {
-	# Position the cursor to the top left corner of the playing field
-	tput cup ${top_padding_height} ${left_padding_width} >> ${buffer}
-	
-	# Print player1's name ($player1_name)
-	printf "${player1_name}" >> ${buffer}
-	
-	# Position the cursor to the top right corner ot the playing field
-	tput cup ${top_padding_height} \
-		$(($((left_padding_width + grid_width)) - ${#player2_name}))>> ${buffer}
-	
-	# Print player2's name ($player2_name)
-	printf "${player2_name}" >> ${buffer}
-	
-	# Refresh the screen
-	refresh_screen
-}
+    # Position the cursor to the top left corner of the playing field
+    tput cup ${top_padding_height} ${left_padding_width} >> ${buffer}
 
+    # Print player1's name ($player1_name)
+    printf "${player1_name}" >> ${buffer}
+
+    # Position the cursor to the top right corner ot the playing field
+    tput cup ${top_padding_height} \
+        $(($((left_padding_width + grid_width)) - ${#player2_name}))>> ${buffer}
+
+    # Print player2's name ($player2_name)
+    printf "${player2_name}" >> ${buffer}
+
+    # Refresh the screen
+    refresh_screen
+}

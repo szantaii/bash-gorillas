@@ -22,49 +22,48 @@
 # depending which player throws
 init_banana()
 {
-	if ((next_player == 1))
-	then
-		banana="<"
-	else
-		banana=">"
-	fi
+    if ((next_player == 1))
+    then
+        banana="<"
+    else
+        banana=">"
+    fi
 }
 
 # Sets the next banana frame
 # depending which player throws
 next_banana_frame()
 {
-	if ((next_player == 1))
-	then
-		case ${banana} in
-			"<")
-				banana="^"
-				;;
-			"^")
-				banana=">"
-				;;
-			">")
-				banana="v"
-				;;
-			"v")
-				banana="<"
-				;;
-		esac
-	else
-		case ${banana} in
-			">")
-				banana="^"
-				;;
-			"^")
-				banana="<"
-				;;
-			"<")
-				banana="v"
-				;;
-			"v")
-				banana=">"
-				;;
-		esac
-	fi
+    if ((next_player == 1))
+    then
+        case ${banana} in
+            "<")
+                banana="^"
+                ;;
+            "^")
+                banana=">"
+                ;;
+            ">")
+                banana="v"
+                ;;
+            "v")
+                banana="<"
+                ;;
+        esac
+    else
+        case ${banana} in
+            ">")
+                banana="^"
+                ;;
+            "^")
+                banana="<"
+                ;;
+            "<")
+                banana="v"
+                ;;
+            "v")
+                banana=">"
+                ;;
+        esac
+    fi
 }
-

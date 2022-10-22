@@ -21,44 +21,43 @@
 # Prints wind indicator arrow to the bottom row of the screen
 print_wind()
 {
-	# Center the cursor in the bottom row of the screen
-	tput cup ${grid_height} \
-		$((left_padding_width + $((grid_width / 2)))) >> ${buffer}
-	
-	printf "|" >> ${buffer}
-	
-	# Print wind indicator arrow if $wind_value is not zero
-	if ((wind_value != 0))
-	then
-		if ((wind_value < 0))
-		then
-			# If the wind blows to the left ($wind_value is negative)
-			tput cup ${grid_height} \
-				$((left_padding_width + $(($(($((grid_width / 2)) \
-				+ wind_value)) - 1)))) >> ${buffer}
-			
-			# Print wind indicator arrowhead
-			printf "<" >> ${buffer}
-			
-			# Print arrow with the length of $wind_value
-			for ((i=wind_value; i < 0; i++))
-			do
-				printf "%s-" >> ${buffer}
-			done
-		else
-			# If the wind blows to the right ($wind_value is positive)
-			# then print the arrow with the length of $wind_value
-			for ((i=0; i < wind_value; i++))
-			do
-				printf "%s-" >> ${buffer}
-			done
-			
-			# Print wind indicator arrowhead
-			printf ">" >> ${buffer}
-		fi
-	fi
-	
-	# Refresh the screen
-	refresh_screen
-}
+    # Center the cursor in the bottom row of the screen
+    tput cup ${grid_height} \
+        $((left_padding_width + $((grid_width / 2)))) >> ${buffer}
 
+    printf "|" >> ${buffer}
+
+    # Print wind indicator arrow if $wind_value is not zero
+    if ((wind_value != 0))
+    then
+        if ((wind_value < 0))
+        then
+            # If the wind blows to the left ($wind_value is negative)
+            tput cup ${grid_height} \
+                $((left_padding_width + $(($(($((grid_width / 2)) \
+                + wind_value)) - 1)))) >> ${buffer}
+
+            # Print wind indicator arrowhead
+            printf "<" >> ${buffer}
+
+            # Print arrow with the length of $wind_value
+            for ((i=wind_value; i < 0; i++))
+            do
+                printf "%s-" >> ${buffer}
+            done
+        else
+            # If the wind blows to the right ($wind_value is positive)
+            # then print the arrow with the length of $wind_value
+            for ((i=0; i < wind_value; i++))
+            do
+                printf "%s-" >> ${buffer}
+            done
+
+            # Print wind indicator arrowhead
+            printf ">" >> ${buffer}
+        fi
+    fi
+
+    # Refresh the screen
+    refresh_screen
+}

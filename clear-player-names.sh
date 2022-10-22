@@ -21,26 +21,25 @@
 # Clears the player names from the top left and right corners of the screen
 clear_player_names()
 {
-	# Position the cursor to the top left corner of the playing field
-	tput cup ${top_padding_height} ${left_padding_width} >> ${buffer}
-	
-	# Clear the name of player1 from the top left corner of the playing field
-	for ((i=0; i < ${#player1_name}; i++))
-	do
-		printf " " >> ${buffer}
-	done
-	
-	# Position the cursor to the top right corner of the playing field
-	tput cup ${top_padding_height} \
-		$(($((left_padding_width + grid_width)) - ${#player2_name}))>> ${buffer}
-	
-	# Clear the name of player2 from the top right corner of the playing field
-	for ((i=0; i < ${#player2_name}; i++))
-	do
-		printf " " >> ${buffer}
-	done
-	
-	# Refresh the screen
-	refresh_screen
-}
+    # Position the cursor to the top left corner of the playing field
+    tput cup ${top_padding_height} ${left_padding_width} >> ${buffer}
 
+    # Clear the name of player1 from the top left corner of the playing field
+    for ((i=0; i < ${#player1_name}; i++))
+    do
+        printf " " >> ${buffer}
+    done
+
+    # Position the cursor to the top right corner of the playing field
+    tput cup ${top_padding_height} \
+        $(($((left_padding_width + grid_width)) - ${#player2_name}))>> ${buffer}
+
+    # Clear the name of player2 from the top right corner of the playing field
+    for ((i=0; i < ${#player2_name}; i++))
+    do
+        printf " " >> ${buffer}
+    done
+
+    # Refresh the screen
+    refresh_screen
+}

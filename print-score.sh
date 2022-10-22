@@ -21,17 +21,16 @@
 # Prints the score of the players (overlaps buildings on the screen)
 print_score()
 {
-	local score_text=" ${player1_score}>SCORE<${player2_score} "
-	
-	# Position the cursor into the third row from the bottom of the screen,
-	# and center with length of $score_text taken into account
-	tput cup $(($((top_padding_height + grid_height)) - 2)) \
-		$((left_padding_width + $((grid_width / 2)) - $((${#score_text} / 2)))) >> ${buffer}
-	
-	# Print the score
-	printf "${score_text}" >> ${buffer}
-	
-	# Refresh the screen
-	refresh_screen
-}
+    local score_text=" ${player1_score}>SCORE<${player2_score} "
 
+    # Position the cursor into the third row from the bottom of the screen,
+    # and center with length of $score_text taken into account
+    tput cup $(($((top_padding_height + grid_height)) - 2)) \
+        $((left_padding_width + $((grid_width / 2)) - $((${#score_text} / 2)))) >> ${buffer}
+
+    # Print the score
+    printf "${score_text}" >> ${buffer}
+
+    # Refresh the screen
+    refresh_screen
+}
