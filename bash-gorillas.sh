@@ -103,7 +103,6 @@ source "${script_directory}/read-player-data.sh"
 source "${script_directory}/generate-buildings.sh"
 source "${script_directory}/init-players.sh"
 source "${script_directory}/init-game.sh"
-source "${script_directory}/print-player-names.sh"
 source "${script_directory}/read-throw-data.sh"
 source "${script_directory}/switch-player.sh"
 source "${script_directory}/throw-banana.sh"
@@ -243,6 +242,27 @@ print_help()
         >> "${buffer}"
 
     printf '%s' "${help_text}" >> "${buffer}"
+
+    refresh_screen
+}
+
+# Print the name of the players to the top left and right corners of the screen
+print_player_names()
+{
+    {
+        # Position the cursor to the top left corner of the playing field
+        tput cup "${top_padding_height}" "${left_padding_width}"
+
+        printf '%s' "${player1_name}"
+
+        # Position the cursor to the top right corner ot the playing field
+        tput cup \
+            "${top_padding_height}" \
+            $((left_padding_width + grid_width - ${#player2_name}))
+
+        printf '%s' "${player2_name}"
+
+    } >> "${buffer}"
 
     refresh_screen
 }
