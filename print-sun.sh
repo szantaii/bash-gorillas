@@ -16,10 +16,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Prints the Sun to the top center of the screen
+# Print the Sun to the top center of the screen
 print_sun()
 {
-    # Create a local array variable
     local sun_text=()
 
     # Store the ASCII lines of the Sun
@@ -29,8 +28,6 @@ print_sun()
     sun_text[3]="  /   \\"
     sun_text[4]="    |"
 
-    # Iterate through the local array $sun_text
-    # and print its contents to the screen
     for ((i=0; i < ${#sun_text[@]}; i++))
     do
         # Position the cursor to the top of the screen + i lines
@@ -40,10 +37,8 @@ print_sun()
             $((left_padding_width + $((grid_width / 2)) - $((9 / 2)))) \
             >> ${buffer}
 
-        # Print the actual line to the screen buffer
         printf "%s${sun_text[${i}]}" >> ${buffer}
     done
 
-    # Refresh the screen
     refresh_screen
 }
