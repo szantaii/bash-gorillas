@@ -1,8 +1,7 @@
 #!/bin/bash
 
-# bash-gorillas is a demake of QBasic GORILLAS completely rewritten
-# in Bash.
-# Copyright (C) 2013 Istvan Szantai <szantaii at sidenote dot hu>
+# bash-gorillas is a demake of QBasic GORILLAS completely rewritten in Bash.
+# Copyright (C) 2013-2022 Istvan Szantai <szantaii@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,8 +14,7 @@
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program (LICENSE).
-# If not, see <http://www.gnu.org/licenses/>.
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # Functions in this file prompt questions and read answers from player
 
