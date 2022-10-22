@@ -106,7 +106,6 @@ source "${script_directory}/init-game.sh"
 source "${script_directory}/print-sun.sh"
 source "${script_directory}/print-wind.sh"
 source "${script_directory}/print-player-names.sh"
-source "${script_directory}/clear-player-names.sh"
 source "${script_directory}/print-score.sh"
 source "${script_directory}/print-scene.sh"
 source "${script_directory}/print-help.sh"
@@ -155,6 +154,32 @@ clear_player2()
             $((left_padding_width + i))                   \
             >> "${buffer}"
 
+        printf ' ' >> "${buffer}"
+    done
+
+    refresh_screen
+}
+
+# Clear the player names from the top left and right corners of the screen
+clear_player_names()
+{
+    # Position the cursor to the top left corner of the playing field
+    tput cup "${top_padding_height}" "${left_padding_width}" >> "${buffer}"
+
+    for ((i=0; i < ${#player1_name}; i++))
+    do
+        printf ' ' >> "${buffer}"
+    done
+
+    # Position the cursor to the top right corner of the playing field right
+    # before player2's name
+    tput cup                                                    \
+        "${top_padding_height}"                                 \
+        $((left_padding_width + grid_width - ${#player2_name})) \
+        >> "${buffer}"
+
+    for ((i=0; i < ${#player2_name}; i++))
+    do
         printf ' ' >> "${buffer}"
     done
 
