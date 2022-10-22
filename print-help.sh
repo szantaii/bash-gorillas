@@ -20,14 +20,16 @@
 # of the screen
 print_help()
 {
-    local help_text="Quit: ^C"
+    local help_text='Quit: ^C'
 
     # Position the cursor to the bottom row of the screen,
     # and to the right side of the $grid
-    tput cup ${grid_height} \
-        $(($((left_padding_width + grid_width)) - ${#help_text})) >> ${buffer}
+    tput cup                                                 \
+        "${grid_height}"                                     \
+        $((left_padding_width + grid_width - ${#help_text})) \
+        >> "${buffer}"
 
-    printf "${help_text}" >> ${buffer}
+    printf '%s' "${help_text}" >> "${buffer}"
 
     refresh_screen
 }
