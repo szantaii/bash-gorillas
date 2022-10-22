@@ -108,7 +108,6 @@ source "${script_directory}/print-wind.sh"
 source "${script_directory}/print-player-names.sh"
 source "${script_directory}/print-score.sh"
 source "${script_directory}/print-scene.sh"
-source "${script_directory}/print-help.sh"
 source "${script_directory}/read-throw-data.sh"
 source "${script_directory}/switch-player.sh"
 source "${script_directory}/throw-banana.sh"
@@ -232,6 +231,24 @@ next_banana_frame()
                 ;;
         esac
     fi
+}
+
+# Print a small help how to quit the game into the right bottom part
+# of the screen
+print_help()
+{
+    local help_text='Quit: ^C'
+
+    # Position the cursor to the bottom row of the screen,
+    # and to the right side of the $grid
+    tput cup                                                 \
+        "${grid_height}"                                     \
+        $((left_padding_width + grid_width - ${#help_text})) \
+        >> "${buffer}"
+
+    printf '%s' "${help_text}" >> "${buffer}"
+
+    refresh_screen
 }
 
 print_player1_throw_frame1()
