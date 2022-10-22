@@ -16,43 +16,44 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+
 # Save terminal screen
 tput smcup
 
-IFS=""
+IFS=''
 
-term_width=$(tput cols)
-term_height=$(tput lines)
+term_width="$(tput cols)"
+term_height="$(tput lines)"
 
 min_term_width=80
 min_term_height=22
 
-buffer_name=""
-buffer_directory=""
-buffer=""
+buffer_name=''
+buffer_directory=''
+buffer=''
 
-left_padding=""
-left_padding_width=$(($((term_width - min_term_width)) / 2))
-top_padding=""
-top_padding_height=$(($((term_height - min_term_height)) / 2))
+left_padding=''
+left_padding_width="$(((term_width - min_term_width) / 2))"
+top_padding=''
+top_padding_height="$(((term_height - min_term_height) / 2))"
 
-building_width=""
-max_building_height=""
-building_count=""
+building_width=''
+max_building_height=''
+building_count=''
 
-banana=""
+banana=''
 
-player1_name=""
-player2_name=""
+player1_name=''
+player2_name=''
 
-player1_score=""
-player2_score=""
+player1_score=''
+player2_score=''
 
 declare -a player1_coordinates
 declare -a player2_coordinates
 
-player1_throw_start_coordinates=""
-player2_throw_start_coordinates=""
+player1_throw_start_coordinates=''
+player2_throw_start_coordinates=''
 
 declare -A player1_throw_animation_frame1
 declare -A player1_throw_animation_frame2
@@ -64,30 +65,30 @@ declare -A player1_victory_animation_frame2
 declare -A player2_victory_animation_frame1
 declare -A player2_victory_animation_frame2
 
-player1_building_height=""
-player2_building_height=""
+player1_building_height=''
+player2_building_height=''
 
-player1_throw_angle=""
-player2_throw_angle=""
+player1_throw_angle=''
+player2_throw_angle=''
 
-player1_throw_speed=""
-player2_throw_speed=""
+player1_throw_speed=''
+player2_throw_speed=''
 
-next_player=""
+next_player=''
 
-total_points=""
-gravity_value=""
-menu_choice=""
+total_points=''
+gravity_value=''
+menu_choice=''
 
-max_speed=""
-max_wind_value=""
-wind_value=""
+max_speed=''
+max_wind_value=''
+wind_value=''
 
 declare -A grid
-grid_width=""
-grid_height=""
+grid_width=''
+grid_height=''
 
-script_directory=$(dirname "$0")
+script_directory="$(dirname "$(realpath "$0")")"
 
 # Include necessary source files
 source "${script_directory}/check-prerequisites.sh"
@@ -423,29 +424,35 @@ print_player_victory_dance()
 }
 
 
-check_prerequisites ${term_width} ${term_height}
+check_prerequisites "${term_width}" "${term_height}"
 
 # Parse option flags and their arguments
 while getopts ":w:s:h" option
 do
-    case ${option} in
-        h)
+    case "${option}" in
+        'h')
             tput rmcup
-            printf "bash-gorillas Copyright (C) Istvan Szantai \
-\x3c\x73\x7a\x61\x6e\x74\x61\x69\x69\x40\x73\x69\x64\x65\x6e\x6f\
-\x74\x65\x2e\x68\x75\x3e 2013\n\
-For more detailed help please see the file 'README.md'.\n"
+
+            printf '%s\n' \
+                "bash-gorillas Copyright (C) 2013-2022 \
+Istvan Szantai <szantaii@gmail.com>" \
+                '' \
+                "For more detailed help please see the file 'README.md'."
+
             exit 0
             ;;
-        w)
-            case ${OPTARG} in
+        'w')
+            case "${OPTARG}" in
                 *[0-9]*)
-                    max_wind_value=${OPTARG}
+                    max_wind_value="${OPTARG}"
                     ;;
                 *)
                     tput rmcup
-                    printf "Invalid argument for option: -w. \
-Specify a number between 0 and 10.\n"
+
+                    printf '%s\n' \
+                        "Invalid argument for option: -w. \
+Specify a number between 0 and 10."
+
                     exit 1
                     ;;
             esac
@@ -453,23 +460,28 @@ Specify a number between 0 and 10.\n"
             if ((max_wind_value < 0 || max_wind_value > 10))
             then
                 tput rmcup
-                printf "Invalid argument for option: -w. \
-Specify a number between 0 and 10.\n"
+
+                printf '%s\n' \
+                    "Invalid argument for option: -w. \
+Specify a number between 0 and 10."
+
                 exit 1
             fi
 
-            max_wind_value=$((max_wind_value + 1))
+            max_wind_value="$((max_wind_value + 1))"
             ;;
-        s)
-
-            case ${OPTARG} in
+        's')
+            case "${OPTARG}" in
                 *[0-9]*)
-                    max_speed=${OPTARG}
+                    max_speed="${OPTARG}"
                     ;;
                 *)
                     tput rmcup
-                    printf "Invalid argument for option: -s. \
-Specify a number between 100 and 200.\n"
+
+                    printf '%s\n' \
+                        "Invalid argument for option: -s. \
+Specify a number between 100 and 200."
+
                     exit 1
                     ;;
             esac
@@ -477,29 +489,37 @@ Specify a number between 100 and 200.\n"
             if ((max_speed < 100 || max_speed > 200))
             then
                 tput rmcup
-                printf "Invalid argument for option: -s. \
-Specify a number between 100 and 200.\n"
+
+                printf '%s\n' \
+                    "Invalid argument for option: -s. \
+Specify a number between 100 and 200."
+
                 exit 1
             fi
             ;;
         :)
             tput rmcup
 
-            if [[ "${OPTARG}" == "w" ]]
+            if [[ "${OPTARG}" == 'w' ]]
             then
-                printf "Missing argument for option: -${OPTARG}. \
-Specify a number between 0 and 10.\n"
-            elif [[ "${OPTARG}" == "s" ]]
+                printf '%s\n' \
+                    "Missing argument for option: -${OPTARG}. \
+Specify a number between 0 and 10."
+
+            elif [[ "${OPTARG}" == 's' ]]
             then
-                printf "Missing argument for option: -${OPTARG}. \
-Specify a number between 100 and 200.\n"
+                printf '%s\n' \
+                    "Missing argument for option: -${OPTARG}. \
+Specify a number between 100 and 200."
             fi
 
             exit 1
             ;;
         \?)
             tput rmcup
-            printf "Invalid option: -${OPTARG}.\n"
+
+            printf '%s\n' "Invalid option: -${OPTARG}.\n"
+
             exit 1
             ;;
     esac
