@@ -21,18 +21,20 @@
 
 print_player1_throw_frame1()
 {
-    local i=""
-    local j=""
+    local i=''
+    local j=''
 
     for key in "${!player1_throw_animation_frame1[@]}"
     do
-        i=${key%","*}
-        j=${key#*","}
+        i="${key%','*}"
+        j="${key#*','}"
 
-        tput cup $(($(($((top_padding_height + grid_height)) - j)) - 1)) \
-            $((left_padding_width + i)) >> ${buffer}
+        tput cup                                          \
+            $((top_padding_height + grid_height - j - 1)) \
+            $((left_padding_width + i)) \
+            >> "${buffer}"
 
-        printf "${player1_throw_animation_frame1["${key}"]}" >> ${buffer}
+        printf '%s' "${player1_throw_animation_frame1["${key}"]}" >> "${buffer}"
     done
 
     refresh_screen
@@ -42,18 +44,20 @@ print_player1_throw_frame1()
 
 print_player1_throw_frame2()
 {
-    local i=""
-    local j=""
+    local i=''
+    local j=''
 
     for key in "${!player1_throw_animation_frame2[@]}"
     do
-        i=${key%","*}
-        j=${key#*","}
+        i="${key%','*}"
+        j="${key#*','}"
 
-        tput cup $(($(($((top_padding_height + grid_height)) - j)) - 1)) \
-            $((left_padding_width + i)) >> ${buffer}
+        tput cup                                          \
+            $((top_padding_height + grid_height - j - 1)) \
+            $((left_padding_width + i))                   \
+            >> "${buffer}"
 
-        printf "${player1_throw_animation_frame2["${key}"]}" >> ${buffer}
+        printf '%s' "${player1_throw_animation_frame2["${key}"]}" >> "${buffer}"
     done
 
     refresh_screen
@@ -63,18 +67,20 @@ print_player1_throw_frame2()
 
 print_player2_throw_frame1()
 {
-    local i=""
-    local j=""
+    local i=''
+    local j=''
 
     for key in "${!player2_throw_animation_frame1[@]}"
     do
-        i=${key%","*}
-        j=${key#*","}
+        i="${key%','*}"
+        j="${key#*','}"
 
-        tput cup $(($(($((top_padding_height + grid_height)) - j)) - 1)) \
-            $((left_padding_width + i)) >> ${buffer}
+        tput cup                                          \
+            $((top_padding_height + grid_height - j - 1)) \
+            $((left_padding_width + i))                   \
+            >> "${buffer}"
 
-        printf "${player2_throw_animation_frame1["${key}"]}" >> ${buffer}
+        printf '%s' "${player2_throw_animation_frame1["${key}"]}" >> "${buffer}"
     done
 
     refresh_screen
@@ -84,18 +90,20 @@ print_player2_throw_frame1()
 
 print_player2_throw_frame2()
 {
-    local i=""
-    local j=""
+    local i=''
+    local j=''
 
     for key in "${!player2_throw_animation_frame2[@]}"
     do
-        i=${key%","*}
-        j=${key#*","}
+        i="${key%','*}"
+        j="${key#*','}"
 
-        tput cup $(($(($((top_padding_height + grid_height)) - j)) - 1)) \
-            $((left_padding_width + i)) >> ${buffer}
+        tput cup                                          \
+            $((top_padding_height + grid_height - j - 1)) \
+            $((left_padding_width + i))                   \
+            >> "${buffer}"
 
-        printf "${player2_throw_animation_frame2["${key}"]}" >> ${buffer}
+        printf '%s' "${player2_throw_animation_frame2["${key}"]}" >> "${buffer}"
     done
 
     refresh_screen
@@ -105,18 +113,21 @@ print_player2_throw_frame2()
 
 print_player1_victory_frame1()
 {
-    local i=""
-    local j=""
+    local i=''
+    local j=''
 
     for key in "${!player1_victory_animation_frame1[@]}"
     do
-        i=${key%","*}
-        j=${key#*","}
+        i="${key%','*}"
+        j="${key#*','}"
 
-        tput cup $(($(($((top_padding_height + grid_height)) - j)) - 1)) \
-            $((left_padding_width + i)) >> ${buffer}
+        tput cup                                          \
+            $((top_padding_height + grid_height - j - 1)) \
+            $((left_padding_width + i))                   \
+            >> "${buffer}"
 
-        printf "${player1_victory_animation_frame1["${key}"]}" >> ${buffer}
+        printf '%s' "${player1_victory_animation_frame1["${key}"]}" \
+            >> "${buffer}"
     done
 
     refresh_screen
@@ -126,18 +137,21 @@ print_player1_victory_frame1()
 
 print_player1_victory_frame2()
 {
-    local i=""
-    local j=""
+    local i=''
+    local j=''
 
     for key in "${!player1_victory_animation_frame2[@]}"
     do
-        i=${key%","*}
-        j=${key#*","}
+        i="${key%','*}"
+        j="${key#*','}"
 
-        tput cup $(($(($((top_padding_height + grid_height)) - j)) - 1)) \
-            $((left_padding_width + i)) >> ${buffer}
+        tput cup                                          \
+            $((top_padding_height + grid_height - j - 1)) \
+            $((left_padding_width + i))                   \
+            >> "${buffer}"
 
-        printf "${player1_victory_animation_frame2["${key}"]}" >> ${buffer}
+        printf '%s' "${player1_victory_animation_frame2["${key}"]}" \
+            >> "${buffer}"
     done
 
     refresh_screen
@@ -147,18 +161,21 @@ print_player1_victory_frame2()
 
 print_player2_victory_frame1()
 {
-    local i=""
-    local j=""
+    local i=''
+    local j=''
 
     for key in "${!player2_victory_animation_frame1[@]}"
     do
-        i=${key%","*}
-        j=${key#*","}
+        i="${key%','*}"
+        j="${key#*','}"
 
-        tput cup $(($(($((top_padding_height + grid_height)) - j)) - 1)) \
-            $((left_padding_width + i)) >> ${buffer}
+        tput cup                                          \
+            $((top_padding_height + grid_height - j - 1)) \
+            $((left_padding_width + i))                   \
+            >> "${buffer}"
 
-        printf "${player2_victory_animation_frame1["${key}"]}" >> ${buffer}
+        printf '%s' "${player2_victory_animation_frame1["${key}"]}" \
+            >> "${buffer}"
     done
 
     refresh_screen
@@ -168,18 +185,21 @@ print_player2_victory_frame1()
 
 print_player2_victory_frame2()
 {
-    local i=""
-    local j=""
+    local i=''
+    local j=''
 
     for key in "${!player2_victory_animation_frame2[@]}"
     do
-        i=${key%","*}
-        j=${key#*","}
+        i="${key%','*}"
+        j="${key#*','}"
 
-        tput cup $(($(($((top_padding_height + grid_height)) - j)) - 1)) \
-            $((left_padding_width + i)) >> ${buffer}
+        tput cup                                          \
+            $((top_padding_height + grid_height - j - 1)) \
+            $((left_padding_width + i))                   \
+            >> "${buffer}"
 
-        printf "${player2_victory_animation_frame2["${key}"]}" >> ${buffer}
+        printf '%s' "${player2_victory_animation_frame2["${key}"]}" \
+            >> "${buffer}"
     done
 
     refresh_screen
@@ -215,18 +235,21 @@ print_player_victory_dance()
 
 clear_player1()
 {
-    local i=""
-    local j=""
-    local value=""
+    local i=''
+    local j=''
+    local value=''
 
     for value in "${player1_coordinates[@]}"
     do
-        i=${value%","*}
-        j=${value#*","}
+        i="${value%','*}"
+        j="${value#*','}"
 
-        tput cup $(($(($((top_padding_height + grid_height)) - j)) - 1)) \
-            $((left_padding_width + i)) >> ${buffer}
-        printf " " >> ${buffer}
+        tput cup                                          \
+            $((top_padding_height + grid_height - j - 1)) \
+            $((left_padding_width + i))                   \
+            >> "${buffer}"
+
+        printf ' ' >> "${buffer}"
     done
 
     refresh_screen
@@ -234,18 +257,21 @@ clear_player1()
 
 clear_player2()
 {
-    local i=""
-    local j=""
-    local value=""
+    local i=''
+    local j=''
+    local value=''
 
     for value in "${player2_coordinates[@]}"
     do
-        i=${value%","*}
-        j=${value#*","}
+        i="${value%','*}"
+        j="${value#*','}"
 
-        tput cup $(($(($((top_padding_height + grid_height)) - j)) - 1)) \
-            $((left_padding_width + i)) >> ${buffer}
-        printf " " >> ${buffer}
+        tput cup                                          \
+            $((top_padding_height + grid_height - j - 1)) \
+            $((left_padding_width + i))                   \
+            >> "${buffer}"
+
+        printf ' ' >> "${buffer}"
     done
 
     refresh_screen
