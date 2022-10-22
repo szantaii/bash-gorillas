@@ -103,7 +103,6 @@ source "${script_directory}/read-player-data.sh"
 source "${script_directory}/generate-buildings.sh"
 source "${script_directory}/init-players.sh"
 source "${script_directory}/init-game.sh"
-source "${script_directory}/print-wind.sh"
 source "${script_directory}/print-player-names.sh"
 source "${script_directory}/read-throw-data.sh"
 source "${script_directory}/switch-player.sh"
@@ -526,6 +525,53 @@ print_sun()
 
         printf '%s' "${sun_text[${i}]}" >> "${buffer}"
     done
+
+    refresh_screen
+}
+
+# Print the wind indicator arrow to the bottom row of the screen
+print_wind()
+{
+    # Center the cursor in the bottom row of the screen
+    tput cup                                       \
+        "${grid_height}"                           \
+        $((left_padding_width + (grid_width / 2))) \
+        >> "${buffer}"
+
+    printf '|' >> "${buffer}"
+
+    # Print the wind indicator arrow if $wind_value is not zero
+    if ((wind_value != 0))
+    then
+        if ((wind_value < 0))
+        then
+            # Wind blows to the left ($wind_value is negative)
+            tput cup                                                        \
+                "${grid_height}"                                            \
+                $((left_padding_width + (grid_width / 2) + wind_value - 1)) \
+                >> "${buffer}"
+
+            # Print wind indicator arrowhead
+            printf '<' >> "${buffer}"
+
+            # Print arrow with the length of $wind_value
+            for ((i=wind_value; i < 0; i++))
+            do
+                printf '%s' '-' >> "${buffer}"
+            done
+        else
+            # Wind blows to the right ($wind_value is positive)
+
+            # Print arrow with the length of $wind_value
+            for ((i=0; i < wind_value; i++))
+            do
+                printf '%s' '-' >> "${buffer}"
+            done
+
+            # Print wind indicator arrowhead
+            printf '>' >> "${buffer}"
+        fi
+    fi
 
     refresh_screen
 }
