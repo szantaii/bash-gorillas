@@ -94,7 +94,6 @@ script_directory="$(dirname "$(realpath "$0")")"
 source "${script_directory}/check-prerequisites.sh"
 source "${script_directory}/create-buffer.sh"
 source "${script_directory}/init-main.sh"
-source "${script_directory}/refresh-screen.sh"
 source "${script_directory}/print-intro-outro-frames.sh"
 source "${script_directory}/read-intro-outro-continue-key.sh"
 source "${script_directory}/play-intro.sh"
@@ -593,6 +592,14 @@ print_wind()
     fi
 
     refresh_screen
+}
+
+# Print the buffer onto the screen then clear the buffer
+refresh_screen()
+{
+    cat "${buffer}"
+
+    printf '' > "${buffer}"
 }
 
 # Switch to the other player
