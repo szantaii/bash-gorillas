@@ -16,24 +16,20 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Main loop of the game
+# Game main loop
 main_loop()
 {
-    # Initialize variables, create screen buffer for bash-gorillas
     init_main
 
-    # Play intro and wait for keypress
     play_intro
 
-    # Read players' names, max points, gravity
     read_player_data
 
-    while [[ "${player1_score}" == "" && "${player2_score}" == "" ]] \
+    while [[ "${player1_score}" == '' && "${player2_score}" == '' ]] \
         || (((player1_score + player2_score) < total_points))
     do
         # Initialize necessary variables before every round,
         # generate buildings, place players on map, etc.
-        # (not everything implemented yet)
         init_game
 
         # Display game on screen
@@ -54,8 +50,7 @@ main_loop()
             throw_banana
         done
 
-        # On player hit update the score
-        # and make the winner dance
+        # On player hit update the score and make the winner dance
         print_score
         print_player_victory_dance
     done
@@ -67,6 +62,5 @@ main_loop()
     # Play outro and wait for keypress
     play_outro
 
-    # Clean up and exit with 0
     quit
 }
