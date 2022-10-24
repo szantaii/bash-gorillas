@@ -56,7 +56,7 @@ main_loop()
     done
 
     # Clear the screen
-    clear >> ${buffer}
+    clear >> "${buffer}"
     refresh_screen
 
     # Play outro and wait for keypress
