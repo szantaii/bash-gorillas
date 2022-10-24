@@ -16,8 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Function that prints the buffer onto
-# the screen then empties the buffer
+# Print the buffer onto the screen then clear the buffer
 refresh_screen()
 {
     cat "${buffer}"
