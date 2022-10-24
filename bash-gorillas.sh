@@ -104,7 +104,6 @@ source "${script_directory}/init-game.sh"
 source "${script_directory}/read-throw-data.sh"
 source "${script_directory}/throw-banana.sh"
 source "${script_directory}/play-outro.sh"
-source "${script_directory}/main-loop.sh"
 
 
 clear_player1()
@@ -202,6 +201,55 @@ init_main()
     clear >> "${buffer}"
 
     refresh_screen
+}
+
+# Game main loop
+main_loop()
+{
+    init_main
+
+    play_intro
+
+    read_player_data
+
+    while [[ "${player1_score}" == '' && "${player2_score}" == '' ]] \
+        || (((player1_score + player2_score) < total_points))
+    do
+        # Initialize necessary variables before every round,
+        # generate buildings, place players on map, etc.
+        init_game
+
+        # Display game on screen
+        print_scene
+        print_wind
+        print_help
+
+        # Loop of players throwing bananas at each other
+        while true
+        do
+            print_sun
+            print_player_names
+            print_score
+
+            read_throw_data
+            clear_player_names
+
+            throw_banana
+        done
+
+        # On player hit update the score and make the winner dance
+        print_score
+        print_player_victory_dance
+    done
+
+    # Clear the screen
+    clear >> "${buffer}"
+    refresh_screen
+
+    # Play outro and wait for keypress
+    play_outro
+
+    quit
 }
 
 # Set the next banana frame depending which player throws
