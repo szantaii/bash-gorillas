@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Swithes to the other player
+# Switch to the other player
 switch_player()
 {
     if ((next_player == 1))
