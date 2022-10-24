@@ -93,7 +93,6 @@ script_directory="$(dirname "$(realpath "$0")")"
 # Include necessary source files
 source "${script_directory}/check-prerequisites.sh"
 source "${script_directory}/create-buffer.sh"
-source "${script_directory}/init-main.sh"
 source "${script_directory}/print-intro-outro-frames.sh"
 source "${script_directory}/read-intro-outro-continue-key.sh"
 source "${script_directory}/play-intro.sh"
@@ -187,6 +186,22 @@ init_banana()
     else
         banana='>'
     fi
+}
+
+# Create screen buffer, install signal handler, clear screen
+init_main()
+{
+    # Create the 'screen buffer'
+    create_buffer
+
+    # Capture Ctrl+C key combination to call the 'quit'
+    # function when Ctrl+C key combination is pressed
+    trap quit SIGINT
+
+    # Clear the screen
+    clear >> "${buffer}"
+
+    refresh_screen
 }
 
 # Set the next banana frame depending which player throws
