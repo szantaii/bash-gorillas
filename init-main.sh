@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Initializes variables and creates buffer
+# Create screen buffer, install signal handler, clear screen
 init_main()
 {
     # Create the 'screen buffer'
@@ -26,7 +26,7 @@ init_main()
     # function when Ctrl+C key combination is pressed
     trap quit SIGINT
 
-    # Clear the terminal screen
+    # Clear the screen
     clear >> ${buffer}
     refresh_screen
 }
