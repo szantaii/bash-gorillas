@@ -99,7 +99,6 @@ source "${script_directory}/play-intro.sh"
 source "${script_directory}/quit.sh"
 source "${script_directory}/read-player-data.sh"
 source "${script_directory}/generate-buildings.sh"
-source "${script_directory}/init-game.sh"
 source "${script_directory}/read-throw-data.sh"
 source "${script_directory}/throw-banana.sh"
 source "${script_directory}/play-outro.sh"
@@ -184,6 +183,94 @@ init_banana()
     else
         banana='>'
     fi
+}
+
+# Initialize variables for a new game or new round in the game
+init_game()
+{
+    # Init player scores on new game
+    if [[ "${player1_score}" == '' && "${player2_score}" == '' ]]
+    then
+        player1_score='0'
+        player2_score='0'
+    fi
+
+    # Set first player randomly on new game
+    if [[ "${next_player}" = '' ]]
+    then
+        next_player="$(((RANDOM % 2) + 1))"
+    fi
+
+    # Set maximum throw velocity
+    if [[ "${max_speed}" = '' ]]
+    then
+        max_speed='100'
+    fi
+
+    # Set maximum wind speed
+    if [[ "${max_wind_value}" == '' ]]
+    then
+        max_wind_value='6'
+    fi
+
+    # Set wind value
+    wind_value="$((RANDOM % max_wind_value))"
+    if ((wind_value != 0 && (RANDOM % 2) != 0))
+    then
+        wind_value="-${wind_value}"
+    fi
+
+    # Print message to the screen to inform the user what is happening
+    tput cup 0 0 >> "${buffer}"
+    if ((player1_score == 0 && player2_score == 0))
+    then
+        printf 'Starting new game...' >> "${buffer}"
+    else
+        printf 'Starting new round...' >> "${buffer}"
+    fi
+
+    # Refresh the screen
+    refresh_screen
+
+    # Set the width of a building (number of characters on the terminal screen)
+    building_width='8'
+
+    # Set the maxmum height of buildings to
+    # three fourth of the height of the terminal
+    max_building_height="$(((term_height * 3) / 4))"
+
+    # Calculate $grid_width which will be the width of the playing field
+    grid_width="$(((term_width / building_width) * building_width))"
+    # Calculate $grid_height which will be the height of the playing field
+    grid_height="$((term_height - 1))"
+
+    # Calculate how many buildings can be placed into the playing field
+    building_count="$((grid_width / building_width))"
+
+    # Reset $left_padding and $top_padding
+    left_padding=''
+    top_padding=''
+
+    # Set $left_padding_width for centering the playing field on the screen,
+    # and set $top_padding_height to '0' since the game uses the whole
+    # terminal in height
+    left_padding_width="$(((term_width % building_width) / 2))"
+    top_padding_height='0'
+
+    # Initialize values of $grid
+    for ((i=0; i < grid_width; i++))
+    do
+        for ((j=0; j < grid_height; j++))
+        do
+            grid["${i},${j}"]=''
+        done
+    done
+
+    # Generate the buildings, and save the buildings into $grid
+    generate_buildings
+
+    # Initialize and place payers into $grid
+    init_players
 }
 
 # Create screen buffer, install signal handler, clear screen
