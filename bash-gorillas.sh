@@ -104,7 +104,6 @@ source "${script_directory}/generate-buildings.sh"
 source "${script_directory}/init-players.sh"
 source "${script_directory}/init-game.sh"
 source "${script_directory}/read-throw-data.sh"
-source "${script_directory}/switch-player.sh"
 source "${script_directory}/throw-banana.sh"
 source "${script_directory}/play-outro.sh"
 source "${script_directory}/main-loop.sh"
@@ -594,6 +593,17 @@ print_wind()
     fi
 
     refresh_screen
+}
+
+# Switch to the other player
+switch_player()
+{
+    if ((next_player == 1))
+    then
+        next_player=2
+    else
+        next_player=1
+    fi
 }
 
 
