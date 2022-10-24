@@ -27,6 +27,7 @@ init_main()
     trap quit SIGINT
 
     # Clear the screen
-    clear >> ${buffer}
+    clear >> "${buffer}"
+
     refresh_screen
 }
