@@ -20,5 +20,6 @@
 refresh_screen()
 {
     cat "${buffer}"
-    printf "" > $buffer
+
+    printf '' > "${buffer}"
 }
