@@ -94,8 +94,6 @@ script_directory="$(dirname "$(realpath "$0")")"
 source "${script_directory}/check-prerequisites.sh"
 source "${script_directory}/create-buffer.sh"
 source "${script_directory}/print-intro-outro-frames.sh"
-source "${script_directory}/read-intro-outro-continue-key.sh"
-source "${script_directory}/play-intro.sh"
 source "${script_directory}/quit.sh"
 source "${script_directory}/read-player-data.sh"
 source "${script_directory}/generate-buildings.sh"
@@ -592,6 +590,80 @@ next_banana_frame()
     fi
 }
 
+# Print animated frames and intro text to the screen
+play_intro()
+{
+    local intro_lines=()
+
+    # Set $left_padding from $left_padding_width ($left_padding will contain
+    # a number of $left_padding_width space characters)
+    for ((i=0; i < left_padding_width; i++))
+    do
+        left_padding="${left_padding} "
+    done
+
+    # Set $top_padding from $top_padding_height ($top_padding will contain
+    # a number of $top_padding_height newline characters)
+    for ((i=0; i < top_padding_height; i++))
+    do
+        top_padding="${top_padding}\n"
+    done
+
+    intro_lines=(
+        ''
+        ''
+        "${top_padding}${left_padding}                           B a s h   G O R I L L A S"
+        ''
+        ''
+        "${left_padding}         Copyright (C) 2013-2022 Istvan Szantai <szantaii@gmail.com>"
+        ''
+        ''
+        "${left_padding}     This game is a demake of QBasic GORILLAS rewritten completely in Bash."
+        ''
+        ''
+        "${left_padding}             Your mission is to hit your opponent with the exploding"
+        "${left_padding}           banana by varying the angle and power of your throw, taking"
+        "${left_padding}             into account wind speed, gravity, and the city skyline."
+        "${left_padding}           The wind speed is show by a directional arrow at the bottom"
+        "${left_padding}            of the playing field, its length relative to its strength."
+        ''
+        ''
+        ''
+        ''
+        ''
+        "${left_padding}                            Press any key to continue"
+    )
+
+    # Print intro into the screen buffer
+    for intro_line in "${intro_lines[@]}"
+    do
+        printf '%s\n' "${intro_line}" >> "${buffer}"
+    done
+
+    # Play animation, exit from loop when a key was pressed
+    while true
+    do
+        print_frame_stage1
+        refresh_screen
+        read_intro_outro_continue_key && break
+        print_frame_stage2
+        refresh_screen
+        read_intro_outro_continue_key && break
+        print_frame_stage3
+        refresh_screen
+        read_intro_outro_continue_key && break
+        print_frame_stage4
+        refresh_screen
+        read_intro_outro_continue_key && break
+        print_frame_stage5
+        refresh_screen
+        read_intro_outro_continue_key && break
+    done
+
+    clear >> "${buffer}"
+    refresh_screen
+}
+
 # Print a small help how to quit the game into the right bottom part
 # of the screen
 print_help()
@@ -958,6 +1030,14 @@ print_wind()
     fi
 
     refresh_screen
+}
+
+# Read a key from keyboard
+read_intro_outro_continue_key()
+{
+    read -r -sn1 -t0.01
+
+    return $?
 }
 
 # Print the buffer onto the screen then clear the buffer
