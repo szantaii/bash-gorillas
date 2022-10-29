@@ -16,60 +16,33 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Check availability of necessary programs and minimum terminal size
-check_prerequisites()
+# Check the availability of necessary programs
+check_required_programs()
 {
-    # Check if 'tput' command is available
-    which tput > /dev/null
+    local required_programs=(
+        'bc'
+        'cat'
+        'mktemp'
+        'rm'
+        'tput'
+    )
 
-    # If 'tput' is not available, then print
-    # error message and exit with status code '2'
-    if (($? != 0))
-    then
-        # Restore terminal screen
-        tput rmcup
+    for required_program in "${required_programs[@]}"
+    do
+        if ! which "${required_program}" > /dev/null 2>&1
+        then
+            printf '%s\n' "Your system is missing the program '${required_program}' which is necessary for bash-gorillas to run."
 
-        printf "Your system is missing the program 'tput' which is necessary \
-for bash-gorillas\nto run. 'tput' can be found in the following packages on \
-the following distributions:\n    Distribution        Package name\n\
-    ---------------------------------\n    Arch Linux          ncurses\n    \
-Debian              ncurses-bin\n    Fedora              ncurses\n    \
-openSUSE            ncurses-utils\n    Ubuntu              ncurses-bin\n"
+            exit 2
+        fi
+    done
+}
 
-        exit 2
-    fi
-
-    # Check if 'bc' command is available
-    which bc > /dev/null
-
-    # If 'bc' is not available, then print
-    # error message and exit with status code '2'
-    if (($? != 0))
-    then
-        # Restore terminal screen
-        tput rmcup
-
-        printf "Your system is missing the program 'bc' which is necessary \
-for bash-gorillas\nto run. 'bc' can be found in the 'bc' package on most Linux \
-distributions.\n"
-
-        exit 2
-    fi
-
-    # Check if terminal has at least $min_term_width columns and
-    # $min_term_height lines
-    #
-    # If either terminal width or height is less than
-    # $min_term_width and $min_term_height print error message
-    # and exit with status code '3'
+check_terminal_size()
+{
     if ((term_width < min_term_width || term_height < min_term_height))
     then
-        # Restore terminal screen
-        tput rmcup
-
-        printf "bash-gorillas needs a terminal with size of at least \
-${min_term_width}x${min_term_height} (${min_term_width} columns, \
-${min_term_height} lines).\n"
+        printf '%s\n' "bash-gorillas needs a terminal with size of at least ${min_term_width}x${min_term_height} (${min_term_width} columns, ${min_term_height} rows)."
 
         exit 3
     fi

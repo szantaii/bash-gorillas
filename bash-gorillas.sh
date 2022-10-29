@@ -17,13 +17,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-# Save terminal screen
-tput smcup
-
 IFS=''
 
-term_width="$(tput cols)"
-term_height="$(tput lines)"
+term_width=''
+term_height=''
 
 min_term_width=80
 min_term_height=22
@@ -33,9 +30,9 @@ buffer_directory=''
 buffer=''
 
 left_padding=''
-left_padding_width="$(((term_width - min_term_width) / 2))"
+left_padding_width=''
 top_padding=''
-top_padding_height="$(((term_height - min_term_height) / 2))"
+top_padding_height=''
 
 building_width=''
 max_building_height=''
@@ -1480,7 +1477,18 @@ switch_player()
 }
 
 
-check_prerequisites "${term_width}" "${term_height}"
+check_required_programs
+
+term_width="$(tput cols)"
+term_height="$(tput lines)"
+
+left_padding_width="$(((term_width - min_term_width) / 2))"
+top_padding_height="$(((term_height - min_term_height) / 2))"
+
+check_terminal_size
+
+# Save terminal screen
+tput smcup
 
 # Parse option flags and their arguments
 while getopts ":w:s:h" option
