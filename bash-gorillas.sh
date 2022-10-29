@@ -92,7 +92,6 @@ script_directory="$(dirname "$(realpath "$0")")"
 
 # Include necessary source files
 source "${script_directory}/check-prerequisites.sh"
-source "${script_directory}/create-buffer.sh"
 source "${script_directory}/quit.sh"
 source "${script_directory}/read-player-data.sh"
 source "${script_directory}/read-throw-data.sh"
@@ -167,6 +166,15 @@ clear_player_names()
     done
 
     refresh_screen
+}
+
+# Create a "screen buffer" file
+create_buffer()
+{
+    local buffer_name_template='bash-gorillas-buffer-XXXXXXXXXX'
+    local buffer_directory='/tmp'
+
+    buffer="$(mktemp --tmpdir="${buffer_directory}" "${buffer_name_template}")"
 }
 
 # Generate buildings into $grid
