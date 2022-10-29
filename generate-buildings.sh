@@ -19,11 +19,11 @@
 # Generate buildings into $grid
 generate_buildings()
 {
-    local current_building_height=""
+    local current_building_height=''
 
     # Setsthe height of the buildings which players stand on
-    player1_building_height=$((RANDOM % max_building_height))
-    player2_building_height=$((RANDOM % max_building_height))
+    player1_building_height="$((RANDOM % max_building_height))"
+    player2_building_height="$((RANDOM % max_building_height))"
 
     if ((building_count <= 15))
     then
@@ -33,7 +33,7 @@ generate_buildings()
         do
             for ((j=0; j < player1_building_height; j++))
             do
-                grid["${i},${j}"]="X"
+                grid["${i},${j}"]='X'
             done
         done
 
@@ -43,7 +43,7 @@ generate_buildings()
         do
             for ((j=0; j < player2_building_height; j++))
             do
-                grid["${i},${j}"]="X"
+                grid["${i},${j}"]='X'
             done
         done
 
@@ -51,7 +51,7 @@ generate_buildings()
         for ((i=0; i < building_count; i++))
         do
             # Always set a random value for the actually generated building
-            current_building_height=$((RANDOM % max_building_height))
+            current_building_height="$((RANDOM % max_building_height))"
 
             if ((i != 1 && i != (building_count - 2)))
             then
@@ -59,7 +59,7 @@ generate_buildings()
                 do
                     for ((k=0; k < current_building_height; k++))
                     do
-                        grid["$(($((i * building_width)) + j)),${k}"]="X"
+                        grid["$(((i * building_width) + j)),${k}"]='X'
                     done
                 done
             fi
@@ -71,7 +71,7 @@ generate_buildings()
         do
             for ((j=0; j < player1_building_height; j++))
             do
-                grid["${i},${j}"]="X"
+                grid["${i},${j}"]='X'
             done
         done
 
@@ -81,7 +81,7 @@ generate_buildings()
         do
             for ((j=0; j < player2_building_height; j++))
             do
-                grid["${i},${j}"]="X"
+                grid["${i},${j}"]='X'
             done
         done
 
@@ -89,7 +89,7 @@ generate_buildings()
         for ((i=0; i < building_count; i++))
         do
             # Always set a random value for the actually generated building
-            current_building_height=$((RANDOM % max_building_height))
+            current_building_height="$((RANDOM % max_building_height))"
 
             if ((i != 2 && i != (building_count - 3)))
             then
@@ -97,7 +97,7 @@ generate_buildings()
                 do
                     for ((k=0; k < current_building_height; k++))
                     do
-                        grid["$(($((i * building_width)) + j)),${k}"]="X"
+                        grid["$(((i * building_width) + j)),${k}"]='X'
                     done
                 done
             fi
