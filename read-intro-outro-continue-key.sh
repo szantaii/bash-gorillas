@@ -16,16 +16,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Reads a key from keyboard
-#
-# If a key was read before read's timeout expires
-# then breaks out of outer construcions.
+# Read a key from keyboard
 read_intro_outro_continue_key()
 {
-    read -sn1 -t0.01
+    read -r -sn1 -t0.01
 
-    if (($? == 0))
-    then
-        break
-    fi
+    return $?
 }
