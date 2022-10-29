@@ -93,7 +93,6 @@ script_directory="$(dirname "$(realpath "$0")")"
 # Include necessary source files
 source "${script_directory}/check-prerequisites.sh"
 source "${script_directory}/create-buffer.sh"
-source "${script_directory}/print-intro-outro-frames.sh"
 source "${script_directory}/quit.sh"
 source "${script_directory}/read-player-data.sh"
 source "${script_directory}/read-throw-data.sh"
@@ -830,6 +829,251 @@ play_outro()
 
     clear >> "${buffer}"
     refresh_screen
+}
+
+print_frame_stage1()
+{
+    # Top rule
+    tput cup "${top_padding_height}" "${left_padding_width}" >> "${buffer}"
+    printf '*    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    ' >> "${buffer}"
+
+    # Right rule
+    for ((i=0; i < (min_term_height - 5); i++))
+    do
+        tput cup                                         \
+            $((top_padding_height + i + 1))              \
+            $((left_padding_width + min_term_width - 1)) \
+            >> "${buffer}"
+
+        if (((i % 3) == 0))
+        then
+            printf '*' >> "${buffer}"
+        else
+            printf ' ' >> "${buffer}"
+        fi
+    done
+
+    # Bottom rule
+    tput cup                                          \
+        $((top_padding_height + min_term_height - 5)) \
+        "${left_padding_width}"                       \
+        >> "${buffer}"
+
+    printf '    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *' >> "${buffer}"
+
+    # Left rule
+    for ((i=0; i < (min_term_height - 5); i++))
+    do
+        tput cup                            \
+            $((top_padding_height + i + 1)) \
+            "${left_padding_width}"         \
+            >> "${buffer}"
+
+        if (((i % 3) == 2))
+        then
+            printf '*' >> "${buffer}"
+        else
+            printf ' ' >> "${buffer}"
+        fi
+    done
+
+    tput cup $((term_height - 1)) $((term_width - 1)) >> "${buffer}"
+}
+
+print_frame_stage2()
+{
+    # Top rule
+    tput cup "${top_padding_height}" "${left_padding_width}" >> "${buffer}"
+    printf ' *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *   ' >> "${buffer}"
+
+    # Right rule
+    for ((i=0; i < (min_term_height - 5); i++))
+    do
+        tput cup                                         \
+            $((top_padding_height + i + 1))              \
+            $((left_padding_width + min_term_width - 1)) \
+            >> "${buffer}"
+
+        if (((i % 3) == 1))
+        then
+            printf '*' >> "${buffer}"
+        else
+            printf ' ' >> "${buffer}"
+        fi
+    done
+
+    # Bottom rule
+    tput cup                                          \
+        $((top_padding_height + min_term_height - 5)) \
+        "${left_padding_width}"                       \
+        >> "${buffer}"
+
+    printf '   *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    * ' >> "${buffer}"
+
+    # Left rule
+    for ((i=0; i < (min_term_height - 5); i++))
+    do
+        tput cup                            \
+            $((top_padding_height + i + 1)) \
+            "${left_padding_width}"         \
+            >> "${buffer}"
+
+        if (((i % 3) == 1))
+        then
+            printf '*' >> "${buffer}"
+        else
+            printf ' ' >> "${buffer}"
+        fi
+    done
+
+    tput cup $((term_height - 1)) $((term_width - 1)) >> "${buffer}"
+}
+
+print_frame_stage3()
+{
+    # Top rule
+    tput cup "${top_padding_height}" "${left_padding_width}" >> "${buffer}"
+    printf '  *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *  ' >> "${buffer}"
+
+    # Right rule
+    for ((i=0; i < (min_term_height - 5); i++))
+    do
+        tput cup                                         \
+            $((top_padding_height + i + 1))              \
+            $((left_padding_width + min_term_width - 1)) \
+            >> "${buffer}"
+
+        if (((i % 3) == 2))
+        then
+            printf '*' >> "${buffer}"
+        else
+            printf ' ' >> "${buffer}"
+        fi
+    done
+
+    # Bottom rule
+    tput cup                                          \
+        $((top_padding_height + min_term_height - 5)) \
+        "${left_padding_width}"                       \
+        >> "${buffer}"
+
+    printf '  *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *  ' >> "${buffer}"
+
+    # Left rule
+    for ((i=0; i < (min_term_height - 5); i++))
+    do
+        tput cup                            \
+            $((top_padding_height + i + 1)) \
+            "${left_padding_width}"         \
+            >> "${buffer}"
+
+        if (((i % 3) == 0))
+        then
+            printf '*' >> "${buffer}"
+        else
+            printf ' ' >> "${buffer}"
+        fi
+    done
+
+    tput cup $((term_height - 1)) $((term_width - 1)) >> "${buffer}"
+}
+
+print_frame_stage4()
+{
+    # Top rule
+    tput cup "${top_padding_height}" "${left_padding_width}" >> "${buffer}"
+    printf '   *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    * ' >> "${buffer}"
+
+    # Right rule
+    for ((i=0; i < (min_term_height - 5); i++))
+    do
+        tput cup                                         \
+            $((top_padding_height + i + 1))              \
+            $((left_padding_width + min_term_width - 1)) \
+            >> "${buffer}"
+
+        if (((i % 3) == 0))
+        then
+            printf '*' >> "${buffer}"
+        else
+            printf ' ' >> "${buffer}"
+        fi
+    done
+
+    # Bottom rule
+    tput cup                                          \
+        $((top_padding_height + min_term_height - 5)) \
+        "${left_padding_width}"                       \
+        >> "${buffer}"
+
+    printf ' *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *   ' >> "${buffer}"
+
+    # Left rule
+    for ((i=0; i < (min_term_height - 5); i++))
+    do
+        tput cup                            \
+            $((top_padding_height + i + 1)) \
+            "${left_padding_width}"         \
+            >> "${buffer}"
+
+        if (((i % 3) == 2))
+        then
+            printf '*' >> "${buffer}"
+        else
+            printf ' ' >> "${buffer}"
+        fi
+    done
+
+    tput cup $((term_height - 1)) $((term_width - 1)) >> "${buffer}"
+}
+
+print_frame_stage5()
+{
+    # Top rule
+    tput cup "${top_padding_height}" "${left_padding_width}" >> "${buffer}"
+    printf '    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *' >> "${buffer}"
+
+    # Right rule
+    for ((i=0; i < (min_term_height - 5); i++))
+    do
+        tput cup                                         \
+            $((top_padding_height + i + 1))              \
+            $((left_padding_width + min_term_width - 1)) \
+            >> "${buffer}"
+
+        if (((i % 3) == 1))
+        then
+            printf '*' >> "${buffer}"
+        else
+            printf ' ' >> "${buffer}"
+        fi
+    done
+
+    # Bottom rule
+    tput cup                                          \
+        $((top_padding_height + min_term_height - 5)) \
+        "${left_padding_width}"                       \
+        >> "${buffer}"
+
+    printf '*    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    ' >> "${buffer}"
+
+    # Left rule
+    for ((i=0; i < (min_term_height - 5); i++))
+    do
+        tput cup                            \
+            $((top_padding_height + i + 1)) \
+            "${left_padding_width}"         \
+            >> "${buffer}"
+
+        if (((i % 3) == 1))
+        then
+            printf '*' >> "${buffer}"
+        else
+            printf ' ' >> "${buffer}"
+        fi
+    done
+
+    tput cup $((term_height - 1)) $((term_width - 1)) >> "${buffer}"
 }
 
 # Print a small help how to quit the game into the right bottom part
