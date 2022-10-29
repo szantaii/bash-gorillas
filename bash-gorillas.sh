@@ -88,12 +88,43 @@ grid_height=''
 script_directory="$(dirname "$(realpath "$0")")"
 
 # Include necessary source files
-source "${script_directory}/check-prerequisites.sh"
 source "${script_directory}/quit.sh"
 source "${script_directory}/read-player-data.sh"
 source "${script_directory}/read-throw-data.sh"
 source "${script_directory}/throw-banana.sh"
 
+
+# Check the availability of necessary programs
+check_required_programs()
+{
+    local required_programs=(
+        'bc'
+        'cat'
+        'mktemp'
+        'rm'
+        'tput'
+    )
+
+    for required_program in "${required_programs[@]}"
+    do
+        if ! which "${required_program}" > /dev/null 2>&1
+        then
+            printf '%s\n' "Your system is missing the program '${required_program}' which is necessary for bash-gorillas to run."
+
+            exit 2
+        fi
+    done
+}
+
+check_terminal_size()
+{
+    if ((term_width < min_term_width || term_height < min_term_height))
+    then
+        printf '%s\n' "bash-gorillas needs a terminal with size of at least ${min_term_width}x${min_term_height} (${min_term_width} columns, ${min_term_height} rows)."
+
+        exit 3
+    fi
+}
 
 clear_player1()
 {
