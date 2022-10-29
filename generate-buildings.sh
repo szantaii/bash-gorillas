@@ -16,20 +16,19 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Generates buildings into $grid
+# Generate buildings into $grid
 generate_buildings()
 {
     local current_building_height=""
 
-    # Sets the height of the buildings which players stand on
+    # Setsthe height of the buildings which players stand on
     player1_building_height=$((RANDOM % max_building_height))
     player2_building_height=$((RANDOM % max_building_height))
 
-    # If there are less than 16 buildings on the map
     if ((building_count <= 15))
     then
-        # Create the bulding which player1 stands on
-        # (the second building from the left edge of the screen)
+        # Create the bulding which player1 stands on (the second building from
+        # the left edge of the screen)
         for ((i=building_width; i < (2 * building_width); i++))
         do
             for ((j=0; j < player1_building_height; j++))
@@ -38,8 +37,8 @@ generate_buildings()
             done
         done
 
-        # Create the bulding which player2 stands on
-        # (the second building from the right edge of the screen)
+        # Create the bulding which player2 stands on (the second building from
+        # the right edge of the screen)
         for ((i=(grid_width - (2 * building_width)); i < (grid_width - building_width); i++))
         do
             for ((j=0; j < player2_building_height; j++))
@@ -65,10 +64,9 @@ generate_buildings()
                 done
             fi
         done
-    else # If there are more than 15 buildings on the map then
-
-        # Create the bulding which player1 stands on
-        # (the third building from the left edge of the screen)
+    else
+        # Create the bulding which player1 stands on (the third building from
+        # the left edge of the screen)
         for ((i=(2 * building_width); i < (3 * building_width); i++))
         do
             for ((j=0; j < player1_building_height; j++))
@@ -77,8 +75,8 @@ generate_buildings()
             done
         done
 
-        # Create the bulding which player2 stands on
-        # (the third building from the right edge of the screen)
+        # Create the bulding which player2 stands on (the third building from
+        # the right edge of the screen)
         for ((i=(grid_width - (3 * building_width)); i < (grid_width - (2 * building_width)); i++))
         do
             for ((j=0; j < player2_building_height; j++))
