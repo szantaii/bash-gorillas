@@ -19,209 +19,244 @@
 print_frame_stage1()
 {
     # Top rule
-    tput cup ${top_padding_height} ${left_padding_width} >> ${buffer}
-    printf "*    *    *    *    *    *    *    *    *    *    *    *    *    \
-*    *    *    " >> ${buffer}
+    tput cup "${top_padding_height}" "${left_padding_width}" >> "${buffer}"
+    printf '*    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    ' >> "${buffer}"
 
     # Right rule
     for ((i=0; i < (min_term_height - 5); i++))
     do
-        tput cup $(($((top_padding_height + i)) + 1)) \
-            $(($((left_padding_width + min_term_width)) - 1)) >> ${buffer}
-        if (( $((i % 3)) == 0))
+        tput cup                                         \
+            $((top_padding_height + i + 1))              \
+            $((left_padding_width + min_term_width - 1)) \
+            >> "${buffer}"
+
+        if (((i % 3) == 0))
         then
-            printf "*" >> ${buffer}
+            printf '*' >> "${buffer}"
         else
-            printf " " >> ${buffer}
+            printf ' ' >> "${buffer}"
         fi
     done
 
     # Bottom rule
-    tput cup $((top_padding_height + min_term_height - 5)) \
-        ${left_padding_width} >> ${buffer}
-    printf "    *    *    *    *    *    *    *    *    *    *    *    *    \
-*    *    *    *" >> ${buffer}
+    tput cup                                          \
+        $((top_padding_height + min_term_height - 5)) \
+        "${left_padding_width}"                       \
+        >> "${buffer}"
+
+    printf '    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *' >> "${buffer}"
 
     # Left rule
     for ((i=0; i < (min_term_height - 5); i++))
     do
-        tput cup $(($((top_padding_height + i)) + 1)) ${left_padding_width} \
-            >> ${buffer}
-        if (( $((i % 3)) == 2))
+        tput cup                            \
+            $((top_padding_height + i + 1)) \
+            "${left_padding_width}"         \
+            >> "${buffer}"
+
+        if (((i % 3) == 2))
         then
-            printf "*" >> ${buffer}
+            printf '*' >> "${buffer}"
         else
-            printf " " >> ${buffer}
+            printf ' ' >> "${buffer}"
         fi
     done
 
-    tput cup $((term_height - 1)) $((term_width - 1)) >> ${buffer}
+    tput cup $((term_height - 1)) $((term_width - 1)) >> "${buffer}"
 }
 
 print_frame_stage2()
 {
     # Top rule
-    tput cup ${top_padding_height} ${left_padding_width} >> ${buffer}
-    printf " *    *    *    *    *    *    *    *    *    *    *    *    \
-*    *    *    *   " >> ${buffer}
+    tput cup "${top_padding_height}" "${left_padding_width}" >> "${buffer}"
+    printf ' *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *   ' >> "${buffer}"
 
     # Right rule
     for ((i=0; i < (min_term_height - 5); i++))
     do
-        tput cup $(($((top_padding_height + i)) + 1)) \
-            $(($((left_padding_width + min_term_width)) - 1)) >> ${buffer}
-        if (( $((i % 3)) == 1))
+        tput cup                                         \
+            $((top_padding_height + i + 1))              \
+            $((left_padding_width + min_term_width - 1)) \
+            >> "${buffer}"
+
+        if (((i % 3) == 1))
         then
-            printf "*" >> ${buffer}
+            printf '*' >> "${buffer}"
         else
-            printf " " >> ${buffer}
+            printf ' ' >> "${buffer}"
         fi
     done
 
     # Bottom rule
-    tput cup $((top_padding_height + min_term_height - 5)) \
-        ${left_padding_width} >> ${buffer}
-    printf "   *    *    *    *    *    *    *    *    *    *    *    *    \
-*    *    *    * " >> ${buffer}
+    tput cup                                          \
+        $((top_padding_height + min_term_height - 5)) \
+        "${left_padding_width}"                       \
+        >> "${buffer}"
+
+    printf '   *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    * ' >> "${buffer}"
 
     # Left rule
     for ((i=0; i < (min_term_height - 5); i++))
     do
-        tput cup $(($((top_padding_height + i)) + 1)) ${left_padding_width} \
-            >> ${buffer}
-        if (( $((i % 3)) == 1))
+        tput cup                            \
+            $((top_padding_height + i + 1)) \
+            "${left_padding_width}"         \
+            >> "${buffer}"
+
+        if (((i % 3) == 1))
         then
-            printf "*" >> ${buffer}
+            printf '*' >> "${buffer}"
         else
-            printf " " >> ${buffer}
+            printf ' ' >> "${buffer}"
         fi
     done
 
-    tput cup $((term_height - 1)) $((term_width - 1)) >> ${buffer}
+    tput cup $((term_height - 1)) $((term_width - 1)) >> "${buffer}"
 }
 
 print_frame_stage3()
 {
     # Top rule
-    tput cup ${top_padding_height} ${left_padding_width} >> ${buffer}
-    printf "  *    *    *    *    *    *    *    *    *    *    *    *    \
-*    *    *    *  " >> ${buffer}
+    tput cup "${top_padding_height}" "${left_padding_width}" >> "${buffer}"
+    printf '  *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *  ' >> "${buffer}"
 
     # Right rule
     for ((i=0; i < (min_term_height - 5); i++))
     do
-        tput cup $(($((top_padding_height + i)) + 1)) \
-            $(($((left_padding_width + min_term_width)) - 1)) >> ${buffer}
-        if (( $((i % 3)) == 2))
+        tput cup                                         \
+            $((top_padding_height + i + 1))              \
+            $((left_padding_width + min_term_width - 1)) \
+            >> "${buffer}"
+
+        if (((i % 3) == 2))
         then
-            printf "*" >> ${buffer}
+            printf '*' >> "${buffer}"
         else
-            printf " " >> ${buffer}
+            printf ' ' >> "${buffer}"
         fi
     done
 
     # Bottom rule
-    tput cup $((top_padding_height + min_term_height - 5)) \
-        ${left_padding_width} >> ${buffer}
-    printf "  *    *    *    *    *    *    *    *    *    *    *    *    \
-*    *    *    *  " >> ${buffer}
+    tput cup                                          \
+        $((top_padding_height + min_term_height - 5)) \
+        "${left_padding_width}"                       \
+        >> "${buffer}"
+
+    printf '  *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *  ' >> "${buffer}"
 
     # Left rule
     for ((i=0; i < (min_term_height - 5); i++))
     do
-        tput cup $(($((top_padding_height + i)) + 1)) ${left_padding_width} \
-            >> ${buffer}
-        if (( $((i % 3)) == 0))
+        tput cup                            \
+            $((top_padding_height + i + 1)) \
+            "${left_padding_width}"         \
+            >> "${buffer}"
+
+        if (((i % 3) == 0))
         then
-            printf "*" >> ${buffer}
+            printf '*' >> "${buffer}"
         else
-            printf " " >> ${buffer}
+            printf ' ' >> "${buffer}"
         fi
     done
 
-    tput cup $((term_height - 1)) $((term_width - 1)) >> ${buffer}
+    tput cup $((term_height - 1)) $((term_width - 1)) >> "${buffer}"
 }
 
 print_frame_stage4()
 {
     # Top rule
-    tput cup ${top_padding_height} ${left_padding_width} >> ${buffer}
-    printf "   *    *    *    *    *    *    *    *    *    *    *    *    \
-*    *    *    * " >> ${buffer}
+    tput cup "${top_padding_height}" "${left_padding_width}" >> "${buffer}"
+    printf '   *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    * ' >> "${buffer}"
 
     # Right rule
     for ((i=0; i < (min_term_height - 5); i++))
     do
-        tput cup $(($((top_padding_height + i)) + 1)) \
-            $(($((left_padding_width + min_term_width)) - 1)) >> ${buffer}
-        if (( $((i % 3)) == 0))
+        tput cup                                         \
+            $((top_padding_height + i + 1))              \
+            $((left_padding_width + min_term_width - 1)) \
+            >> "${buffer}"
+
+        if (((i % 3) == 0))
         then
-            printf "*" >> ${buffer}
+            printf '*' >> "${buffer}"
         else
-            printf " " >> ${buffer}
+            printf ' ' >> "${buffer}"
         fi
     done
 
     # Bottom rule
-    tput cup $((top_padding_height + min_term_height - 5)) \
-        ${left_padding_width} >> ${buffer}
-    printf " *    *    *    *    *    *    *    *    *    *    *    *    \
-*    *    *    *   " >> ${buffer}
+    tput cup                                          \
+        $((top_padding_height + min_term_height - 5)) \
+        "${left_padding_width}"                       \
+        >> "${buffer}"
+
+    printf ' *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *   ' >> "${buffer}"
 
     # Left rule
     for ((i=0; i < (min_term_height - 5); i++))
     do
-        tput cup $(($((top_padding_height + i)) + 1)) ${left_padding_width} \
-            >> ${buffer}
-        if (( $((i % 3)) == 2))
+        tput cup                            \
+            $((top_padding_height + i + 1)) \
+            "${left_padding_width}"         \
+            >> "${buffer}"
+
+        if (((i % 3) == 2))
         then
-            printf "*" >> ${buffer}
+            printf '*' >> "${buffer}"
         else
-            printf " " >> ${buffer}
+            printf ' ' >> "${buffer}"
         fi
     done
 
-    tput cup $((term_height - 1)) $((term_width - 1)) >> ${buffer}
+    tput cup $((term_height - 1)) $((term_width - 1)) >> "${buffer}"
 }
 
 print_frame_stage5()
 {
     # Top rule
-    tput cup ${top_padding_height} ${left_padding_width} >> ${buffer}
-    printf "    *    *    *    *    *    *    *    *    *    *    *    *    \
-*    *    *    *" >> ${buffer}
+    tput cup "${top_padding_height}" "${left_padding_width}" >> "${buffer}"
+    printf '    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *' >> "${buffer}"
 
     # Right rule
     for ((i=0; i < (min_term_height - 5); i++))
     do
-        tput cup $(($((top_padding_height + i)) + 1)) \
-            $(($((left_padding_width + min_term_width)) - 1)) >> ${buffer}
-        if (( $((i % 3)) == 1))
+        tput cup                                         \
+            $((top_padding_height + i + 1))              \
+            $((left_padding_width + min_term_width - 1)) \
+            >> "${buffer}"
+
+        if (((i % 3) == 1))
         then
-            printf "*" >> ${buffer}
+            printf '*' >> "${buffer}"
         else
-            printf " " >> ${buffer}
+            printf ' ' >> "${buffer}"
         fi
     done
 
     # Bottom rule
-    tput cup $((top_padding_height + min_term_height - 5)) \
-        ${left_padding_width} >> ${buffer}
-    printf "*    *    *    *    *    *    *    *    *    *    *    *    *    \
-*    *    *    " >> ${buffer}
+    tput cup                                          \
+        $((top_padding_height + min_term_height - 5)) \
+        "${left_padding_width}"                       \
+        >> "${buffer}"
+
+    printf '*    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    ' >> "${buffer}"
 
     # Left rule
     for ((i=0; i < (min_term_height - 5); i++))
     do
-        tput cup $(($((top_padding_height + i)) + 1)) ${left_padding_width} \
-            >> ${buffer}
-        if (( $((i % 3)) == 1))
+        tput cup                            \
+            $((top_padding_height + i + 1)) \
+            "${left_padding_width}"         \
+            >> "${buffer}"
+
+        if (((i % 3) == 1))
         then
-            printf "*" >> ${buffer}
+            printf '*' >> "${buffer}"
         else
-            printf " " >> ${buffer}
+            printf ' ' >> "${buffer}"
         fi
     done
 
-    tput cup $((term_height - 1)) $((term_width - 1)) >> ${buffer}
+    tput cup $((term_height - 1)) $((term_width - 1)) >> "${buffer}"
 }
