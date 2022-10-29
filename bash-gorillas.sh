@@ -96,7 +96,6 @@ source "${script_directory}/create-buffer.sh"
 source "${script_directory}/print-intro-outro-frames.sh"
 source "${script_directory}/quit.sh"
 source "${script_directory}/read-player-data.sh"
-source "${script_directory}/generate-buildings.sh"
 source "${script_directory}/read-throw-data.sh"
 source "${script_directory}/throw-banana.sh"
 
@@ -169,6 +168,95 @@ clear_player_names()
     done
 
     refresh_screen
+}
+
+# Generate buildings into $grid
+generate_buildings()
+{
+    local current_building_height=''
+
+    # Setsthe height of the buildings which players stand on
+    player1_building_height="$((RANDOM % max_building_height))"
+    player2_building_height="$((RANDOM % max_building_height))"
+
+    if ((building_count <= 15))
+    then
+        # Create the bulding which player1 stands on (the second building from
+        # the left edge of the screen)
+        for ((i=building_width; i < (2 * building_width); i++))
+        do
+            for ((j=0; j < player1_building_height; j++))
+            do
+                grid["${i},${j}"]='X'
+            done
+        done
+
+        # Create the bulding which player2 stands on (the second building from
+        # the right edge of the screen)
+        for ((i=(grid_width - (2 * building_width)); i < (grid_width - building_width); i++))
+        do
+            for ((j=0; j < player2_building_height; j++))
+            do
+                grid["${i},${j}"]='X'
+            done
+        done
+
+        # Create all the other buildings
+        for ((i=0; i < building_count; i++))
+        do
+            # Always set a random value for the actually generated building
+            current_building_height="$((RANDOM % max_building_height))"
+
+            if ((i != 1 && i != (building_count - 2)))
+            then
+                for ((j=0; j < building_width; j++))
+                do
+                    for ((k=0; k < current_building_height; k++))
+                    do
+                        grid["$(((i * building_width) + j)),${k}"]='X'
+                    done
+                done
+            fi
+        done
+    else
+        # Create the bulding which player1 stands on (the third building from
+        # the left edge of the screen)
+        for ((i=(2 * building_width); i < (3 * building_width); i++))
+        do
+            for ((j=0; j < player1_building_height; j++))
+            do
+                grid["${i},${j}"]='X'
+            done
+        done
+
+        # Create the bulding which player2 stands on (the third building from
+        # the right edge of the screen)
+        for ((i=(grid_width - (3 * building_width)); i < (grid_width - (2 * building_width)); i++))
+        do
+            for ((j=0; j < player2_building_height; j++))
+            do
+                grid["${i},${j}"]='X'
+            done
+        done
+
+        # Create all the other buildings
+        for ((i=0; i < building_count; i++))
+        do
+            # Always set a random value for the actually generated building
+            current_building_height="$((RANDOM % max_building_height))"
+
+            if ((i != 2 && i != (building_count - 3)))
+            then
+                for ((j=0; j < building_width; j++))
+                do
+                    for ((k=0; k < current_building_height; k++))
+                    do
+                        grid["$(((i * building_width) + j)),${k}"]='X'
+                    done
+                done
+            fi
+        done
+    fi
 }
 
 # Set the first banana frame depending which player throws
