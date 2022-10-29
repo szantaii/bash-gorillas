@@ -16,18 +16,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Functions in this file each print a frame to the buffer
-#
-# Calling these funcions and refreshing the screen in order will
-# result in an animation
 print_frame_stage1()
 {
-    # top rule
+    # Top rule
     tput cup ${top_padding_height} ${left_padding_width} >> ${buffer}
     printf "*    *    *    *    *    *    *    *    *    *    *    *    *    \
 *    *    *    " >> ${buffer}
 
-    # right rule
+    # Right rule
     for ((i=0; i < (min_term_height - 5); i++))
     do
         tput cup $(($((top_padding_height + i)) + 1)) \
@@ -40,13 +36,13 @@ print_frame_stage1()
         fi
     done
 
-    # bottom rule
+    # Bottom rule
     tput cup $((top_padding_height + min_term_height - 5)) \
         ${left_padding_width} >> ${buffer}
     printf "    *    *    *    *    *    *    *    *    *    *    *    *    \
 *    *    *    *" >> ${buffer}
 
-    # left rule
+    # Left rule
     for ((i=0; i < (min_term_height - 5); i++))
     do
         tput cup $(($((top_padding_height + i)) + 1)) ${left_padding_width} \
@@ -64,12 +60,12 @@ print_frame_stage1()
 
 print_frame_stage2()
 {
-    # top rule
+    # Top rule
     tput cup ${top_padding_height} ${left_padding_width} >> ${buffer}
     printf " *    *    *    *    *    *    *    *    *    *    *    *    \
 *    *    *    *   " >> ${buffer}
 
-    # right rule
+    # Right rule
     for ((i=0; i < (min_term_height - 5); i++))
     do
         tput cup $(($((top_padding_height + i)) + 1)) \
@@ -82,13 +78,13 @@ print_frame_stage2()
         fi
     done
 
-    # bottom rule
+    # Bottom rule
     tput cup $((top_padding_height + min_term_height - 5)) \
         ${left_padding_width} >> ${buffer}
     printf "   *    *    *    *    *    *    *    *    *    *    *    *    \
 *    *    *    * " >> ${buffer}
 
-    # left rule
+    # Left rule
     for ((i=0; i < (min_term_height - 5); i++))
     do
         tput cup $(($((top_padding_height + i)) + 1)) ${left_padding_width} \
@@ -106,12 +102,12 @@ print_frame_stage2()
 
 print_frame_stage3()
 {
-    # top rule
+    # Top rule
     tput cup ${top_padding_height} ${left_padding_width} >> ${buffer}
     printf "  *    *    *    *    *    *    *    *    *    *    *    *    \
 *    *    *    *  " >> ${buffer}
 
-    # right rule
+    # Right rule
     for ((i=0; i < (min_term_height - 5); i++))
     do
         tput cup $(($((top_padding_height + i)) + 1)) \
@@ -124,13 +120,13 @@ print_frame_stage3()
         fi
     done
 
-    # bottom rule
+    # Bottom rule
     tput cup $((top_padding_height + min_term_height - 5)) \
         ${left_padding_width} >> ${buffer}
     printf "  *    *    *    *    *    *    *    *    *    *    *    *    \
 *    *    *    *  " >> ${buffer}
 
-    # left rule
+    # Left rule
     for ((i=0; i < (min_term_height - 5); i++))
     do
         tput cup $(($((top_padding_height + i)) + 1)) ${left_padding_width} \
@@ -148,12 +144,12 @@ print_frame_stage3()
 
 print_frame_stage4()
 {
-    # top rule
+    # Top rule
     tput cup ${top_padding_height} ${left_padding_width} >> ${buffer}
     printf "   *    *    *    *    *    *    *    *    *    *    *    *    \
 *    *    *    * " >> ${buffer}
 
-    # right rule
+    # Right rule
     for ((i=0; i < (min_term_height - 5); i++))
     do
         tput cup $(($((top_padding_height + i)) + 1)) \
@@ -166,13 +162,13 @@ print_frame_stage4()
         fi
     done
 
-    # bottom rule
+    # Bottom rule
     tput cup $((top_padding_height + min_term_height - 5)) \
         ${left_padding_width} >> ${buffer}
     printf " *    *    *    *    *    *    *    *    *    *    *    *    \
 *    *    *    *   " >> ${buffer}
 
-    # left rule
+    # Left rule
     for ((i=0; i < (min_term_height - 5); i++))
     do
         tput cup $(($((top_padding_height + i)) + 1)) ${left_padding_width} \
@@ -190,12 +186,12 @@ print_frame_stage4()
 
 print_frame_stage5()
 {
-    # top rule
+    # Top rule
     tput cup ${top_padding_height} ${left_padding_width} >> ${buffer}
     printf "    *    *    *    *    *    *    *    *    *    *    *    *    \
 *    *    *    *" >> ${buffer}
 
-    # right rule
+    # Right rule
     for ((i=0; i < (min_term_height - 5); i++))
     do
         tput cup $(($((top_padding_height + i)) + 1)) \
@@ -208,13 +204,13 @@ print_frame_stage5()
         fi
     done
 
-    # bottom rule
+    # Bottom rule
     tput cup $((top_padding_height + min_term_height - 5)) \
         ${left_padding_width} >> ${buffer}
     printf "*    *    *    *    *    *    *    *    *    *    *    *    *    \
 *    *    *    " >> ${buffer}
 
-    # left rule
+    # Left rule
     for ((i=0; i < (min_term_height - 5); i++))
     do
         tput cup $(($((top_padding_height + i)) + 1)) ${left_padding_width} \
