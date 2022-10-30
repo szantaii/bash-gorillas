@@ -16,11 +16,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# This fuction is responsible for banana throwing,
-# including physics, animation, etc.
+# This fuction is responsible for banana throwing, including physics,
+# animation, etc.
 throw_banana()
 {
-    # Necessary local variables
     local pi=$(echo "scale=20; 4 * a(1)" | bc -l)
     local x=""
     local y=""
@@ -34,9 +33,8 @@ throw_banana()
     # Initialize banana animation frame
     init_banana
 
-    # Set $throw_angle, $throw_speed, banana throw
-    # start positions, etc. based on read values and
-    # current player
+    # Set $throw_angle, $throw_speed, banana throw start positions, etc.
+    # based on read values and current player
     if ((next_player == 1))
     then
         # Convert degrees to radians
@@ -55,8 +53,7 @@ throw_banana()
         # Start player1 throw animation
         print_player1_throw_frame1
     else
-        # Set correct angle for player2, and
-        # convert degrees to radians
+        # Set correct angle for player2, and convert degrees to radians
         throw_angle=$((180 - player2_throw_angle))
         throw_angle=$(echo "scale=20; ${throw_angle} * ${pi} / 180" | \
             bc -l)
@@ -80,8 +77,8 @@ throw_banana()
     printf "${banana}" >> ${buffer}
     refresh_screen
 
-    # Print player throw animation ending to the screen
-    # depending who is the current throwing player
+    # Print player throw animation ending to the screen depending who is the
+    # current throwing player
     if ((next_player == 1))
     then
         print_player1_throw_frame2
@@ -89,8 +86,7 @@ throw_banana()
         print_player2_throw_frame2
     fi
 
-    # Banana throw loop:
-    #
+    # Banana throw loop
     for ((t=0; x >= 0 && x < grid_width && y >= 1 && y <= (grid_height * 5); ))
     do
         # Clear previous banana frame from screen,
@@ -105,8 +101,8 @@ throw_banana()
             refresh_screen
         fi
 
-        # Calculate next horizontal ($x) and
-        # vertical ($y) position of the banana
+        # Calculate next horizontal ($x) and vertical ($y) position
+        # of the banana
         x=$(echo "scale=20; ${x_0} + \
             (${throw_speed} * ${t} * c(${throw_angle}) + \
             (${wind_value} * ${t} * ${t}))" | bc -l | xargs printf "%1.0f\n")
@@ -116,8 +112,8 @@ throw_banana()
             bc -l | xargs printf "%1.0f\n")
 
         # Collision detection START --------------------------------------------
-        # If the banana hits a building the building block
-        # will be erased and then comes the next player
+        # If the banana hits a building the building block will be erased
+        # and then comes the next player
         if [[ "${grid["${x},$((y - 1))"]}" == "X" ]]
         then
             # Erase block from 'grid'
@@ -133,10 +129,9 @@ throw_banana()
             break
         fi
 
-        # Banana hits player: check the current player,
-        # and increase score of the player who was not hit,
-        # clear the player who was hit from the screen,
-        # and set $next_player to the player who was hit
+        # Banana hits player: check the current player, and increase score
+        # of the player who was not hit, clear the player who was hit from
+        # the screen, and set $next_player to the player who was hit
         for ((i=0; i < ${#player1_coordinates[@]}; i++))
         do
             if [[ "${player1_coordinates[${i}]}" == "${x},$((y - 1))" ]]
@@ -190,8 +185,7 @@ throw_banana()
         t=$(echo "scale=20; ${t} + 0.005" | bc -l)
     done
 
-    # If the thrown banana gets out of boundaries
-    # or the banana hits a building then the next
-    # player can throw
+    # If the thrown banana gets out of boundaries or the banana hits a building
+    # then the next player can throw
     switch_player
 }
