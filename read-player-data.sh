@@ -20,70 +20,77 @@
 
 prompt_player1_name()
 {
-    tput cup $((top_padding_height + 4)) \
-        $((left_padding_width + 15)) >> ${buffer}
+    {
+        tput cup $((top_padding_height + 4)) $((left_padding_width + 15))
 
-    printf "Name of Player 1 (Default = 'Player 1'): " >> ${buffer}
+        printf "Name of Player 1 (Default = 'Player 1'): "
+
+    } >> "${buffer}"
 }
 
 prompt_player2_name()
 {
-    tput cup $((top_padding_height + 6)) \
-        $((left_padding_width + 15)) >> ${buffer}
+    {
+        tput cup $((top_padding_height + 6)) $((left_padding_width + 15))
 
-    printf "Name of Player 2 (Default = 'Player 2'): " >> ${buffer}
+        printf "Name of Player 2 (Default = 'Player 2'): "
+
+    } >> "${buffer}"
 }
 
 prompt_max_points_num()
 {
-    tput cup $((top_padding_height + 8)) \
-        $((left_padding_width + 17)) >> ${buffer}
+    {
+        tput cup $((top_padding_height + 8)) $((left_padding_width + 17))
 
-    printf "Play to how many total points (Default = 3)? " >> ${buffer}
+        printf "Play to how many total points (Default = 3)? "
+
+    } >> "${buffer}"
 }
 
 prompt_gravity_value()
 {
-    tput cup $((top_padding_height + 10)) \
-        $((left_padding_width + 20)) >> ${buffer}
+    {
+        tput cup $((top_padding_height + 10)) $((left_padding_width + 20))
 
-    printf "Gravity in Meters/Sec^2 (Earth = ~10)? " >> ${buffer}
+        printf "Gravity in Meters/Sec^2 (Earth = ~10)? "
+
+    } >> "${buffer}"
 }
 
 prompt_menu_choice()
 {
-    tput cup $((top_padding_height + 12)) \
-        $((left_padding_width + 34)) >> ${buffer}
+    {
+        tput cup $((top_padding_height + 12)) $((left_padding_width + 34))
 
-    printf "%s-------------" >> ${buffer}
+        printf '%s' '-------------'
 
-    tput cup $((top_padding_height + 14)) \
-        $((left_padding_width + 34)) >> ${buffer}
+        tput cup $((top_padding_height + 14)) $((left_padding_width + 34))
 
-    printf "P = Play Game" >> ${buffer}
+        printf 'P = Play Game'
 
-    tput cup $((top_padding_height + 15)) \
-        $((left_padding_width + 37)) >> ${buffer}
+        tput cup $((top_padding_height + 15)) $((left_padding_width + 37))
 
-    printf "Q = Quit" >> ${buffer}
+        printf 'Q = Quit'
 
-    tput cup $((top_padding_height + 17)) \
-        $((left_padding_width + 35)) >> ${buffer}
+        tput cup $((top_padding_height + 17)) $((left_padding_width + 35))
 
-    printf "Your Choice?" >> ${buffer}
+        printf 'Your Choice?'
+
+    } >> "${buffer}"
 }
 
 read_player1_name()
 {
-    local player1_tmp_name=""
+    local player1_tmp_name=''
 
-    read -n10 player1_name
+    read -r -n10 player1_name
 
-    player1_tmp_name=${player1_name/ /}
+    player1_tmp_name="${player1_name/ /}"
 
-    if [[ "${player1_tmp_name}" == "" ]]
+    if [[ "${player1_tmp_name}" == '' ]]
     then
-        player1_name="Player 1"
+        player1_name='Player 1'
     fi
 }
 
@@ -91,46 +98,46 @@ read_player2_name()
 {
     local player2_tmp_name
 
-    read -n10 player2_name
+    read -r -n10 player2_name
 
-    player2_tmp_name=${player2_name/ /}
+    player2_tmp_name="${player2_name/ /}"
 
-    if [[ "${player2_tmp_name}" == "" ]]
+    if [[ "${player2_tmp_name}" == '' ]]
     then
-        player2_name="Player 2"
+        player2_name='Player 2'
     fi
 }
 
 read_total_points()
 {
-    read -n2 total_points
+    read -r -n2 total_points
 
-    case ${total_points} in
+    case "${total_points}" in
         ''|*[!0-9]*)
-            total_points="3"
+            total_points='3'
             ;;
     esac
 }
 
 read_gravity_value()
 {
-    read -n3 gravity_value
+    read -r -n3 gravity_value
 
-    case ${gravity_value} in
+    case "${gravity_value}" in
         ''|*[!0-9]*)
-            gravity_value=10
+            gravity_value='10'
             ;;
     esac
 }
 
 read_menu_choice()
 {
-    while [[ "${menu_choice}" != "p" && "${menu_choice}" != "P" && \
-        "${menu_choice}" != "q" && "${menu_choice}" != "Q" ]]
+    while [[ "${menu_choice}" != 'p' && "${menu_choice}" != 'P' && \
+        "${menu_choice}" != 'q' && "${menu_choice}" != 'Q' ]]
     do
-        read -sn1 menu_choice
+        read -r -sn1 menu_choice
 
-        case ${menu_choice} in
+        case "${menu_choice}" in
             'p'|'P')
                 ;;
             'q'|'Q')
@@ -162,6 +169,6 @@ read_player_data()
     refresh_screen
     read_menu_choice
 
-    clear >> ${buffer}
+    clear >> "${buffer}"
     refresh_screen
 }
