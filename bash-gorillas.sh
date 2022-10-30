@@ -88,7 +88,6 @@ grid_height=''
 script_directory="$(dirname "$(realpath "$0")")"
 
 # Include necessary source files
-source "${script_directory}/quit.sh"
 source "${script_directory}/throw-banana.sh"
 
 
@@ -1739,6 +1738,18 @@ prompt_player2_throw_speed()
     } >> "${buffer}"
 
     refresh_screen
+}
+
+# Cleanup on quit
+quit()
+{
+    # Delete screen buffer file
+    rm -f "${buffer}"
+
+    # Restore terminal screen
+    tput rmcup
+
+    exit 0
 }
 
 read_gravity_value()
