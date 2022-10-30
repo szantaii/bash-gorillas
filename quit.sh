@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Cleans up on quit, returns '0'
+# Cleanup on quit
 quit()
 {
     # Delete screen buffer file
@@ -25,6 +25,5 @@ quit()
     # Restore terminal screen
     tput rmcup
 
-    # Exit with status '0'
     exit 0
 }
