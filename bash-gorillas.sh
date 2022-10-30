@@ -25,8 +25,8 @@ term_height=''
 min_term_width=80
 min_term_height=22
 
-buffer_name=''
-buffer_directory=''
+buffer_name_template='bash-gorillas-buffer-XXXXXXXXXX'
+buffer_directory='/tmp'
 buffer=''
 
 left_padding=''
@@ -253,9 +253,6 @@ clear_player2_throw_speed()
 # Create a "screen buffer" file
 create_buffer()
 {
-    local buffer_name_template='bash-gorillas-buffer-XXXXXXXXXX'
-    local buffer_directory='/tmp'
-
     buffer="$(mktemp --tmpdir="${buffer_directory}" "${buffer_name_template}")"
 }
 
