@@ -29,9 +29,7 @@ buffer_name_template='bash-gorillas-buffer-XXXXXXXXXX'
 buffer_directory='/tmp'
 buffer=''
 
-left_padding=''
 left_padding_width=''
-top_padding=''
 top_padding_height=''
 
 building_width=''
@@ -422,10 +420,6 @@ init_game()
     # Calculate how many buildings can be placed into the playing field
     building_count="$((grid_width / building_width))"
 
-    # Reset $left_padding and $top_padding
-    left_padding=''
-    top_padding=''
-
     # Set $left_padding_width for centering the playing field on the screen,
     # and set $top_padding_height to '0' since the game uses the whole
     # terminal in height
@@ -769,25 +763,22 @@ next_banana_frame()
 play_intro()
 {
     local intro_lines=()
+    local left_padding=''
 
-    # Set $left_padding from $left_padding_width ($left_padding will contain
-    # a number of $left_padding_width space characters)
     for ((i=0; i < left_padding_width; i++))
     do
         left_padding="${left_padding} "
     done
 
-    # Set $top_padding from $top_padding_height ($top_padding will contain
-    # a number of $top_padding_height newline characters)
     for ((i=0; i < top_padding_height; i++))
     do
-        top_padding="${top_padding}\n"
+        intro_lines+=('')
     done
 
-    intro_lines=(
+    intro_lines+=(
         ''
         ''
-        "${top_padding}${left_padding}                           B a s h   G O R I L L A S"
+        "${left_padding}                           B a s h   G O R I L L A S"
         ''
         ''
         "${left_padding}         Copyright (C) 2013-2022 Istvan Szantai <szantaii@gmail.com>"
@@ -845,37 +836,30 @@ play_intro()
 play_outro()
 {
     local outro_lines=()
-
-    # Clear $top_padding and $left_padding
-    top_padding=''
-    left_padding=''
+    local left_padding=''
 
     # Calculate $left_padding_width and $top_padding_height
     left_padding_width=$(((term_width - min_term_width) / 2))
     top_padding_height=$(((term_height - min_term_height) / 2))
 
-    # Set $left_padding from $left_padding_width ($left_padding will contain
-    # a number of $left_padding_width space characters)
     for ((i=0; i < left_padding_width; i++))
     do
         left_padding="${left_padding} "
     done
 
-    # Set $top_padding from $top_padding_height ($top_padding will contain
-    # a number of $top_padding_height newline characters)
     for ((i=0; i < top_padding_height; i++))
     do
-        top_padding="${top_padding}\n"
+        outro_lines+=('')
     done
 
-    outro_lines=(
+    outro_lines+=(
         ''
         ''
         ''
         ''
         ''
         ''
-        "${top_padding}${left_padding}                                   GAME OVER!"
+        "${left_padding}                                   GAME OVER!"
         ''
         "${left_padding}                                     Score:"
         "${left_padding}                               $(printf '%-10s' "${player1_name}")${player1_score}"
@@ -892,7 +876,7 @@ play_outro()
         "${left_padding}                            Press any key to continue"
     )
 
-    # Print outro text into the screen buffer
+    # Print outro into the screen buffer
     {
         for outro_line in "${outro_lines[@]}"
         do
