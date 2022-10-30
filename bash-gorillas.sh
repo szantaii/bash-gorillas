@@ -86,10 +86,10 @@ grid_width=''
 grid_height=''
 
 
-# Check the availability of necessary programs
-check_required_programs()
+# Check the availability of necessary commands
+check_required_commads()
 {
-    local required_programs=(
+    local required_commands=(
         'bc'
         'cat'
         'mktemp'
@@ -97,11 +97,11 @@ check_required_programs()
         'tput'
     )
 
-    for required_program in "${required_programs[@]}"
+    for required_command in "${required_commands[@]}"
     do
-        if ! which "${required_program}" > /dev/null 2>&1
+        if ! command -v "${required_command}" > /dev/null 2>&1
         then
-            printf '%s\n' "Your system is missing the program '${required_program}' which is necessary for bash-gorillas to run."
+            printf '%s\n' "Your system is missing the command '${required_command}' which is necessary for bash-gorillas to run."
 
             exit 2
         fi
@@ -2061,8 +2061,8 @@ throw_banana()
 
         # Calculate next horizontal ($x) and vertical ($y) position
         # of the banana
-        x="$(echo "scale=20; ${x_0} + (${throw_speed} * ${t} * c(${throw_angle}) + (${wind_value} * ${t} * ${t}))" | bc -l | xargs printf "%1.0f\n")"
-        y="$(echo "scale=20; ${y_0} + (${throw_speed} * ${t} * s(${throw_angle}) - (2 * ${gravity_value} / 2) * ${t} * ${t})" | bc -l | xargs printf "%1.0f\n")"
+        x="$(echo "scale=20; ${x_0} + (${throw_speed} * ${t} * c(${throw_angle}) + (${wind_value} * ${t} * ${t}))" | bc -l | xargs printf "%1.0f\n" || true)"
+        y="$(echo "scale=20; ${y_0} + (${throw_speed} * ${t} * s(${throw_angle}) - (2 * ${gravity_value} / 2) * ${t} * ${t})" | bc -l | xargs printf "%1.0f\n" || true)"
 
         # Collision detection START --------------------------------------------
         # If the banana hits a building the building block will be erased
@@ -2154,7 +2154,7 @@ throw_banana()
 }
 
 
-check_required_programs
+check_required_commads
 
 term_width="$(tput cols)"
 term_height="$(tput lines)"
