@@ -93,7 +93,9 @@ check_required_commads()
         'bc'
         'cat'
         'mktemp'
+        'printf'
         'rm'
+        'sleep'
         'tput'
     )
 
