@@ -447,6 +447,9 @@ init_game()
 # Create screen buffer, install signal handler, clear screen
 init_main()
 {
+    # Save terminal screen
+    tput smcup
+
     # Create the 'screen buffer'
     create_buffer
 
@@ -677,9 +680,6 @@ init_players()
 # Game main loop
 main_loop()
 {
-    # Save terminal screen
-    tput smcup
-
     init_main
 
     play_intro
