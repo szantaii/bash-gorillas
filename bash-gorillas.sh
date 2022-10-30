@@ -716,7 +716,7 @@ main_loop()
             read_throw_data
             clear_player_names
 
-            throw_banana
+            throw_banana && break
         done
 
         # On player hit update the score and make the winner dance
