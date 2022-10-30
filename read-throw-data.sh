@@ -21,24 +21,30 @@
 
 prompt_player1_throw_angle()
 {
-    local angle_text="Angle [0-90]: "
+    local angle_text='Angle [0-90]: '
 
-    tput cup $((top_padding_height + 1)) ${left_padding_width} >> ${buffer}
+    {
+        tput cup $((top_padding_height + 1)) "${left_padding_width}"
 
-    printf "${angle_text}" >> ${buffer}
+        printf '%s' "${angle_text}"
+
+    } >> "${buffer}"
 
     refresh_screen
 }
 
 prompt_player2_throw_angle()
 {
-    local angle_text="Angle [0-90]: "
+    local angle_text='Angle [0-90]: '
 
-    tput cup $((top_padding_height + 1)) \
-        $(($((left_padding_width + grid_width)) - $((${#angle_text} + 2)))) \
-        >> ${buffer}
+    {
+        tput cup                        \
+            $((top_padding_height + 1)) \
+            $(((left_padding_width + grid_width) - (${#angle_text} + 2)))
 
-    printf "${angle_text}" >> ${buffer}
+        printf '%s' "${angle_text}"
+
+    } >> "${buffer}"
 
     refresh_screen
 }
@@ -47,9 +53,12 @@ prompt_player1_throw_speed()
 {
     local speed_text="Velocity [0-${max_speed}]: "
 
-    tput cup $((top_padding_height + 2)) ${left_padding_width} >> ${buffer}
+    {
+        tput cup $((top_padding_height + 2)) "${left_padding_width}"
 
-    printf "${speed_text}" >> ${buffer}
+        printf '%s' "${speed_text}"
+
+    } >> "${buffer}"
 
     refresh_screen
 }
@@ -58,86 +67,102 @@ prompt_player2_throw_speed()
 {
     local speed_text="Velocity [0-${max_speed}]: "
 
-    tput cup $((top_padding_height + 2)) \
-        $(($((left_padding_width + grid_width)) - \
-        $((${#speed_text} + ${#max_speed})))) >> ${buffer}
+    {
+        tput cup                        \
+            $((top_padding_height + 2)) \
+            $(((left_padding_width + grid_width) - $((${#speed_text} + ${#max_speed}))))
 
-    printf "${speed_text}" >> ${buffer}
+
+        printf '%s' "${speed_text}"
+
+    } >> "${buffer}"
 
     refresh_screen
 }
 
 print_player1_correct_throw_angle()
 {
-    tput cup $((top_padding_height + 1)) \
-        $((left_padding_width + 14)) >> ${buffer}
+    {
+        tput cup $((top_padding_height + 1)) $((left_padding_width + 14))
 
-    printf "  " >> ${buffer}
+        printf '  '
 
-    tput cup $((top_padding_height + 1)) \
-        $((left_padding_width + 14)) >> ${buffer}
+        tput cup $((top_padding_height + 1)) $((left_padding_width + 14))
 
-    printf "${player1_throw_angle}" >> ${buffer}
+        printf '%s' "${player1_throw_angle}"
+
+    } >> "${buffer}"
 
     refresh_screen
 }
 
 print_player2_correct_throw_angle()
 {
-    tput cup $((top_padding_height + 1)) \
-        $(($((left_padding_width + grid_width)) - 2)) >> ${buffer}
+    {
+        tput cup $((top_padding_height + 1)) $((left_padding_width + grid_width - 2))
 
-    printf "  " >> ${buffer}
+        printf '  '
 
-    tput cup $((top_padding_height + 1)) \
-        $(($((left_padding_width + grid_width)) - 2)) >> ${buffer}
+        tput cup $((top_padding_height + 1)) $((left_padding_width + grid_width - 2))
 
-    printf "${player2_throw_angle}" >> ${buffer}
+        printf '%s' "${player2_throw_angle}"
+
+    } >> "${buffer}"
 
     refresh_screen
 }
 
 print_player1_correct_throw_speed()
 {
-    tput cup $((top_padding_height + 2)) \
-        $(($((left_padding_width + 15)) + ${#max_speed})) >> ${buffer}
+    {
+        tput cup                        \
+            $((top_padding_height + 2)) \
+            $((left_padding_width + 15 + ${#max_speed}))
 
-    for ((i=0; i < ${#max_speed}; i++))
-    do
-        printf " " >> ${buffer}
-    done
+        for ((i=0; i < ${#max_speed}; i++))
+        do
+            printf ' '
+        done
 
-    tput cup $((top_padding_height + 2)) \
-        $(($((left_padding_width + 15)) + ${#max_speed})) >> ${buffer}
+        tput cup                        \
+            $((top_padding_height + 2)) \
+            $((left_padding_width + 15 + ${#max_speed}))
 
-    printf "${player1_throw_speed}" >> ${buffer}
+        printf '%s' "${player1_throw_speed}"
+
+    } >> "${buffer}"
 
     refresh_screen
 }
 
 print_player2_correct_throw_speed()
 {
-    tput cup $((top_padding_height + 2)) \
-        $(($((left_padding_width + grid_width)) - ${#max_speed})) >> ${buffer}
+    {
+        tput cup                        \
+            $((top_padding_height + 2)) \
+            $((left_padding_width + grid_width - ${#max_speed}))
 
-    for ((i=0; i < ${#max_speed}; i++))
-    do
-        printf " " >> ${buffer}
-    done
+        for ((i=0; i < ${#max_speed}; i++))
+        do
+            printf ' '
+        done
 
-    tput cup $((top_padding_height + 2)) \
-        $(($((left_padding_width + grid_width)) - ${#max_speed})) >> ${buffer}
+        tput cup                        \
+            $((top_padding_height + 2)) \
+            $((left_padding_width + grid_width - ${#max_speed}))
 
-    printf "${player2_throw_speed}" >> ${buffer}
+        printf '%s' "${player2_throw_speed}"
+
+    } >> "${buffer}"
 
     refresh_screen
 }
 
 read_player1_throw_angle()
 {
-    read -n2 player1_throw_angle
+    read -r -n2 player1_throw_angle
 
-    case ${player1_throw_angle} in
+    case "${player1_throw_angle}" in
         ''|*[!0-9]*)
             player1_throw_angle=0
             print_player1_correct_throw_angle
@@ -154,9 +179,9 @@ read_player1_throw_angle()
 
 read_player2_throw_angle()
 {
-    read -n2 player2_throw_angle
+    read -r -n2 player2_throw_angle
 
-    case ${player2_throw_angle} in
+    case "${player2_throw_angle}" in
         ''|*[!0-9]*)
             player2_throw_angle=0
             print_player2_correct_throw_angle
@@ -173,9 +198,9 @@ read_player2_throw_angle()
 
 read_player1_throw_speed()
 {
-    read -n3 player1_throw_speed
+    read -r -n3 player1_throw_speed
 
-    case ${player1_throw_speed} in
+    case "${player1_throw_speed}" in
         ''|*[!0-9]*)
             player1_throw_speed=0
             print_player1_correct_throw_speed
@@ -192,9 +217,9 @@ read_player1_throw_speed()
 
 read_player2_throw_speed()
 {
-    read -n3 player2_throw_speed
+    read -r -n3 player2_throw_speed
 
-    case ${player2_throw_speed} in
+    case "${player2_throw_speed}" in
         ''|*[!0-9]*)
             player2_throw_speed=0
             print_player2_correct_throw_speed
@@ -211,49 +236,62 @@ read_player2_throw_speed()
 
 clear_player1_throw_angle()
 {
-    tput cup $((top_padding_height + 1)) ${left_padding_width} >> ${buffer}
+    {
+        tput cup $((top_padding_height + 1)) "${left_padding_width}"
 
-    printf "                " >> ${buffer}
+        printf '                '
+
+    } >> "${buffer}"
 
     refresh_screen
 }
 
 clear_player2_throw_angle()
 {
-    tput cup $((top_padding_height + 1)) \
-    $(($((left_padding_width + grid_width)) - 16)) >> ${buffer}
+    {
+        tput cup                        \
+            $((top_padding_height + 1)) \
+            $((left_padding_width + grid_width - 16))
 
-    printf "                " >> ${buffer}
+        printf '                '
+
+    } >> "${buffer}"
 
     refresh_screen
 }
 
 clear_player1_throw_speed()
 {
-    tput cup $((top_padding_height + 2)) ${left_padding_width} >> ${buffer}
+    {
+        tput cup $((top_padding_height + 2)) "${left_padding_width}"
 
-    printf "               " >> ${buffer}
+        printf '               '
 
-    for ((i=0; i < (2 * ${#max_speed}); i++))
-    do
-        printf " " >> ${buffer}
-    done
+        for ((i=0; i < (2 * ${#max_speed}); i++))
+        do
+            printf ' '
+        done
+
+    } >> "${buffer}"
 
     refresh_screen
 }
 
 clear_player2_throw_speed()
 {
-    tput cup $((top_padding_height + 2)) \
-        $(($(($((left_padding_width + grid_width)) - 15)) \
-        - $((2 * ${#max_speed})))) >> ${buffer}
+    {
+        tput cup                        \
+            $((top_padding_height + 2)) \
+            $(((left_padding_width + grid_width - 15) - (2 * ${#max_speed})))
 
-    printf "               " >> ${buffer}
+        printf '               '
 
-    for ((i=0; i < (2 * ${#max_speed}); i++))
-    do
-        printf " " >> ${buffer}
-    done
+        for ((i=0; i < (2 * ${#max_speed}); i++))
+        do
+            printf ' '
+        done
+
+    } >> "${buffer}"
 
     refresh_screen
 }
