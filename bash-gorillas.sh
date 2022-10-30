@@ -95,6 +95,8 @@ check_required_commads()
         'rm'
         'sleep'
         'tput'
+        'true'
+        'xargs'
     )
 
     for required_command in "${required_commands[@]}"
