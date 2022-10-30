@@ -85,7 +85,7 @@ grid_height=''
 
 
 # Check the availability of necessary commands
-check_required_commads()
+check_required_commands()
 {
     local required_commands=(
         'bc'
@@ -265,13 +265,13 @@ generate_buildings()
 {
     local current_building_height=''
 
-    # Setsthe height of the buildings which players stand on
+    # Set the height of the buildings which players stand on
     player1_building_height="$((RANDOM % max_building_height))"
     player2_building_height="$((RANDOM % max_building_height))"
 
     if ((building_count <= 15))
     then
-        # Create the bulding which player1 stands on (the second building from
+        # Create the building which player1 stands on (the second building from
         # the left edge of the screen)
         for ((i=building_width; i < (2 * building_width); i++))
         do
@@ -281,7 +281,7 @@ generate_buildings()
             done
         done
 
-        # Create the bulding which player2 stands on (the second building from
+        # Create the building which player2 stands on (the second building from
         # the right edge of the screen)
         for ((i=(grid_width - (2 * building_width)); i < (grid_width - building_width); i++))
         do
@@ -309,7 +309,7 @@ generate_buildings()
             fi
         done
     else
-        # Create the bulding which player1 stands on (the third building from
+        # Create the building which player1 stands on (the third building from
         # the left edge of the screen)
         for ((i=(2 * building_width); i < (3 * building_width); i++))
         do
@@ -319,7 +319,7 @@ generate_buildings()
             done
         done
 
-        # Create the bulding which player2 stands on (the third building from
+        # Create the building which player2 stands on (the third building from
         # the right edge of the screen)
         for ((i=(grid_width - (3 * building_width)); i < (grid_width - (2 * building_width)); i++))
         do
@@ -410,7 +410,7 @@ init_game()
     # Set the width of a building (number of characters on the terminal screen)
     building_width='8'
 
-    # Set the maxmum height of buildings to
+    # Set the maximum height of buildings to
     # three fourth of the height of the terminal
     max_building_height="$(((term_height * 3) / 4))"
 
@@ -440,7 +440,7 @@ init_game()
     # Generate the buildings, and save the buildings into $grid
     generate_buildings
 
-    # Initialize and place payers into $grid
+    # Initialize and place players into $grid
     init_players
 }
 
@@ -1227,7 +1227,7 @@ print_player_names()
 
         printf '%s' "${player1_name}"
 
-        # Position the cursor to the top right corner ot the playing field
+        # Position the cursor to the top right corner of the playing field
         tput cup "${top_padding_height}" $((left_padding_width + grid_width - ${#player2_name}))
 
         printf '%s' "${player2_name}"
@@ -2095,7 +2095,7 @@ throw_banana()
 }
 
 
-check_required_commads
+check_required_commands
 
 term_width="$(tput cols)"
 term_height="$(tput lines)"
