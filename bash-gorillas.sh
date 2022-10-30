@@ -89,7 +89,6 @@ script_directory="$(dirname "$(realpath "$0")")"
 
 # Include necessary source files
 source "${script_directory}/quit.sh"
-source "${script_directory}/read-player-data.sh"
 source "${script_directory}/throw-banana.sh"
 
 
@@ -1619,6 +1618,68 @@ print_wind()
     refresh_screen
 }
 
+prompt_gravity_value()
+{
+    {
+        tput cup $((top_padding_height + 10)) $((left_padding_width + 20))
+
+        printf "Gravity in Meters/Sec^2 (Earth = ~10)? "
+
+    } >> "${buffer}"
+}
+
+prompt_max_points_num()
+{
+    {
+        tput cup $((top_padding_height + 8)) $((left_padding_width + 17))
+
+        printf "Play to how many total points (Default = 3)? "
+
+    } >> "${buffer}"
+}
+
+prompt_menu_choice()
+{
+    {
+        tput cup $((top_padding_height + 12)) $((left_padding_width + 34))
+
+        printf '%s' '-------------'
+
+        tput cup $((top_padding_height + 14)) $((left_padding_width + 34))
+
+        printf 'P = Play Game'
+
+        tput cup $((top_padding_height + 15)) $((left_padding_width + 37))
+
+        printf 'Q = Quit'
+
+        tput cup $((top_padding_height + 17)) $((left_padding_width + 35))
+
+        printf 'Your Choice?'
+
+    } >> "${buffer}"
+}
+
+prompt_player1_name()
+{
+    {
+        tput cup $((top_padding_height + 4)) $((left_padding_width + 15))
+
+        printf "Name of Player 1 (Default = 'Player 1'): "
+
+    } >> "${buffer}"
+}
+
+prompt_player2_name()
+{
+    {
+        tput cup $((top_padding_height + 6)) $((left_padding_width + 15))
+
+        printf "Name of Player 2 (Default = 'Player 2'): "
+
+    } >> "${buffer}"
+}
+
 prompt_player1_throw_angle()
 {
     local angle_text='Angle [0-90]: '
@@ -1680,12 +1741,94 @@ prompt_player2_throw_speed()
     refresh_screen
 }
 
+read_gravity_value()
+{
+    read -r -n3 gravity_value
+
+    case "${gravity_value}" in
+        ''|*[!0-9]*)
+            gravity_value='10'
+            ;;
+    esac
+}
+
 # Read a key from keyboard
 read_intro_outro_continue_key()
 {
     read -r -sn1 -t0.01
 
     return $?
+}
+
+read_menu_choice()
+{
+    while [[ "${menu_choice}" != 'p' && "${menu_choice}" != 'P' && \
+        "${menu_choice}" != 'q' && "${menu_choice}" != 'Q' ]]
+    do
+        read -r -sn1 menu_choice
+
+        case "${menu_choice}" in
+            'p'|'P')
+                ;;
+            'q'|'Q')
+                quit
+                ;;
+        esac
+    done
+}
+
+read_player_data()
+{
+    prompt_player1_name
+    refresh_screen
+    read_player1_name
+
+    prompt_player2_name
+    refresh_screen
+    read_player2_name
+
+    prompt_max_points_num
+    refresh_screen
+    read_total_points
+
+    prompt_gravity_value
+    refresh_screen
+    read_gravity_value
+
+    prompt_menu_choice
+    refresh_screen
+    read_menu_choice
+
+    clear >> "${buffer}"
+    refresh_screen
+}
+
+read_player1_name()
+{
+    local player1_tmp_name=''
+
+    read -r -n10 player1_name
+
+    player1_tmp_name="${player1_name/ /}"
+
+    if [[ "${player1_tmp_name}" == '' ]]
+    then
+        player1_name='Player 1'
+    fi
+}
+
+read_player2_name()
+{
+    local player2_tmp_name
+
+    read -r -n10 player2_name
+
+    player2_tmp_name="${player2_name/ /}"
+
+    if [[ "${player2_tmp_name}" == '' ]]
+    then
+        player2_name='Player 2'
+    fi
 }
 
 read_player1_throw_angle()
@@ -1786,6 +1929,17 @@ read_throw_data()
         clear_player2_throw_angle
         clear_player2_throw_speed
     fi
+}
+
+read_total_points()
+{
+    read -r -n2 total_points
+
+    case "${total_points}" in
+        ''|*[!0-9]*)
+            total_points='3'
+            ;;
+    esac
 }
 
 # Print the buffer onto the screen then clear the buffer
