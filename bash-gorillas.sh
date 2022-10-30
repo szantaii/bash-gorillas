@@ -680,6 +680,9 @@ init_players()
 # Game main loop
 main_loop()
 {
+    # Save terminal screen
+    tput smcup
+
     init_main
 
     play_intro
@@ -2164,16 +2167,11 @@ top_padding_height="$(((term_height - min_term_height) / 2))"
 
 check_terminal_size
 
-# Save terminal screen
-tput smcup
-
 # Parse option flags and their arguments
 while getopts ":w:s:h" option
 do
     case "${option}" in
         'h')
-            tput rmcup
-
             printf '%s\n' \
                 "bash-gorillas Copyright (C) 2013-2022 \
 Istvan Szantai <szantaii@gmail.com>" \
@@ -2188,8 +2186,6 @@ Istvan Szantai <szantaii@gmail.com>" \
                     max_wind_value="${OPTARG}"
                     ;;
                 *)
-                    tput rmcup
-
                     printf '%s\n' \
                         "Invalid argument for option: -w. \
 Specify a number between 0 and 10."
@@ -2200,8 +2196,6 @@ Specify a number between 0 and 10."
 
             if ((max_wind_value < 0 || max_wind_value > 10))
             then
-                tput rmcup
-
                 printf '%s\n' \
                     "Invalid argument for option: -w. \
 Specify a number between 0 and 10."
@@ -2217,8 +2211,6 @@ Specify a number between 0 and 10."
                     max_speed="${OPTARG}"
                     ;;
                 *)
-                    tput rmcup
-
                     printf '%s\n' \
                         "Invalid argument for option: -s. \
 Specify a number between 100 and 200."
@@ -2229,8 +2221,6 @@ Specify a number between 100 and 200."
 
             if ((max_speed < 100 || max_speed > 200))
             then
-                tput rmcup
-
                 printf '%s\n' \
                     "Invalid argument for option: -s. \
 Specify a number between 100 and 200."
@@ -2239,8 +2229,6 @@ Specify a number between 100 and 200."
             fi
             ;;
         :)
-            tput rmcup
-
             if [[ "${OPTARG}" == 'w' ]]
             then
                 printf '%s\n' \
@@ -2257,8 +2245,6 @@ Specify a number between 100 and 200."
             exit 1
             ;;
         \?)
-            tput rmcup
-
             printf '%s\n' "Invalid option: -${OPTARG}.\n"
 
             exit 1
