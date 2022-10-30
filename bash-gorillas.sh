@@ -90,7 +90,6 @@ script_directory="$(dirname "$(realpath "$0")")"
 # Include necessary source files
 source "${script_directory}/quit.sh"
 source "${script_directory}/read-player-data.sh"
-source "${script_directory}/read-throw-data.sh"
 source "${script_directory}/throw-banana.sh"
 
 
@@ -192,6 +191,68 @@ clear_player_names()
     do
         printf ' ' >> "${buffer}"
     done
+
+    refresh_screen
+}
+
+clear_player1_throw_angle()
+{
+    {
+        tput cup $((top_padding_height + 1)) "${left_padding_width}"
+
+        printf '                '
+
+    } >> "${buffer}"
+
+    refresh_screen
+}
+
+clear_player2_throw_angle()
+{
+    {
+        tput cup                        \
+            $((top_padding_height + 1)) \
+            $((left_padding_width + grid_width - 16))
+
+        printf '                '
+
+    } >> "${buffer}"
+
+    refresh_screen
+}
+
+clear_player1_throw_speed()
+{
+    {
+        tput cup $((top_padding_height + 2)) "${left_padding_width}"
+
+        printf '               '
+
+        for ((i=0; i < (2 * ${#max_speed}); i++))
+        do
+            printf ' '
+        done
+
+    } >> "${buffer}"
+
+    refresh_screen
+}
+
+clear_player2_throw_speed()
+{
+    {
+        tput cup                        \
+            $((top_padding_height + 2)) \
+            $(((left_padding_width + grid_width - 15) - (2 * ${#max_speed})))
+
+        printf '               '
+
+        for ((i=0; i < (2 * ${#max_speed}); i++))
+        do
+            printf ' '
+        done
+
+    } >> "${buffer}"
 
     refresh_screen
 }
@@ -1130,6 +1191,84 @@ print_help()
     refresh_screen
 }
 
+print_player1_correct_throw_angle()
+{
+    {
+        tput cup $((top_padding_height + 1)) $((left_padding_width + 14))
+
+        printf '  '
+
+        tput cup $((top_padding_height + 1)) $((left_padding_width + 14))
+
+        printf '%s' "${player1_throw_angle}"
+
+    } >> "${buffer}"
+
+    refresh_screen
+}
+
+print_player2_correct_throw_angle()
+{
+    {
+        tput cup $((top_padding_height + 1)) $((left_padding_width + grid_width - 2))
+
+        printf '  '
+
+        tput cup $((top_padding_height + 1)) $((left_padding_width + grid_width - 2))
+
+        printf '%s' "${player2_throw_angle}"
+
+    } >> "${buffer}"
+
+    refresh_screen
+}
+
+print_player1_correct_throw_speed()
+{
+    {
+        tput cup                        \
+            $((top_padding_height + 2)) \
+            $((left_padding_width + 15 + ${#max_speed}))
+
+        for ((i=0; i < ${#max_speed}; i++))
+        do
+            printf ' '
+        done
+
+        tput cup                        \
+            $((top_padding_height + 2)) \
+            $((left_padding_width + 15 + ${#max_speed}))
+
+        printf '%s' "${player1_throw_speed}"
+
+    } >> "${buffer}"
+
+    refresh_screen
+}
+
+print_player2_correct_throw_speed()
+{
+    {
+        tput cup                        \
+            $((top_padding_height + 2)) \
+            $((left_padding_width + grid_width - ${#max_speed}))
+
+        for ((i=0; i < ${#max_speed}; i++))
+        do
+            printf ' '
+        done
+
+        tput cup                        \
+            $((top_padding_height + 2)) \
+            $((left_padding_width + grid_width - ${#max_speed}))
+
+        printf '%s' "${player2_throw_speed}"
+
+    } >> "${buffer}"
+
+    refresh_screen
+}
+
 # Print the name of the players to the top left and right corners of the screen
 print_player_names()
 {
@@ -1480,12 +1619,173 @@ print_wind()
     refresh_screen
 }
 
+prompt_player1_throw_angle()
+{
+    local angle_text='Angle [0-90]: '
+
+    {
+        tput cup $((top_padding_height + 1)) "${left_padding_width}"
+
+        printf '%s' "${angle_text}"
+
+    } >> "${buffer}"
+
+    refresh_screen
+}
+
+prompt_player2_throw_angle()
+{
+    local angle_text='Angle [0-90]: '
+
+    {
+        tput cup                        \
+            $((top_padding_height + 1)) \
+            $(((left_padding_width + grid_width) - (${#angle_text} + 2)))
+
+        printf '%s' "${angle_text}"
+
+    } >> "${buffer}"
+
+    refresh_screen
+}
+
+prompt_player1_throw_speed()
+{
+    local speed_text="Velocity [0-${max_speed}]: "
+
+    {
+        tput cup $((top_padding_height + 2)) "${left_padding_width}"
+
+        printf '%s' "${speed_text}"
+
+    } >> "${buffer}"
+
+    refresh_screen
+}
+
+prompt_player2_throw_speed()
+{
+    local speed_text="Velocity [0-${max_speed}]: "
+
+    {
+        tput cup                        \
+            $((top_padding_height + 2)) \
+            $(((left_padding_width + grid_width) - $((${#speed_text} + ${#max_speed}))))
+
+
+        printf '%s' "${speed_text}"
+
+    } >> "${buffer}"
+
+    refresh_screen
+}
+
 # Read a key from keyboard
 read_intro_outro_continue_key()
 {
     read -r -sn1 -t0.01
 
     return $?
+}
+
+read_player1_throw_angle()
+{
+    read -r -n2 player1_throw_angle
+
+    case "${player1_throw_angle}" in
+        ''|*[!0-9]*)
+            player1_throw_angle=0
+            print_player1_correct_throw_angle
+            ;;
+        *)
+            if ((player1_throw_angle > 90))
+            then
+                player1_throw_angle=90
+                print_player1_correct_throw_angle
+            fi
+            ;;
+    esac
+}
+
+read_player2_throw_angle()
+{
+    read -r -n2 player2_throw_angle
+
+    case "${player2_throw_angle}" in
+        ''|*[!0-9]*)
+            player2_throw_angle=0
+            print_player2_correct_throw_angle
+            ;;
+        *)
+            if ((player2_throw_angle > 90))
+            then
+                player2_throw_angle=90
+                print_player2_correct_throw_angle
+            fi
+            ;;
+    esac
+}
+
+read_player1_throw_speed()
+{
+    read -r -n3 player1_throw_speed
+
+    case "${player1_throw_speed}" in
+        ''|*[!0-9]*)
+            player1_throw_speed=0
+            print_player1_correct_throw_speed
+            ;;
+        *)
+            if ((player1_throw_speed > max_speed))
+            then
+                player1_throw_speed=${max_speed}
+                print_player1_correct_throw_speed
+            fi
+            ;;
+    esac
+}
+
+read_player2_throw_speed()
+{
+    read -r -n3 player2_throw_speed
+
+    case "${player2_throw_speed}" in
+        ''|*[!0-9]*)
+            player2_throw_speed=0
+            print_player2_correct_throw_speed
+            ;;
+        *)
+            if ((player2_throw_speed > max_speed))
+            then
+                player2_throw_speed=${max_speed}
+                print_player2_correct_throw_speed
+            fi
+            ;;
+    esac
+}
+
+read_throw_data()
+{
+    if ((next_player == 1))
+    then
+        prompt_player1_throw_angle
+        read_player1_throw_angle
+
+        prompt_player1_throw_speed
+        read_player1_throw_speed
+
+        clear_player1_throw_angle
+        clear_player1_throw_speed
+    else
+        prompt_player2_throw_angle
+        read_player2_throw_angle
+
+        prompt_player2_throw_speed
+        read_player2_throw_speed
+
+        clear_player2_throw_angle
+        clear_player2_throw_speed
+    fi
 }
 
 # Print the buffer onto the screen then clear the buffer
