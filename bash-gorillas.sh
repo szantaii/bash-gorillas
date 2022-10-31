@@ -90,6 +90,7 @@ check_required_commands()
     local required_commands=(
         'bc'
         'cat'
+        'clear'
         'mktemp'
         'printf'
         'rm'
