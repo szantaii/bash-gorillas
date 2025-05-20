@@ -124,82 +124,81 @@ check_prerequisites ${term_width} ${term_height}
 # Parse option flags and their arguments
 while getopts ":w:s:h" option
 do
-	case ${option} in
-		h)
-			tput rmcup
-			printf "bash-gorillas Copyright (C) Istvan Szantai \
+    case ${option} in
+        h)
+            tput rmcup
+            printf "bash-gorillas Copyright (C) Istvan Szantai \
 \x3c\x73\x7a\x61\x6e\x74\x61\x69\x69\x40\x73\x69\x64\x65\x6e\x6f\
 \x74\x65\x2e\x68\x75\x3e 2013\n\
 For more detailed help please see the file 'README.md'.\n"
-			exit 0
-			;;
-		w)
-			case ${OPTARG} in
-				*[0-9]*)
-					max_wind_value=${OPTARG}
-					;;
-				*)
-					tput rmcup
-					printf "Invalid argument for option: -w. \
+            exit 0
+            ;;
+        w)
+            case ${OPTARG} in
+                *[0-9]*)
+                    max_wind_value=${OPTARG}
+                    ;;
+                *)
+                    tput rmcup
+                    printf "Invalid argument for option: -w. \
 Specify a number between 0 and 10.\n"
-					exit 1
-					;;
-			esac
-			
-			if ((max_wind_value < 0 || max_wind_value > 10))
-			then
-				tput rmcup
-				printf "Invalid argument for option: -w. \
+                    exit 1
+                    ;;
+            esac
+
+            if ((max_wind_value < 0 || max_wind_value > 10))
+            then
+                tput rmcup
+                printf "Invalid argument for option: -w. \
 Specify a number between 0 and 10.\n"
-				exit 1
-			fi
-			
-			max_wind_value=$((max_wind_value + 1))
-			;;
-		s)
-			
-			case ${OPTARG} in
-				*[0-9]*)
-					max_speed=${OPTARG}
-					;;
-				*)
-					tput rmcup
-					printf "Invalid argument for option: -s. \
+                exit 1
+            fi
+
+            max_wind_value=$((max_wind_value + 1))
+            ;;
+        s)
+
+            case ${OPTARG} in
+                *[0-9]*)
+                    max_speed=${OPTARG}
+                    ;;
+                *)
+                    tput rmcup
+                    printf "Invalid argument for option: -s. \
 Specify a number between 100 and 200.\n"
-					exit 1
-					;;
-			esac
-			
-			if ((max_speed < 100 || max_speed > 200))
-			then
-				tput rmcup
-				printf "Invalid argument for option: -s. \
+                    exit 1
+                    ;;
+            esac
+
+            if ((max_speed < 100 || max_speed > 200))
+            then
+                tput rmcup
+                printf "Invalid argument for option: -s. \
 Specify a number between 100 and 200.\n"
-				exit 1
-			fi
-			;;
-		:)
-			tput rmcup
-			
-			if [[ "${OPTARG}" == "w" ]]
-			then
-				printf "Missing argument for option: -${OPTARG}. \
+                exit 1
+            fi
+            ;;
+        :)
+            tput rmcup
+
+            if [[ "${OPTARG}" == "w" ]]
+            then
+                printf "Missing argument for option: -${OPTARG}. \
 Specify a number between 0 and 10.\n"
-			elif [[ "${OPTARG}" == "s" ]]
-			then
-				printf "Missing argument for option: -${OPTARG}. \
+            elif [[ "${OPTARG}" == "s" ]]
+            then
+                printf "Missing argument for option: -${OPTARG}. \
 Specify a number between 100 and 200.\n"
-			fi
-			
-			exit 1
-			;;
-		\?)
-			tput rmcup
-			printf "Invalid option: -${OPTARG}.\n"
-			exit 1
-			;;
-	esac
+            fi
+
+            exit 1
+            ;;
+        \?)
+            tput rmcup
+            printf "Invalid option: -${OPTARG}.\n"
+            exit 1
+            ;;
+    esac
 done
 
 main_loop
-
