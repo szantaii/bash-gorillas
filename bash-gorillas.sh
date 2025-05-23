@@ -102,12 +102,16 @@ check_prerequisites()
         # Restore terminal screen
         tput rmcup
 
-        printf "Your system is missing the program 'tput' which is necessary \
-for bash-gorillas\nto run. 'tput' can be found in the following packages on \
-the following distributions:\n    Distribution        Package name\n\
-    ---------------------------------\n    Arch Linux          ncurses\n    \
-Debian              ncurses-bin\n    Fedora              ncurses\n    \
-openSUSE            ncurses-utils\n    Ubuntu              ncurses-bin\n"
+        printf '%s\n' "Your system is missing the program 'tput' which is \
+necessary for bash-gorillas\nto run. 'tput' can be found in the following \
+packages on the following distributions:\n\
+    Distribution        Package name\n\
+    ---------------------------------\n\
+    Arch Linux          ncurses\n\
+    Debian              ncurses-bin\n\
+    Fedora              ncurses\n\
+    openSUSE            ncurses-utils\n\
+    Ubuntu              ncurses-bin"
 
         exit 2
     fi
@@ -122,9 +126,9 @@ openSUSE            ncurses-utils\n    Ubuntu              ncurses-bin\n"
         # Restore terminal screen
         tput rmcup
 
-        printf "Your system is missing the program 'bc' which is necessary \
-for bash-gorillas\nto run. 'bc' can be found in the 'bc' package on most Linux \
-distributions.\n"
+        printf '%s\n' "Your system is missing the program 'bc' which is \
+necessary for bash-gorillas\nto run. 'bc' can be found in the 'bc' \
+package on most Linux distributions."
 
         exit 2
     fi
@@ -140,9 +144,9 @@ distributions.\n"
         # Restore terminal screen
         tput rmcup
 
-        printf "bash-gorillas needs a terminal with size of at least \
+        printf '%s\n' "bash-gorillas needs a terminal with size of at least \
 ${min_term_width}x${min_term_height} (${min_term_width} columns, \
-${min_term_height} lines).\n"
+${min_term_height} lines)."
 
         exit 3
     fi
@@ -179,7 +183,7 @@ create_buffer()
         buffer="${buffer_directory}/${buffer_name}-${RANDOM}"
 
         # Create the buffer file
-        printf "" > $buffer
+        printf '%s' '' > $buffer
     fi
 }
 
@@ -203,7 +207,7 @@ init_main()
 refresh_screen()
 {
     cat "${buffer}"
-    printf "" > "${buffer}"
+    printf '%s' '' > "${buffer}"
 }
 
 # Functions in this file each print a frame to the buffer
@@ -214,7 +218,7 @@ print_frame_stage1()
 {
     # top rule
     tput cup ${top_padding_height} ${left_padding_width} >> "${buffer}"
-    printf "*    *    *    *    *    *    *    *    *    *    *    *    *    \
+    printf '%s' "*    *    *    *    *    *    *    *    *    *    *    *    *    \
 *    *    *    " >> "${buffer}"
 
     # right rule
@@ -224,16 +228,16 @@ print_frame_stage1()
             $(($((left_padding_width + min_term_width)) - 1)) >> "${buffer}"
         if (( $((i % 3)) == 0))
         then
-            printf "*" >> "${buffer}"
+            printf '%s' '*' >> "${buffer}"
         else
-            printf " " >> "${buffer}"
+            printf '%s' ' ' >> "${buffer}"
         fi
     done
 
     # bottom rule
     tput cup $((top_padding_height + min_term_height - 5)) \
         ${left_padding_width} >> "${buffer}"
-    printf "    *    *    *    *    *    *    *    *    *    *    *    *    \
+    printf '%s' "    *    *    *    *    *    *    *    *    *    *    *    *    \
 *    *    *    *" >> "${buffer}"
 
     # left rule
@@ -243,9 +247,9 @@ print_frame_stage1()
             >> "${buffer}"
         if (( $((i % 3)) == 2))
         then
-            printf "*" >> "${buffer}"
+            printf '%s' '*' >> "${buffer}"
         else
-            printf " " >> "${buffer}"
+            printf '%s' ' ' >> "${buffer}"
         fi
     done
 
@@ -256,7 +260,7 @@ print_frame_stage2()
 {
     # top rule
     tput cup ${top_padding_height} ${left_padding_width} >> "${buffer}"
-    printf " *    *    *    *    *    *    *    *    *    *    *    *    \
+    printf '%s' " *    *    *    *    *    *    *    *    *    *    *    *    \
 *    *    *    *   " >> "${buffer}"
 
     # right rule
@@ -266,16 +270,16 @@ print_frame_stage2()
             $(($((left_padding_width + min_term_width)) - 1)) >> "${buffer}"
         if (( $((i % 3)) == 1))
         then
-            printf "*" >> "${buffer}"
+            printf '%s' '*' >> "${buffer}"
         else
-            printf " " >> "${buffer}"
+            printf '%s' ' ' >> "${buffer}"
         fi
     done
 
     # bottom rule
     tput cup $((top_padding_height + min_term_height - 5)) \
         ${left_padding_width} >> "${buffer}"
-    printf "   *    *    *    *    *    *    *    *    *    *    *    *    \
+    printf '%s' "   *    *    *    *    *    *    *    *    *    *    *    *    \
 *    *    *    * " >> "${buffer}"
 
     # left rule
@@ -285,9 +289,9 @@ print_frame_stage2()
             >> "${buffer}"
         if (( $((i % 3)) == 1))
         then
-            printf "*" >> "${buffer}"
+            printf '%s' '*' >> "${buffer}"
         else
-            printf " " >> "${buffer}"
+            printf '%s' ' ' >> "${buffer}"
         fi
     done
 
@@ -298,7 +302,7 @@ print_frame_stage3()
 {
     # top rule
     tput cup ${top_padding_height} ${left_padding_width} >> "${buffer}"
-    printf "  *    *    *    *    *    *    *    *    *    *    *    *    \
+    printf '%s' "  *    *    *    *    *    *    *    *    *    *    *    *    \
 *    *    *    *  " >> "${buffer}"
 
     # right rule
@@ -308,16 +312,16 @@ print_frame_stage3()
             $(($((left_padding_width + min_term_width)) - 1)) >> "${buffer}"
         if (( $((i % 3)) == 2))
         then
-            printf "*" >> "${buffer}"
+            printf '%s' '*' >> "${buffer}"
         else
-            printf " " >> "${buffer}"
+            printf '%s' ' ' >> "${buffer}"
         fi
     done
 
     # bottom rule
     tput cup $((top_padding_height + min_term_height - 5)) \
         ${left_padding_width} >> "${buffer}"
-    printf "  *    *    *    *    *    *    *    *    *    *    *    *    \
+    printf '%s' "  *    *    *    *    *    *    *    *    *    *    *    *    \
 *    *    *    *  " >> "${buffer}"
 
     # left rule
@@ -327,9 +331,9 @@ print_frame_stage3()
             >> "${buffer}"
         if (( $((i % 3)) == 0))
         then
-            printf "*" >> "${buffer}"
+            printf '%s' '*' >> "${buffer}"
         else
-            printf " " >> "${buffer}"
+            printf '%s' ' ' >> "${buffer}"
         fi
     done
 
@@ -340,7 +344,7 @@ print_frame_stage4()
 {
     # top rule
     tput cup ${top_padding_height} ${left_padding_width} >> "${buffer}"
-    printf "   *    *    *    *    *    *    *    *    *    *    *    *    \
+    printf '%s' "   *    *    *    *    *    *    *    *    *    *    *    *    \
 *    *    *    * " >> "${buffer}"
 
     # right rule
@@ -350,16 +354,16 @@ print_frame_stage4()
             $(($((left_padding_width + min_term_width)) - 1)) >> "${buffer}"
         if (( $((i % 3)) == 0))
         then
-            printf "*" >> "${buffer}"
+            printf '%s' '*' >> "${buffer}"
         else
-            printf " " >> "${buffer}"
+            printf '%s' ' ' >> "${buffer}"
         fi
     done
 
     # bottom rule
     tput cup $((top_padding_height + min_term_height - 5)) \
         ${left_padding_width} >> "${buffer}"
-    printf " *    *    *    *    *    *    *    *    *    *    *    *    \
+    printf '%s' " *    *    *    *    *    *    *    *    *    *    *    *    \
 *    *    *    *   " >> "${buffer}"
 
     # left rule
@@ -369,9 +373,9 @@ print_frame_stage4()
             >> "${buffer}"
         if (( $((i % 3)) == 2))
         then
-            printf "*" >> "${buffer}"
+            printf '%s' '*' >> "${buffer}"
         else
-            printf " " >> "${buffer}"
+            printf '%s' ' ' >> "${buffer}"
         fi
     done
 
@@ -382,7 +386,7 @@ print_frame_stage5()
 {
     # top rule
     tput cup ${top_padding_height} ${left_padding_width} >> "${buffer}"
-    printf "    *    *    *    *    *    *    *    *    *    *    *    *    \
+    printf '%s' "    *    *    *    *    *    *    *    *    *    *    *    *    \
 *    *    *    *" >> "${buffer}"
 
     # right rule
@@ -392,16 +396,16 @@ print_frame_stage5()
             $(($((left_padding_width + min_term_width)) - 1)) >> "${buffer}"
         if (( $((i % 3)) == 1))
         then
-            printf "*" >> "${buffer}"
+            printf '%s' '*' >> "${buffer}"
         else
-            printf " " >> "${buffer}"
+            printf '%s' ' ' >> "${buffer}"
         fi
     done
 
     # bottom rule
     tput cup $((top_padding_height + min_term_height - 5)) \
         ${left_padding_width} >> "${buffer}"
-    printf "*    *    *    *    *    *    *    *    *    *    *    *    *    \
+    printf '%s' "*    *    *    *    *    *    *    *    *    *    *    *    *    \
 *    *    *    " >> "${buffer}"
 
     # left rule
@@ -411,9 +415,9 @@ print_frame_stage5()
             >> "${buffer}"
         if (( $((i % 3)) == 1))
         then
-            printf "*" >> "${buffer}"
+            printf '%s' '*' >> "${buffer}"
         else
-            printf " " >> "${buffer}"
+            printf '%s' ' ' >> "${buffer}"
         fi
     done
 
@@ -470,7 +474,7 @@ field, its length relative to its strength.\n\n\n\n\n\n${left_padding}    \
                         Press any key to continue"
 
     # Print intro text into the screen buffer
-    printf "${intro_text}" >> "${buffer}"
+    printf '%s' "${intro_text}" >> "${buffer}"
 
     # Play animation, exit from loop when a key was pressed
     while true
@@ -517,7 +521,7 @@ prompt_player1_name()
     tput cup $((top_padding_height + 4)) \
         $((left_padding_width + 15)) >> "${buffer}"
 
-    printf "Name of Player 1 (Default = 'Player 1'): " >> "${buffer}"
+    printf '%s' 'Name of Player 1 (Default = '"'"'Player 1'"'"'): ' >> "${buffer}"
 }
 
 prompt_player2_name()
@@ -525,7 +529,7 @@ prompt_player2_name()
     tput cup $((top_padding_height + 6)) \
         $((left_padding_width + 15)) >> "${buffer}"
 
-    printf "Name of Player 2 (Default = 'Player 2'): " >> "${buffer}"
+    printf '%s' 'Name of Player 2 (Default = '"'"'Player 2'"'"'): ' >> "${buffer}"
 }
 
 prompt_max_points_num()
@@ -533,7 +537,7 @@ prompt_max_points_num()
     tput cup $((top_padding_height + 8)) \
         $((left_padding_width + 17)) >> "${buffer}"
 
-    printf "Play to how many total points (Default = 3)? " >> "${buffer}"
+    printf '%s' 'Play to how many total points (Default = 3)? ' >> "${buffer}"
 }
 
 prompt_gravity_value()
@@ -541,7 +545,7 @@ prompt_gravity_value()
     tput cup $((top_padding_height + 10)) \
         $((left_padding_width + 20)) >> "${buffer}"
 
-    printf "Gravity in Meters/Sec^2 (Earth = ~10)? " >> "${buffer}"
+    printf '%s' 'Gravity in Meters/Sec^2 (Earth = ~10)? ' >> "${buffer}"
 }
 
 prompt_menu_choice()
@@ -549,22 +553,22 @@ prompt_menu_choice()
     tput cup $((top_padding_height + 12)) \
         $((left_padding_width + 34)) >> "${buffer}"
 
-    printf "%s-------------" >> "${buffer}"
+    printf '%s' '-------------' >> "${buffer}"
 
     tput cup $((top_padding_height + 14)) \
         $((left_padding_width + 34)) >> "${buffer}"
 
-    printf "P = Play Game" >> "${buffer}"
+    printf '%s' 'P = Play Game' >> "${buffer}"
 
     tput cup $((top_padding_height + 15)) \
         $((left_padding_width + 37)) >> "${buffer}"
 
-    printf "Q = Quit" >> "${buffer}"
+    printf '%s' 'Q = Quit' >> "${buffer}"
 
     tput cup $((top_padding_height + 17)) \
         $((left_padding_width + 35)) >> "${buffer}"
 
-    printf "Your Choice?" >> "${buffer}"
+    printf '%s' 'Your Choice?' >> "${buffer}"
 }
 
 read_player1_name()
@@ -1006,9 +1010,9 @@ init_game()
     tput cup 0 0 >> "${buffer}"
     if ((player1_score == 0 && player2_score == 0))
     then
-        printf "Starting new game..." >> "${buffer}"
+        printf '%s' 'Starting new game...' >> "${buffer}"
     else
-        printf "Starting new round..." >> "${buffer}"
+        printf '%s' 'Starting new round...' >> "${buffer}"
     fi
 
     # Refresh the screen
@@ -1080,7 +1084,7 @@ print_sun()
             >> "${buffer}"
 
         # Print the actual line to the screen buffer
-        printf "%s${sun_text[${i}]}" >> "${buffer}"
+        printf '%s' "${sun_text[${i}]}" >> "${buffer}"
     done
 
     # Refresh the screen
@@ -1094,7 +1098,7 @@ print_wind()
     tput cup ${grid_height} \
         $((left_padding_width + $((grid_width / 2)))) >> "${buffer}"
 
-    printf "|" >> "${buffer}"
+    printf '%s' '|' >> "${buffer}"
 
     # Print wind indicator arrow if $wind_value is not zero
     if ((wind_value != 0))
@@ -1107,23 +1111,23 @@ print_wind()
                 + wind_value)) - 1)))) >> "${buffer}"
 
             # Print wind indicator arrowhead
-            printf "<" >> "${buffer}"
+            printf '%s' '<' >> "${buffer}"
 
             # Print arrow with the length of $wind_value
             for ((i=wind_value; i < 0; i++))
             do
-                printf "%s-" >> "${buffer}"
+                printf '%s' '-' >> "${buffer}"
             done
         else
             # If the wind blows to the right ($wind_value is positive)
             # then print the arrow with the length of $wind_value
             for ((i=0; i < wind_value; i++))
             do
-                printf "%s-" >> "${buffer}"
+                printf '%s' '-' >> "${buffer}"
             done
 
             # Print wind indicator arrowhead
-            printf ">" >> "${buffer}"
+            printf '%s' '>' >> "${buffer}"
         fi
     fi
 
@@ -1138,14 +1142,14 @@ print_player_names()
     tput cup ${top_padding_height} ${left_padding_width} >> "${buffer}"
 
     # Print player1's name ($player1_name)
-    printf "${player1_name}" >> "${buffer}"
+    printf '%s' "${player1_name}" >> "${buffer}"
 
     # Position the cursor to the top right corner ot the playing field
     tput cup ${top_padding_height} \
         $(($((left_padding_width + grid_width)) - ${#player2_name}))>> "${buffer}"
 
     # Print player2's name ($player2_name)
-    printf "${player2_name}" >> "${buffer}"
+    printf '%s' "${player2_name}" >> "${buffer}"
 
     # Refresh the screen
     refresh_screen
@@ -1160,7 +1164,7 @@ clear_player_names()
     # Clear the name of player1 from the top left corner of the playing field
     for ((i=0; i < ${#player1_name}; i++))
     do
-        printf " " >> "${buffer}"
+        printf '%s' ' ' >> "${buffer}"
     done
 
     # Position the cursor to the top right corner of the playing field
@@ -1170,7 +1174,7 @@ clear_player_names()
     # Clear the name of player2 from the top right corner of the playing field
     for ((i=0; i < ${#player2_name}; i++))
     do
-        printf " " >> "${buffer}"
+        printf '%s' ' ' >> "${buffer}"
     done
 
     # Refresh the screen
@@ -1188,7 +1192,7 @@ print_score()
         $((left_padding_width + $((grid_width / 2)) - $((${#score_text} / 2)))) >> "${buffer}"
 
     # Print the score
-    printf "${score_text}" >> "${buffer}"
+    printf '%s' "${score_text}" >> "${buffer}"
 
     # Refresh the screen
     refresh_screen
@@ -1209,7 +1213,7 @@ print_scene()
             tput cup $(($(($((top_padding_height + grid_height)) - j)) - 1)) \
                 $((left_padding_width + i)) >> "${buffer}"
 
-            printf "${grid["${i},${j}"]}" >> "${buffer}"
+            printf '%s' "${grid["${i},${j}"]}" >> "${buffer}"
         done
     done
 
@@ -1229,7 +1233,7 @@ print_help()
         $(($((left_padding_width + grid_width)) - ${#help_text})) >> "${buffer}"
 
     # Print help
-    printf "${help_text}" >> "${buffer}"
+    printf '%s' "${help_text}" >> "${buffer}"
 
     # Refresh the screen
     refresh_screen
@@ -1244,7 +1248,7 @@ prompt_player1_throw_angle()
 
     tput cup $((top_padding_height + 1)) ${left_padding_width} >> "${buffer}"
 
-    printf "${angle_text}" >> "${buffer}"
+    printf '%s' "${angle_text}" >> "${buffer}"
 
     refresh_screen
 }
@@ -1257,7 +1261,7 @@ prompt_player2_throw_angle()
         $(($((left_padding_width + grid_width)) - $((${#angle_text} + 2)))) \
         >> "${buffer}"
 
-    printf "${angle_text}" >> "${buffer}"
+    printf '%s' "${angle_text}" >> "${buffer}"
 
     refresh_screen
 }
@@ -1268,7 +1272,7 @@ prompt_player1_throw_speed()
 
     tput cup $((top_padding_height + 2)) ${left_padding_width} >> "${buffer}"
 
-    printf "${speed_text}" >> "${buffer}"
+    printf '%s' "${speed_text}" >> "${buffer}"
 
     refresh_screen
 }
@@ -1281,7 +1285,7 @@ prompt_player2_throw_speed()
         $(($((left_padding_width + grid_width)) - \
         $((${#speed_text} + ${#max_speed})))) >> "${buffer}"
 
-    printf "${speed_text}" >> "${buffer}"
+    printf '%s' "${speed_text}" >> "${buffer}"
 
     refresh_screen
 }
@@ -1291,12 +1295,12 @@ print_player1_correct_throw_angle()
     tput cup $((top_padding_height + 1)) \
         $((left_padding_width + 14)) >> "${buffer}"
 
-    printf "  " >> "${buffer}"
+    printf '%s' '  ' >> "${buffer}"
 
     tput cup $((top_padding_height + 1)) \
         $((left_padding_width + 14)) >> "${buffer}"
 
-    printf "${player1_throw_angle}" >> "${buffer}"
+    printf '%s' "${player1_throw_angle}" >> "${buffer}"
 
     refresh_screen
 }
@@ -1306,12 +1310,12 @@ print_player2_correct_throw_angle()
     tput cup $((top_padding_height + 1)) \
         $(($((left_padding_width + grid_width)) - 2)) >> "${buffer}"
 
-    printf "  " >> "${buffer}"
+    printf '%s' '  ' >> "${buffer}"
 
     tput cup $((top_padding_height + 1)) \
         $(($((left_padding_width + grid_width)) - 2)) >> "${buffer}"
 
-    printf "${player2_throw_angle}" >> "${buffer}"
+    printf '%s' "${player2_throw_angle}" >> "${buffer}"
 
     refresh_screen
 }
@@ -1323,13 +1327,13 @@ print_player1_correct_throw_speed()
 
     for ((i=0; i < ${#max_speed}; i++))
     do
-        printf " " >> "${buffer}"
+        printf '%s' ' ' >> "${buffer}"
     done
 
     tput cup $((top_padding_height + 2)) \
         $(($((left_padding_width + 15)) + ${#max_speed})) >> "${buffer}"
 
-    printf "${player1_throw_speed}" >> "${buffer}"
+    printf '%s' "${player1_throw_speed}" >> "${buffer}"
 
     refresh_screen
 }
@@ -1341,13 +1345,13 @@ print_player2_correct_throw_speed()
 
     for ((i=0; i < ${#max_speed}; i++))
     do
-        printf " " >> "${buffer}"
+        printf '%s' ' ' >> "${buffer}"
     done
 
     tput cup $((top_padding_height + 2)) \
         $(($((left_padding_width + grid_width)) - ${#max_speed})) >> "${buffer}"
 
-    printf "${player2_throw_speed}" >> "${buffer}"
+    printf '%s' "${player2_throw_speed}" >> "${buffer}"
 
     refresh_screen
 }
@@ -1432,7 +1436,7 @@ clear_player1_throw_angle()
 {
     tput cup $((top_padding_height + 1)) ${left_padding_width} >> "${buffer}"
 
-    printf "                " >> "${buffer}"
+    printf '%s' '                ' >> "${buffer}"
 
     refresh_screen
 }
@@ -1442,7 +1446,7 @@ clear_player2_throw_angle()
     tput cup $((top_padding_height + 1)) \
     $(($((left_padding_width + grid_width)) - 16)) >> "${buffer}"
 
-    printf "                " >> "${buffer}"
+    printf '%s' '                ' >> "${buffer}"
 
     refresh_screen
 }
@@ -1451,11 +1455,11 @@ clear_player1_throw_speed()
 {
     tput cup $((top_padding_height + 2)) ${left_padding_width} >> "${buffer}"
 
-    printf "               " >> "${buffer}"
+    printf '%s' '               ' >> "${buffer}"
 
     for ((i=0; i < (2 * ${#max_speed}); i++))
     do
-        printf " " >> "${buffer}"
+        printf '%s' ' ' >> "${buffer}"
     done
 
     refresh_screen
@@ -1467,11 +1471,11 @@ clear_player2_throw_speed()
         $(($(($((left_padding_width + grid_width)) - 15)) \
         - $((2 * ${#max_speed})))) >> "${buffer}"
 
-    printf "               " >> "${buffer}"
+    printf '%s' '               ' >> "${buffer}"
 
     for ((i=0; i < (2 * ${#max_speed}); i++))
     do
-        printf " " >> "${buffer}"
+        printf '%s' ' ' >> "${buffer}"
     done
 
     refresh_screen
@@ -1517,7 +1521,7 @@ print_player1_throw_frame1()
         tput cup $(($(($((top_padding_height + grid_height)) - j)) - 1)) \
             $((left_padding_width + i)) >> "${buffer}"
 
-        printf "${player1_throw_animation_frame1["${key}"]}" >> "${buffer}"
+        printf '%s' "${player1_throw_animation_frame1["${key}"]}" >> "${buffer}"
     done
 
     refresh_screen
@@ -1538,7 +1542,7 @@ print_player1_throw_frame2()
         tput cup $(($(($((top_padding_height + grid_height)) - j)) - 1)) \
             $((left_padding_width + i)) >> "${buffer}"
 
-        printf "${player1_throw_animation_frame2["${key}"]}" >> "${buffer}"
+        printf '%s' "${player1_throw_animation_frame2["${key}"]}" >> "${buffer}"
     done
 
     refresh_screen
@@ -1559,7 +1563,7 @@ print_player2_throw_frame1()
         tput cup $(($(($((top_padding_height + grid_height)) - j)) - 1)) \
             $((left_padding_width + i)) >> "${buffer}"
 
-        printf "${player2_throw_animation_frame1["${key}"]}" >> "${buffer}"
+        printf '%s' "${player2_throw_animation_frame1["${key}"]}" >> "${buffer}"
     done
 
     refresh_screen
@@ -1580,7 +1584,7 @@ print_player2_throw_frame2()
         tput cup $(($(($((top_padding_height + grid_height)) - j)) - 1)) \
             $((left_padding_width + i)) >> "${buffer}"
 
-        printf "${player2_throw_animation_frame2["${key}"]}" >> "${buffer}"
+        printf '%s' "${player2_throw_animation_frame2["${key}"]}" >> "${buffer}"
     done
 
     refresh_screen
@@ -1601,7 +1605,7 @@ print_player1_victory_frame1()
         tput cup $(($(($((top_padding_height + grid_height)) - j)) - 1)) \
             $((left_padding_width + i)) >> "${buffer}"
 
-        printf "${player1_victory_animation_frame1["${key}"]}" >> "${buffer}"
+        printf '%s' "${player1_victory_animation_frame1["${key}"]}" >> "${buffer}"
     done
 
     refresh_screen
@@ -1622,7 +1626,7 @@ print_player1_victory_frame2()
         tput cup $(($(($((top_padding_height + grid_height)) - j)) - 1)) \
             $((left_padding_width + i)) >> "${buffer}"
 
-        printf "${player1_victory_animation_frame2["${key}"]}" >> "${buffer}"
+        printf '%s' "${player1_victory_animation_frame2["${key}"]}" >> "${buffer}"
     done
 
     refresh_screen
@@ -1643,7 +1647,7 @@ print_player2_victory_frame1()
         tput cup $(($(($((top_padding_height + grid_height)) - j)) - 1)) \
             $((left_padding_width + i)) >> "${buffer}"
 
-        printf "${player2_victory_animation_frame1["${key}"]}" >> "${buffer}"
+        printf '%s' "${player2_victory_animation_frame1["${key}"]}" >> "${buffer}"
     done
 
     refresh_screen
@@ -1664,7 +1668,7 @@ print_player2_victory_frame2()
         tput cup $(($(($((top_padding_height + grid_height)) - j)) - 1)) \
             $((left_padding_width + i)) >> "${buffer}"
 
-        printf "${player2_victory_animation_frame2["${key}"]}" >> "${buffer}"
+        printf '%s' "${player2_victory_animation_frame2["${key}"]}" >> "${buffer}"
     done
 
     refresh_screen
@@ -1711,7 +1715,7 @@ clear_player1()
 
         tput cup $(($(($((top_padding_height + grid_height)) - j)) - 1)) \
             $((left_padding_width + i)) >> "${buffer}"
-        printf " " >> "${buffer}"
+        printf '%s' ' ' >> "${buffer}"
     done
 
     refresh_screen
@@ -1730,7 +1734,7 @@ clear_player2()
 
         tput cup $(($(($((top_padding_height + grid_height)) - j)) - 1)) \
             $((left_padding_width + i)) >> "${buffer}"
-        printf " " >> "${buffer}"
+        printf '%s' ' ' >> "${buffer}"
     done
 
     refresh_screen
@@ -1858,7 +1862,7 @@ throw_banana()
     # Print first banana frame to the screen
     tput cup $(($((top_padding_height + grid_height)) - y)) \
         $((left_padding_width + x)) >> "${buffer}"
-    printf "${banana}" >> "${buffer}"
+    printf '%s' "${banana}" >> "${buffer}"
     refresh_screen
 
     # Print player throw animation ending to the screen
@@ -1882,7 +1886,7 @@ throw_banana()
         then
             tput cup $(($((top_padding_height + grid_height)) - y)) \
                 $((left_padding_width + x)) >> "${buffer}"
-            printf " " >> "${buffer}"
+            printf '%s' ' ' >> "${buffer}"
             refresh_screen
         fi
 
@@ -1907,7 +1911,7 @@ throw_banana()
             # Erase block from screen
             tput cup $(($((top_padding_height + grid_height)) - y)) \
                 $((left_padding_width + x)) >> "${buffer}"
-            printf " " >> "${buffer}"
+            printf '%s' ' ' >> "${buffer}"
             refresh_screen
 
             # Exit the loop
@@ -1958,7 +1962,7 @@ throw_banana()
         then
             tput cup $(($((top_padding_height + grid_height)) - y)) \
                 $((left_padding_width + x)) >> "${buffer}"
-            printf "${banana}" >> "${buffer}"
+            printf '%s' "${banana}" >> "${buffer}"
             refresh_screen
             sleep 0.05
         fi
@@ -2027,7 +2031,7 @@ play_outro()
 ${left_padding}                            Press any key to continue"
 
     # Print outro text into the screen buffer
-    printf "${outro_text}" >> "${buffer}"
+    printf '%s' "${outro_text}" >> "${buffer}"
 
     # Play animation, exit from loop when a key was pressed
     while true
@@ -2117,10 +2121,9 @@ do
     case ${option} in
         h)
             tput rmcup
-            printf "bash-gorillas Copyright (C) Istvan Szantai \
-\x3c\x73\x7a\x61\x6e\x74\x61\x69\x69\x40\x73\x69\x64\x65\x6e\x6f\
-\x74\x65\x2e\x68\x75\x3e 2013\n\
-For more detailed help please see the file 'README.md'.\n"
+            printf '%s\n'                                                                                                                                  \
+                "bash-gorillas Copyright (C) Istvan Szantai \x3c\x73\x7a\x61\x6e\x74\x61\x69\x69\x40\x73\x69\x64\x65\x6e\x6f\x74\x65\x2e\x68\x75\x3e 2025" \
+                "For more detailed help please see the file 'README.md'."
             exit 0
             ;;
         w)
@@ -2130,8 +2133,8 @@ For more detailed help please see the file 'README.md'.\n"
                     ;;
                 *)
                     tput rmcup
-                    printf "Invalid argument for option: -w. \
-Specify a number between 0 and 10.\n"
+                    printf '%s\n' "Invalid argument for option: -w. \
+Specify a number between 0 and 10."
                     exit 1
                     ;;
             esac
@@ -2139,8 +2142,8 @@ Specify a number between 0 and 10.\n"
             if ((max_wind_value < 0 || max_wind_value > 10))
             then
                 tput rmcup
-                printf "Invalid argument for option: -w. \
-Specify a number between 0 and 10.\n"
+                printf '%s\n' "Invalid argument for option: -w. \
+Specify a number between 0 and 10."
                 exit 1
             fi
 
@@ -2154,8 +2157,8 @@ Specify a number between 0 and 10.\n"
                     ;;
                 *)
                     tput rmcup
-                    printf "Invalid argument for option: -s. \
-Specify a number between 100 and 200.\n"
+                    printf '%s\n' "Invalid argument for option: -s. \
+Specify a number between 100 and 200."
                     exit 1
                     ;;
             esac
@@ -2163,8 +2166,8 @@ Specify a number between 100 and 200.\n"
             if ((max_speed < 100 || max_speed > 200))
             then
                 tput rmcup
-                printf "Invalid argument for option: -s. \
-Specify a number between 100 and 200.\n"
+                printf '%s\n' "Invalid argument for option: -s. \
+Specify a number between 100 and 200."
                 exit 1
             fi
             ;;
@@ -2173,19 +2176,19 @@ Specify a number between 100 and 200.\n"
 
             if [[ "${OPTARG}" == "w" ]]
             then
-                printf "Missing argument for option: -${OPTARG}. \
-Specify a number between 0 and 10.\n"
+                printf '%s\n' "Missing argument for option: -${OPTARG}. \
+Specify a number between 0 and 10."
             elif [[ "${OPTARG}" == "s" ]]
             then
-                printf "Missing argument for option: -${OPTARG}. \
-Specify a number between 100 and 200.\n"
+                printf '%s\n' "Missing argument for option: -${OPTARG}. \
+Specify a number between 100 and 200."
             fi
 
             exit 1
             ;;
         \?)
             tput rmcup
-            printf "Invalid option: -${OPTARG}.\n"
+            printf '%s\n' "Invalid option: -${OPTARG}."
             exit 1
             ;;
     esac
