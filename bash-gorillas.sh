@@ -765,31 +765,31 @@ init_players()
     j=${#player1_coordinates[@]}
     for ((i=0; i < j; i++))
     do
-        unset player1_coordinates[${i}]
+        unset 'player1_coordinates[${i}]'
     done
 
     # Remove elements of $player1_throw_animation_frame1
     for key in "${!player1_throw_animation_frame1[@]}"
     do
-        unset player1_throw_animation_frame1["${key}"]
+        unset 'player1_throw_animation_frame1["${key}"]'
     done
 
     # Remove elements of $player1_throw_animation_frame2
     for key in "${!player1_throw_animation_frame2[@]}"
     do
-        unset player1_throw_animation_frame2["${key}"]
+        unset 'player1_throw_animation_frame2["${key}"]'
     done
 
     # Remove elements of $player1_victory_animation_frame1
     for key in "${!player1_victory_animation_frame1[@]}"
     do
-        unset player1_victory_animation_frame1["${key}"]
+        unset 'player1_victory_animation_frame1["${key}"]'
     done
 
     # Remove elements of $player1_victory_animation_frame2
     for key in "${!player1_victory_animation_frame2[@]}"
     do
-        unset player1_victory_animation_frame2["${key}"]
+        unset 'player1_victory_animation_frame2["${key}"]'
     done
 
     # Set the initial horizontal coordinate of player1 depending
@@ -871,31 +871,31 @@ init_players()
     j=${#player2_coordinates[@]}
     for ((i=0; i < j; i++))
     do
-        unset player2_coordinates[${i}]
+        unset 'player2_coordinates[${i}]'
     done
 
     # Remove elements of $player2_throw_animation_frame1
     for key in "${!player2_throw_animation_frame1[@]}"
     do
-        unset player2_throw_animation_frame1["${key}"]
+        unset 'player2_throw_animation_frame1["${key}"]'
     done
 
     # Remove elements of $player2_throw_animation_frame2
     for key in "${!player2_throw_animation_frame2[@]}"
     do
-        unset player2_throw_animation_frame2["${key}"]
+        unset 'player2_throw_animation_frame2["${key}"]'
     done
 
     # Remove elements of $player2_victory_animation_frame1
     for key in "${!player2_victory_animation_frame1[@]}"
     do
-        unset player2_victory_animation_frame1["${key}"]
+        unset 'player2_victory_animation_frame1["${key}"]'
     done
 
     # Remove elements of $player2_victory_animation_frame2
     for key in "${!player2_victory_animation_frame2[@]}"
     do
-        unset player2_victory_animation_frame2["${key}"]
+        unset 'player2_victory_animation_frame2["${key}"]'
     done
 
     # Set the initial horizontal coordinate of player2 depending
