@@ -93,11 +93,7 @@ grid_height=""
 check_prerequisites()
 {
     # Check if 'tput' command is available
-    which tput > /dev/null
-
-    # If 'tput' is not available, then print
-    # error message and exit with status code '2'
-    if (($? != 0))
+    if ! which tput > /dev/null 2>&1
     then
         # Restore terminal screen
         tput rmcup
@@ -117,11 +113,7 @@ packages on the following distributions:\n\
     fi
 
     # Check if 'bc' command is available
-    which bc > /dev/null
-
-    # If 'bc' is not available, then print
-    # error message and exit with status code '2'
-    if (($? != 0))
+    if ! which bc > /dev/null 2>&1
     then
         # Restore terminal screen
         tput rmcup
@@ -523,9 +515,7 @@ print_frame_stage5()
 # then breaks out of outer construcions.
 read_intro_outro_continue_key()
 {
-    read -r -sn1 -t0.01
-
-    if (($? == 0))
+    if read -r -sn1 -t0.01
     then
         break
     fi
