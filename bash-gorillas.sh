@@ -21,40 +21,40 @@
 # Save terminal screen
 tput smcup
 
-IFS=""
+IFS=''
 
-term_width=$(tput cols)
-term_height=$(tput lines)
+term_width="$(tput cols)"
+term_height="$(tput lines)"
 
 min_term_width=80
 min_term_height=22
 
-buffer_name=""
-buffer_directory=""
-buffer=""
+buffer_name=''
+buffer_directory=''
+buffer=''
 
-left_padding=""
-left_padding_width=$(($((term_width - min_term_width)) / 2))
-top_padding=""
-top_padding_height=$(($((term_height - min_term_height)) / 2))
+left_padding=''
+left_padding_width="$(((term_width - min_term_width) / 2))"
+top_padding=''
+top_padding_height="$(((term_height - min_term_height) / 2))"
 
-building_width=""
-max_building_height=""
-building_count=""
+building_width=''
+max_building_height=''
+building_count=''
 
-banana=""
+banana=''
 
-player1_name=""
-player2_name=""
+player1_name=''
+player2_name=''
 
-player1_score=""
-player2_score=""
+player1_score=''
+player2_score=''
 
 declare -a player1_coordinates
 declare -a player2_coordinates
 
-player1_throw_start_coordinates=""
-player2_throw_start_coordinates=""
+player1_throw_start_coordinates=''
+player2_throw_start_coordinates=''
 
 declare -A player1_throw_animation_frame1
 declare -A player1_throw_animation_frame2
@@ -66,28 +66,28 @@ declare -A player1_victory_animation_frame2
 declare -A player2_victory_animation_frame1
 declare -A player2_victory_animation_frame2
 
-player1_building_height=""
-player2_building_height=""
+player1_building_height=''
+player2_building_height=''
 
-player1_throw_angle=""
-player2_throw_angle=""
+player1_throw_angle=''
+player2_throw_angle=''
 
-player1_throw_speed=""
-player2_throw_speed=""
+player1_throw_speed=''
+player2_throw_speed=''
 
-next_player=""
+next_player=''
 
-total_points=""
-gravity_value=""
-menu_choice=""
+total_points=''
+gravity_value=''
+menu_choice=''
 
-max_speed=""
-max_wind_value=""
-wind_value=""
+max_speed=''
+max_wind_value=''
+wind_value=''
 
 declare -A grid
-grid_width=""
-grid_height=""
+grid_width=''
+grid_height=''
 
 # Check availability of necessary programs and minimum terminal size
 check_prerequisites()
@@ -147,16 +147,16 @@ ${min_term_height} lines)."
 # Creates a 'screen buffer' file
 create_buffer()
 {
-    local buffer_name="bashgorillas-buffer"
+    local buffer_name='bashgorillas-buffer'
 
     # Try to use /dev/shm if available
     # else use /tmp as the location of
     # the screen buffer file
-    if [ -d "/dev/shm" ]
+    if [ -d '/dev/shm' ]
     then
-        local buffer_directory="/dev/shm"
+        local buffer_directory='/dev/shm'
     else
-        local buffer_directory="/tmp"
+        local buffer_directory='/tmp'
     fi
 
     # Try to use mktemp before using the unsafe method
@@ -164,7 +164,7 @@ create_buffer()
     then
         # If 'mktemp' is available for use,
         # then create the buffer file using it
-        buffer=$(mktemp --tmpdir=${buffer_directory} ${buffer_name}-XXXXXXXXXX)
+        buffer="$(mktemp --tmpdir="${buffer_directory}" "${buffer_name}-XXXXXXXXXX")"
     else
         # If 'mktemp' was not available for use,
         # then create the buffer file using $RANDOM
@@ -686,15 +686,15 @@ prompt_menu_choice()
 
 read_player1_name()
 {
-    local player1_tmp_name=""
+    local player1_tmp_name=''
 
     read -r -n10 player1_name
 
-    player1_tmp_name=${player1_name/ /}
+    player1_tmp_name="${player1_name/ /}"
 
-    if [[ "${player1_tmp_name}" == "" ]]
+    if [[ "${player1_tmp_name}" == '' ]]
     then
-        player1_name="Player 1"
+        player1_name='Player 1'
     fi
 }
 
@@ -704,11 +704,11 @@ read_player2_name()
 
     read -r -n10 player2_name
 
-    player2_tmp_name=${player2_name/ /}
+    player2_tmp_name="${player2_name/ /}"
 
-    if [[ "${player2_tmp_name}" == "" ]]
+    if [[ "${player2_tmp_name}" == '' ]]
     then
-        player2_name="Player 2"
+        player2_name='Player 2'
     fi
 }
 
@@ -718,7 +718,7 @@ read_total_points()
 
     case ${total_points} in
         ''|*[!0-9]*)
-            total_points="3"
+            total_points=3
             ;;
     esac
 }
@@ -736,12 +736,14 @@ read_gravity_value()
 
 read_menu_choice()
 {
-    while [[ "${menu_choice}" != "p" && "${menu_choice}" != "P" && \
-        "${menu_choice}" != "q" && "${menu_choice}" != "Q" ]]
+    while [[ "${menu_choice}" != 'p' \
+        && "${menu_choice}" != 'P' \
+        && "${menu_choice}" != 'q' \
+        && "${menu_choice}" != 'Q' ]]
     do
         read -r -sn1 menu_choice
 
-        case ${menu_choice} in
+        case "${menu_choice}" in
             'p'|'P')
                 ;;
             'q'|'Q')
@@ -780,11 +782,11 @@ read_player_data()
 # Generates buildings into $grid
 generate_buildings()
 {
-    local current_building_height=""
+    local current_building_height=''
 
     # Sets the height of the buildings which players stand on
-    player1_building_height=$((RANDOM % max_building_height))
-    player2_building_height=$((RANDOM % max_building_height))
+    player1_building_height="$((RANDOM % max_building_height))"
+    player2_building_height="$((RANDOM % max_building_height))"
 
     # If there are less than 16 buildings on the map
     if ((building_count <= 15))
@@ -795,7 +797,7 @@ generate_buildings()
         do
             for ((j=0; j < player1_building_height; j++))
             do
-                grid["${i},${j}"]="X"
+                grid["${i},${j}"]='X'
             done
         done
 
@@ -805,7 +807,7 @@ generate_buildings()
         do
             for ((j=0; j < player2_building_height; j++))
             do
-                grid["${i},${j}"]="X"
+                grid["${i},${j}"]='X'
             done
         done
 
@@ -813,7 +815,7 @@ generate_buildings()
         for ((i=0; i < building_count; i++))
         do
             # Always set a random value for the actually generated building
-            current_building_height=$((RANDOM % max_building_height))
+            current_building_height="$((RANDOM % max_building_height))"
 
             if ((i != 1 && i != (building_count - 2)))
             then
@@ -821,7 +823,7 @@ generate_buildings()
                 do
                     for ((k=0; k < current_building_height; k++))
                     do
-                        grid["$(($((i * building_width)) + j)),${k}"]="X"
+                        grid["$(($((i * building_width)) + j)),${k}"]='X'
                     done
                 done
             fi
@@ -834,7 +836,7 @@ generate_buildings()
         do
             for ((j=0; j < player1_building_height; j++))
             do
-                grid["${i},${j}"]="X"
+                grid["${i},${j}"]='X'
             done
         done
 
@@ -844,7 +846,7 @@ generate_buildings()
         do
             for ((j=0; j < player2_building_height; j++))
             do
-                grid["${i},${j}"]="X"
+                grid["${i},${j}"]='X'
             done
         done
 
@@ -852,7 +854,7 @@ generate_buildings()
         for ((i=0; i < building_count; i++))
         do
             # Always set a random value for the actually generated building
-            current_building_height=$((RANDOM % max_building_height))
+            current_building_height="$((RANDOM % max_building_height))"
 
             if ((i != 2 && i != (building_count - 3)))
             then
@@ -860,7 +862,7 @@ generate_buildings()
                 do
                     for ((k=0; k < current_building_height; k++))
                     do
-                        grid["$(($((i * building_width)) + j)),${k}"]="X"
+                        grid["$(($((i * building_width)) + j)),${k}"]='X'
                     done
                 done
             fi
@@ -871,11 +873,11 @@ generate_buildings()
 init_players()
 {
     # Init player1 START -------------------------------------------------------
-    local i=""
-    local j=""
+    local i=''
+    local j=''
 
     # Remove elements of the $player1_coordinates array
-    j=${#player1_coordinates[@]}
+    j="${#player1_coordinates[@]}"
     for ((i=0; i < j; i++))
     do
         unset 'player1_coordinates[${i}]'
@@ -914,9 +916,9 @@ init_players()
         i=$(($((building_width * 2)) + $(($((building_width - 3)) / 2))))
     fi
     # Set the initial vertical coordinate of player1
-    j=${player1_building_height}
+    j="${player1_building_height}"
     # Left leg of player1
-    grid["${i},${j}"]="/"
+    grid["${i},${j}"]='/'
 
     # Add "${i},${j}" to the $player1_coordinates array
     player1_coordinates=("${player1_coordinates[@]}" "${i},${j}")
@@ -931,29 +933,29 @@ init_players()
     # Left arm of player1
     i=$((i - 2))
     j=$((j + 1))
-    grid["${i},${j}"]="("
+    grid["${i},${j}"]='('
 
     # Set animation frames for player1 banana throw and victory dance
-    player1_throw_animation_frame1["${i},${j}"]=" "
-    player1_throw_animation_frame2["${i},${j}"]="("
+    player1_throw_animation_frame1["${i},${j}"]=' '
+    player1_throw_animation_frame2["${i},${j}"]='('
 
     # Add "${i},${j}" to the $player1_coordinates array
     player1_coordinates=("${player1_coordinates[@]}" "${i},${j}")
 
     # Belly of player1
     i=$((i + 1))
-    grid["${i},${j}"]="G"
+    grid["${i},${j}"]='G'
 
     # Add "${i},${j}" to the $player1_coordinates array
     player1_coordinates=("${player1_coordinates[@]}" "${i},${j}")
 
     # Right arm of player1
     i=$((i + 1))
-    grid["${i},${j}"]=")"
+    grid["${i},${j}"]=')'
 
     # Set animation frames for player1 victory dance
-    player1_victory_animation_frame1["${i},${j}"]=")"
-    player1_victory_animation_frame2["${i},${j}"]=" "
+    player1_victory_animation_frame1["${i},${j}"]=')'
+    player1_victory_animation_frame2["${i},${j}"]=' '
 
     # Add "${i},${j}" to the $player1_coordinates array
     player1_coordinates=("${player1_coordinates[@]}" "${i},${j}")
@@ -961,13 +963,13 @@ init_players()
     # Head of player1
     i=$((i - 1))
     j=$((j + 1))
-    grid["${i},${j}"]="o"
+    grid["${i},${j}"]='o'
 
     # Set animation frames for player1 banana throw and victory dance
-    player1_throw_animation_frame1["$((i - 1)),${j}"]="("
-    player1_throw_animation_frame2["$((i - 1)),${j}"]=" "
-    player1_victory_animation_frame1["$((i + 1)),${j}"]=" "
-    player1_victory_animation_frame2["$((i + 1)),${j}"]=")"
+    player1_throw_animation_frame1["$((i - 1)),${j}"]='('
+    player1_throw_animation_frame2["$((i - 1)),${j}"]=' '
+    player1_victory_animation_frame1["$((i + 1)),${j}"]=' '
+    player1_victory_animation_frame2["$((i + 1)),${j}"]=')'
 
     # Add "${i},${j}" to the $player1_coordinates array
     player1_coordinates=("${player1_coordinates[@]}" "${i},${j}")
@@ -977,11 +979,11 @@ init_players()
     # Init player1 END ---------------------------------------------------------
 
     # Init player2 START -------------------------------------------------------
-    i=""
-    j=""
+    i=''
+    j=''
 
     # Remove elements of the $player1_coordinates array
-    j=${#player2_coordinates[@]}
+    j="${#player2_coordinates[@]}"
     for ((i=0; i < j; i++))
     do
         unset 'player2_coordinates[${i}]'
@@ -1022,10 +1024,10 @@ init_players()
         i=$((i + $(($((building_width - 3)) / 2))))
     fi
     # Set the initial vertical coordinate of player1
-    j=${player2_building_height}
+    j="${player2_building_height}"
 
     # Left leg of player2
-    grid["${i},${j}"]="/"
+    grid["${i},${j}"]='/'
 
     # Add "${i},${j}" to the $player2_coordinates array
     player2_coordinates=("${player2_coordinates[@]}" "${i},${j}")
@@ -1040,27 +1042,27 @@ init_players()
     # Left arm of player2
     i=$((i - 2))
     j=$((j + 1))
-    grid["${i},${j}"]="("
+    grid["${i},${j}"]='('
 
     # Set animation frames for player2 banana throw and victory dance
-    player2_victory_animation_frame1["${i},${j}"]="("
-    player2_victory_animation_frame2["${i},${j}"]=" "
+    player2_victory_animation_frame1["${i},${j}"]='('
+    player2_victory_animation_frame2["${i},${j}"]=' '
 
     # Add "${i},${j}" to the $player2_coordinates array
     player2_coordinates=("${player2_coordinates[@]}" "${i},${j}")
 
     # Belly of player2
     i=$((i + 1))
-    grid["${i},${j}"]="G"
+    grid["${i},${j}"]='G'
 
     # Add "${i},${j}" to the $player2_coordinates array
     player2_coordinates=("${player2_coordinates[@]}" "${i},${j}")
 
     # Right arm of player2
     i=$((i + 1))
-    grid["${i},${j}"]=")"
-    player2_throw_animation_frame1["${i},${j}"]=" "
-    player2_throw_animation_frame2["${i},${j}"]=")"
+    grid["${i},${j}"]=')'
+    player2_throw_animation_frame1["${i},${j}"]=' '
+    player2_throw_animation_frame2["${i},${j}"]=')'
 
     # Add "${i},${j}" to the $player2_coordinates array
     player2_coordinates=("${player2_coordinates[@]}" "${i},${j}")
@@ -1068,13 +1070,13 @@ init_players()
     # Head of player2
     i=$((i - 1))
     j=$((j + 1))
-    grid["${i},${j}"]="o"
+    grid["${i},${j}"]='o'
 
     # Set animation frames for player2 banana throw and victory dance
-    player2_throw_animation_frame1["$((i + 1)),${j}"]=")"
-    player2_throw_animation_frame2["$((i + 1)),${j}"]=" "
-    player2_victory_animation_frame1["$((i - 1)),${j}"]=" "
-    player2_victory_animation_frame2["$((i - 1)),${j}"]="("
+    player2_throw_animation_frame1["$((i + 1)),${j}"]=')'
+    player2_throw_animation_frame2["$((i + 1)),${j}"]=' '
+    player2_victory_animation_frame1["$((i - 1)),${j}"]=' '
+    player2_victory_animation_frame2["$((i - 1)),${j}"]='('
 
     # Add "${i},${j}" to the $player2_coordinates array
     player2_coordinates=("${player2_coordinates[@]}" "${i},${j}")
@@ -1088,26 +1090,26 @@ init_players()
 init_game()
 {
     # Init player scores on new game
-    if [[ "${player1_score}" == "" && "${player2_score}" == "" ]]
+    if [[ "${player1_score}" == '' && "${player2_score}" == '' ]]
     then
         player1_score=0
         player2_score=0
     fi
 
     # Set first player randomly on new game
-    if [[ "${next_player}" = "" ]]
+    if [[ "${next_player}" == '' ]]
     then
-        next_player=$(($((RANDOM % 2)) + 1))
+        next_player=$(((RANDOM % 2) + 1))
     fi
 
     # Set maximum throw velocity
-    if [[ "${max_speed}" = "" ]]
+    if [[ "${max_speed}" == '' ]]
     then
         max_speed=100
     fi
 
     # Set maximum wind speed
-    if [[ "${max_wind_value}" == "" ]]
+    if [[ "${max_wind_value}" == '' ]]
     then
         max_wind_value=6
     fi
@@ -1148,21 +1150,21 @@ init_game()
     building_count=$((grid_width / building_width))
 
     # Reset $left_padding and $top_padding
-    left_padding=""
-    top_padding=""
+    left_padding=''
+    top_padding=''
 
     # Set $left_padding_width for centering the playing field on the screen,
     # and set $top_padding_height to '0' since the game uses the whole
     # terminal in height
     left_padding_width=$(($((term_width % building_width)) / 2))
-    top_padding_height="0"
+    top_padding_height=0
 
     # Initialize values of $grid
     for ((i=0; i < grid_width; i++))
     do
         for ((j=0; j < grid_height; j++))
         do
-            grid["${i},${j}"]=""
+            grid["${i},${j}"]=''
         done
     done
 
@@ -1180,11 +1182,11 @@ print_sun()
     local sun_text=()
 
     # Store the ASCII lines of the Sun
-    sun_text[0]="    |"
+    sun_text[0]='    |'
     sun_text[1]="  \\ _ /"
-    sun_text[2]="-= (_) =-"
+    sun_text[2]='-= (_) =-'
     sun_text[3]="  /   \\"
-    sun_text[4]="    |"
+    sun_text[4]='    |'
 
     # Iterate through the local array $sun_text
     # and print its contents to the screen
@@ -1362,7 +1364,7 @@ print_scene()
 # into the right bottom part of the screen
 print_help()
 {
-    local help_text="Quit: ^C"
+    local help_text='Quit: ^C'
 
     {
         # Position the cursor to the bottom row of the screen,
@@ -1384,7 +1386,7 @@ print_help()
 
 prompt_player1_throw_angle()
 {
-    local angle_text="Angle [0-90]: "
+    local angle_text='Angle [0-90]: '
 
     {
         tput cup                        \
@@ -1399,7 +1401,7 @@ prompt_player1_throw_angle()
 
 prompt_player2_throw_angle()
 {
-    local angle_text="Angle [0-90]: "
+    local angle_text='Angle [0-90]: '
 
     {
         tput cup                        \
@@ -1575,7 +1577,7 @@ read_player1_throw_speed()
         *)
             if ((player1_throw_speed > max_speed))
             then
-                player1_throw_speed=${max_speed}
+                player1_throw_speed="${max_speed}"
                 print_player1_correct_throw_speed
             fi
             ;;
@@ -1594,7 +1596,7 @@ read_player2_throw_speed()
         *)
             if ((player2_throw_speed > max_speed))
             then
-                player2_throw_speed=${max_speed}
+                player2_throw_speed="${max_speed}"
                 print_player2_correct_throw_speed
             fi
             ;;
@@ -1692,13 +1694,13 @@ read_throw_data()
 
 print_player1_throw_frame1()
 {
-    local i=""
-    local j=""
+    local i=''
+    local j=''
 
     for key in "${!player1_throw_animation_frame1[@]}"
     do
-        i=${key%","*}
-        j=${key#*","}
+        i="${key%","*}"
+        j="${key#*","}"
 
         {
             tput cup                                          \
@@ -1716,13 +1718,13 @@ print_player1_throw_frame1()
 
 print_player1_throw_frame2()
 {
-    local i=""
-    local j=""
+    local i=''
+    local j=''
 
     for key in "${!player1_throw_animation_frame2[@]}"
     do
-        i=${key%","*}
-        j=${key#*","}
+        i="${key%","*}"
+        j="${key#*","}"
 
         {
             tput cup                                          \
@@ -1740,13 +1742,13 @@ print_player1_throw_frame2()
 
 print_player2_throw_frame1()
 {
-    local i=""
-    local j=""
+    local i=''
+    local j=''
 
     for key in "${!player2_throw_animation_frame1[@]}"
     do
-        i=${key%","*}
-        j=${key#*","}
+        i="${key%","*}"
+        j="${key#*","}"
 
         {
             tput cup                                          \
@@ -1764,13 +1766,13 @@ print_player2_throw_frame1()
 
 print_player2_throw_frame2()
 {
-    local i=""
-    local j=""
+    local i=''
+    local j=''
 
     for key in "${!player2_throw_animation_frame2[@]}"
     do
-        i=${key%","*}
-        j=${key#*","}
+        i="${key%","*}"
+        j="${key#*","}"
 
         {
             tput cup                                          \
@@ -1788,13 +1790,13 @@ print_player2_throw_frame2()
 
 print_player1_victory_frame1()
 {
-    local i=""
-    local j=""
+    local i=''
+    local j=''
 
     for key in "${!player1_victory_animation_frame1[@]}"
     do
-        i=${key%","*}
-        j=${key#*","}
+        i="${key%","*}"
+        j="${key#*","}"
 
         {
             tput cup                                          \
@@ -1812,13 +1814,13 @@ print_player1_victory_frame1()
 
 print_player1_victory_frame2()
 {
-    local i=""
-    local j=""
+    local i=''
+    local j=''
 
     for key in "${!player1_victory_animation_frame2[@]}"
     do
-        i=${key%","*}
-        j=${key#*","}
+        i="${key%","*}"
+        j="${key#*","}"
 
         {
             tput cup                                          \
@@ -1836,13 +1838,13 @@ print_player1_victory_frame2()
 
 print_player2_victory_frame1()
 {
-    local i=""
-    local j=""
+    local i=''
+    local j=''
 
     for key in "${!player2_victory_animation_frame1[@]}"
     do
-        i=${key%","*}
-        j=${key#*","}
+        i="${key%","*}"
+        j="${key#*","}"
 
         {
             tput cup                                          \
@@ -1860,13 +1862,14 @@ print_player2_victory_frame1()
 
 print_player2_victory_frame2()
 {
-    local i=""
-    local j=""
+    local i=''
+    local j=''
 
     for key in "${!player2_victory_animation_frame2[@]}"
     do
-        i=${key%","*}
-        j=${key#*","}
+        i="${key%","*}"
+        j="${key#*","}"
+
         {
             tput cup                                          \
                 $((top_padding_height + grid_height - j - 1)) \
@@ -1909,14 +1912,14 @@ print_player_victory_dance()
 
 clear_player1()
 {
-    local i=""
-    local j=""
-    local value=""
+    local i=''
+    local j=''
+    local value=''
 
     for value in "${player1_coordinates[@]}"
     do
-        i=${value%","*}
-        j=${value#*","}
+        i="${value%","*}"
+        j="${value#*","}"
 
         {
             tput cup                                          \
@@ -1932,14 +1935,14 @@ clear_player1()
 
 clear_player2()
 {
-    local i=""
-    local j=""
-    local value=""
+    local i=''
+    local j=''
+    local value=''
 
     for value in "${player2_coordinates[@]}"
     do
-        i=${value%","*}
-        j=${value#*","}
+        i="${value%","*}"
+        j="${value#*","}"
 
         {
             tput cup                                          \
@@ -1959,9 +1962,9 @@ init_banana()
 {
     if ((next_player == 1))
     then
-        banana="<"
+        banana='<'
     else
-        banana=">"
+        banana='>'
     fi
 }
 
@@ -1971,33 +1974,33 @@ next_banana_frame()
 {
     if ((next_player == 1))
     then
-        case ${banana} in
-            "<")
-                banana="^"
+        case "${banana}" in
+            '<')
+                banana='^'
                 ;;
-            "^")
-                banana=">"
+            '^')
+                banana='>'
                 ;;
-            ">")
-                banana="v"
+            '>')
+                banana='v'
                 ;;
-            "v")
-                banana="<"
+            'v')
+                banana='<'
                 ;;
         esac
     else
-        case ${banana} in
-            ">")
-                banana="^"
+        case "${banana}" in
+            '>')
+                banana='^'
                 ;;
-            "^")
-                banana="<"
+            '^')
+                banana='<'
                 ;;
-            "<")
-                banana="v"
+            '<')
+                banana='v'
                 ;;
-            "v")
-                banana=">"
+            'v')
+                banana='>'
                 ;;
         esac
     fi
@@ -2028,7 +2031,10 @@ throw_banana()
     local throw_angle=''
     local throw_speed=''
 
-    pi="$(printf '%s\n' 'scale=20; 4 * a(1)' | bc -l)"
+    pi="$(                                 \
+        printf '%s\n' 'scale=20; 4 * a(1)' \
+        | bc -l                            \
+    )"
 
     # Initialize banana animation frame
     init_banana
@@ -2039,17 +2045,19 @@ throw_banana()
     if ((next_player == 1))
     then
         # Convert degrees to radians
-        throw_angle=$(echo "scale=20; ${player1_throw_angle} * ${pi} / 180" | \
-            bc -l)
+        throw_angle="$(                                                    \
+            printf '%s\n' "scale=20; ${player1_throw_angle} * ${pi} / 180" \
+            | bc -l                                                        \
+        )"
 
         # Set $throw_speed of player1
-        throw_speed=${player1_throw_speed}
+        throw_speed="${player1_throw_speed}"
 
         # Set throw start coordinates of player1
-        x=${player1_throw_start_coordinates%","*}
-        y=${player1_throw_start_coordinates#*","}
-        x_0=${x}
-        y_0=${y}
+        x="${player1_throw_start_coordinates%","*}"
+        y="${player1_throw_start_coordinates#*","}"
+        x_0="${x}"
+        y_0="${y}"
 
         # Start player1 throw animation
         print_player1_throw_frame1
@@ -2057,17 +2065,19 @@ throw_banana()
         # Set correct angle for player2, and
         # convert degrees to radians
         throw_angle=$((180 - player2_throw_angle))
-        throw_angle=$(echo "scale=20; ${throw_angle} * ${pi} / 180" | \
-            bc -l)
+        throw_angle="$(                                            \
+            printf '%s\n' "scale=20; ${throw_angle} * ${pi} / 180" \
+            | bc -l                                                \
+        )"
 
         # Set $throw_speed of player2
-        throw_speed=${player2_throw_speed}
+        throw_speed="${player2_throw_speed}"
 
         # Set throw start coordinates of player2
-        x=${player2_throw_start_coordinates%","*}
-        y=${player2_throw_start_coordinates#*","}
-        x_0=${x}
-        y_0=${y}
+        x="${player2_throw_start_coordinates%","*}"
+        y="${player2_throw_start_coordinates#*","}"
+        x_0="${x}"
+        y_0="${y}"
 
         # Start player2 throw animation
         print_player2_throw_frame1
@@ -2100,7 +2110,7 @@ throw_banana()
         # Clear previous banana frame from screen,
         # if there was a banana printed to the
         # screen in the previous iteration
-        if [[ "${prev_x}" != "" && "${prev_y}" != "" ]] \
+        if [[ "${prev_x}" != '' && "${prev_y}" != '' ]] \
             && ((x >= 0 && x < grid_width && y >= 1 && y <= grid_height))
         then
             {
@@ -2116,13 +2126,18 @@ throw_banana()
 
         # Calculate next horizontal ($x) and
         # vertical ($y) position of the banana
-        x=$(echo "scale=20; ${x_0} + \
-            (${throw_speed} * ${t} * c(${throw_angle}) + \
-            (${wind_value} * ${t} * ${t}))" | bc -l | xargs printf "%1.0f\n")
-        y=$(echo "scale=20; ${y_0} + \
-            (${throw_speed} * ${t} * s(${throw_angle}) - \
-            (2 * ${gravity_value} / 2) * ${t} * ${t})" | \
-            bc -l | xargs printf "%1.0f\n")
+        x="$(                                                                                                        \
+            printf '%s\n'                                                                                            \
+                    "scale=20; ${x_0} + (${throw_speed} * ${t} * c(${throw_angle}) + (${wind_value} * ${t} * ${t}))" \
+                | bc -l                                                                                              \
+                | xargs printf '%1.0f\n'                                                                             \
+        )"
+        y="$(                                                                                                                   \
+            printf '%s\n'                                                                                                       \
+                    "scale=20; ${y_0} + (${throw_speed} * ${t} * s(${throw_angle}) - (2 * ${gravity_value} / 2) * ${t} * ${t})" \
+                | bc -l                                                                                                         \
+                | xargs printf '%1.0f\n'                                                                                        \
+        )"
 
         # Collision detection START --------------------------------------------
         # If the banana hits a building the building block
@@ -2130,7 +2145,7 @@ throw_banana()
         if [[ "${grid["${x},$((y - 1))"]}" == "X" ]]
         then
             # Erase block from 'grid'
-            grid["${x},$((y - 1))"]=""
+            grid["${x},$((y - 1))"]=''
 
             # Erase block from screen
             {
@@ -2203,11 +2218,14 @@ throw_banana()
         fi
 
         # Set previous horizontal ($prev_x) and vertical ($prev_y) coordinates
-        prev_x=${x}
-        prev_y=${y}
+        prev_x="${x}"
+        prev_y="${y}"
 
         # Step time
-        t=$(echo "scale=20; ${t} + 0.005" | bc -l)
+        t="$(                                      \
+            printf '%s\n' "scale=20; ${t} + 0.005" \
+            | bc -l                                \
+        )"
     done
 
     # If the thrown banana gets out of boundaries
@@ -2220,8 +2238,8 @@ throw_banana()
 play_outro()
 {
     # Clear $top_padding and $left_padding
-    top_padding=""
-    left_padding=""
+    top_padding=''
+    left_padding=''
 
     # Calculate $left_padding_width and $top_padding_height
     left_padding_width=$(($((term_width - min_term_width)) / 2))
@@ -2329,7 +2347,7 @@ main_loop()
     # Read players' names, max points, gravity
     read_player_data
 
-    while [[ "${player1_score}" == "" && "${player2_score}" == "" ]] \
+    while [[ "${player1_score}" == '' && "${player2_score}" == '' ]] \
         || (((player1_score + player2_score) < total_points))
     do
         # Initialize necessary variables before every round,
@@ -2380,10 +2398,13 @@ do
     case ${option} in
         h)
             tput rmcup
-            printf '%s\n'                                                                                                                                  \
-                "bash-gorillas Copyright (C) Istvan Szantai \x3c\x73\x7a\x61\x6e\x74\x61\x69\x69\x40\x73\x69\x64\x65\x6e\x6f\x74\x65\x2e\x68\x75\x3e 2025" \
-                "For more detailed help please see the file 'README.md'."
+
+            printf '%sbash-gorillas Copyright (C) Istvan Szantai \x3c\x73\x7a\x61\x6e\x74\x61\x69\x69\x40\x73\x69\x64\x65\x6e\x6f\x74\x65\x2e\x68\x75\x3e 2025\n' \
+                ''
+            printf '%s\n' "For more detailed help please see the file 'README.md'."
+
             exit 0
+
             ;;
         w)
             case ${OPTARG} in
@@ -2392,63 +2413,77 @@ do
                     ;;
                 *)
                     tput rmcup
-                    printf '%s\n' "Invalid argument for option: -w. \
-Specify a number between 0 and 10."
+
+                    printf '%s\n' \
+                        'Invalid argument for option: -w. Specify a number between 0 and 10.'
+
                     exit 1
-                    ;;
             esac
 
             if ((max_wind_value < 0 || max_wind_value > 10))
             then
                 tput rmcup
-                printf '%s\n' "Invalid argument for option: -w. \
-Specify a number between 0 and 10."
+
+                printf '%s\n' \
+                    'Invalid argument for option: -w. Specify a number between 0 and 10.'
+
                 exit 1
             fi
 
             max_wind_value=$((max_wind_value + 1))
+
             ;;
         s)
-
             case ${OPTARG} in
                 *[0-9]*)
                     max_speed=${OPTARG}
+
                     ;;
                 *)
                     tput rmcup
-                    printf '%s\n' "Invalid argument for option: -s. \
-Specify a number between 100 and 200."
+
+                    printf '%s\n' \
+                        'Invalid argument for option: -s. Specify a number between 100 and 200.'
+
                     exit 1
+
                     ;;
             esac
 
             if ((max_speed < 100 || max_speed > 200))
             then
                 tput rmcup
-                printf '%s\n' "Invalid argument for option: -s. \
-Specify a number between 100 and 200."
+
+                printf '%s\n' \
+                    'Invalid argument for option: -s. Specify a number between 100 and 200.'
+
                 exit 1
             fi
+
             ;;
         :)
             tput rmcup
 
-            if [[ "${OPTARG}" == "w" ]]
+            if [[ "${OPTARG}" == 'w' ]]
             then
-                printf '%s\n' "Missing argument for option: -${OPTARG}. \
-Specify a number between 0 and 10."
-            elif [[ "${OPTARG}" == "s" ]]
+                printf '%s\n' \
+                    "Missing argument for option: -${OPTARG}. Specify a number between 0 and 10."
+            elif [[ "${OPTARG}" == 's' ]]
             then
-                printf '%s\n' "Missing argument for option: -${OPTARG}. \
-Specify a number between 100 and 200."
+                printf '%s\n' \
+                    "Missing argument for option: -${OPTARG}. Specify a number between 100 and 200."
             fi
 
             exit 1
+
             ;;
         \?)
             tput rmcup
+
             printf '%s\n' "Invalid option: -${OPTARG}."
+
             exit 1
+
             ;;
     esac
 done
