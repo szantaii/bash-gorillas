@@ -507,20 +507,6 @@ print_frame_stage5()
         >> "${buffer}"
 }
 
-#!/bin/bash
-
-# Reads a key from keyboard
-#
-# If a key was read before read's timeout expires
-# then breaks out of outer construcions.
-read_intro_outro_continue_key()
-{
-    if read -r -sn1 -t0.01
-    then
-        break
-    fi
-}
-
 # Plays intro: prints animated frames and intro text to the screen
 play_intro()
 {
@@ -562,19 +548,43 @@ field, its length relative to its strength.\n\n\n\n\n\n${left_padding}    \
     do
         print_frame_stage1
         refresh_screen
-        read_intro_outro_continue_key
+
+        if read -r -sn1 -t0.01
+        then
+            break
+        fi
+
         print_frame_stage2
         refresh_screen
-        read_intro_outro_continue_key
+
+        if read -r -sn1 -t0.01
+        then
+            break
+        fi
+
         print_frame_stage3
         refresh_screen
-        read_intro_outro_continue_key
+
+        if read -r -sn1 -t0.01
+        then
+            break
+        fi
+
         print_frame_stage4
         refresh_screen
-        read_intro_outro_continue_key
+
+        if read -r -sn1 -t0.01
+        then
+            break
+        fi
+
         print_frame_stage5
         refresh_screen
-        read_intro_outro_continue_key
+
+        if read -r -sn1 -t0.01
+        then
+            break
+        fi
     done
 
     # Clear and refresh screen
@@ -2263,19 +2273,43 @@ ${left_padding}                            Press any key to continue"
     do
         print_frame_stage1
         refresh_screen
-        read_intro_outro_continue_key
+
+        if read -r -sn1 -t0.01
+        then
+            break
+        fi
+
         print_frame_stage2
         refresh_screen
-        read_intro_outro_continue_key
+
+        if read -r -sn1 -t0.01
+        then
+            break
+        fi
+
         print_frame_stage3
         refresh_screen
-        read_intro_outro_continue_key
+
+        if read -r -sn1 -t0.01
+        then
+            break
+        fi
+
         print_frame_stage4
         refresh_screen
-        read_intro_outro_continue_key
+
+        if read -r -sn1 -t0.01
+        then
+            break
+        fi
+
         print_frame_stage5
         refresh_screen
-        read_intro_outro_continue_key
+
+        if read -r -sn1 -t0.01
+        then
+            break
+        fi
     done
 
     # Clear and refresh screen
