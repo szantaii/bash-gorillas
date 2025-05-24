@@ -2008,16 +2008,17 @@ switch_player()
 # including physics, animation, etc.
 throw_banana()
 {
-    # Necessary local variables
-    local pi=$(echo "scale=20; 4 * a(1)" | bc -l)
-    local x=""
-    local y=""
-    local x_0=""
-    local y_0=""
-    local prev_x=""
-    local prev_y=""
-    local throw_angle=""
-    local throw_speed=""
+    local pi=''
+    local x=''
+    local y=''
+    local x_0=''
+    local y_0=''
+    local prev_x=''
+    local prev_y=''
+    local throw_angle=''
+    local throw_speed=''
+
+    pi="$(printf '%s\n' 'scale=20; 4 * a(1)' | bc -l)"
 
     # Initialize banana animation frame
     init_banana
