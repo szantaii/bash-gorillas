@@ -160,7 +160,7 @@ create_buffer()
     fi
 
     # Try to use mktemp before using the unsafe method
-    if [ -x $(which mktemp) ]
+    if which mktemp > /dev/null 2>&1
     then
         # If 'mktemp' is available for use,
         # then create the buffer file using it
