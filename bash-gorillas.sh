@@ -34,9 +34,9 @@ buffer_directory=''
 buffer=''
 
 left_padding=''
-left_padding_width="$(((term_width - min_term_width) / 2))"
+left_padding_width=$(((term_width - min_term_width) / 2))
 top_padding=''
-top_padding_height="$(((term_height - min_term_height) / 2))"
+top_padding_height=$(((term_height - min_term_height) / 2))
 
 building_width=''
 max_building_height=''
@@ -220,14 +220,14 @@ print_frame_stage1()
     } >> "${buffer}"
 
     # right rule
-    for ((i=0; i < (min_term_height - 5); i++))
+    for ((i=0; i < min_term_height - 5; i++))
     do
         tput cup                                         \
             $((top_padding_height + i + 1))              \
             $((left_padding_width + min_term_width - 1)) \
             >> "${buffer}"
 
-        if (( $((i % 3)) == 0))
+        if ((i % 3 == 0))
         then
             printf '%s' '*' >> "${buffer}"
         else
@@ -246,14 +246,14 @@ print_frame_stage1()
     } >> "${buffer}"
 
     # left rule
-    for ((i=0; i < (min_term_height - 5); i++))
+    for ((i=0; i < min_term_height - 5; i++))
     do
         tput cup                            \
             $((top_padding_height + i + 1)) \
             "${left_padding_width}"         \
             >> "${buffer}"
 
-        if (( $((i % 3)) == 2))
+        if ((i % 3 == 2))
         then
             printf '%s' '*' >> "${buffer}"
         else
@@ -280,14 +280,14 @@ print_frame_stage2()
     }  >> "${buffer}"
 
     # right rule
-    for ((i=0; i < (min_term_height - 5); i++))
+    for ((i=0; i < min_term_height - 5; i++))
     do
         tput cup                                         \
             $((top_padding_height + i + 1))              \
             $((left_padding_width + min_term_width - 1)) \
             >> "${buffer}"
 
-        if (( $((i % 3)) == 1))
+        if ((i % 3 == 1))
         then
             printf '%s' '*' >> "${buffer}"
         else
@@ -306,14 +306,14 @@ print_frame_stage2()
     } >> "${buffer}"
 
     # left rule
-    for ((i=0; i < (min_term_height - 5); i++))
+    for ((i=0; i < min_term_height - 5; i++))
     do
         tput cup                            \
             $((top_padding_height + i + 1)) \
             "${left_padding_width}"         \
             >> "${buffer}"
 
-        if (( $((i % 3)) == 1))
+        if ((i % 3 == 1))
         then
             printf '%s' '*' >> "${buffer}"
         else
@@ -340,14 +340,14 @@ print_frame_stage3()
     } >> "${buffer}"
 
     # right rule
-    for ((i=0; i < (min_term_height - 5); i++))
+    for ((i=0; i < min_term_height - 5; i++))
     do
         tput cup                                         \
             $((top_padding_height + i + 1))              \
             $((left_padding_width + min_term_width - 1)) \
             >> "${buffer}"
 
-        if (( $((i % 3)) == 2))
+        if ((i % 3 == 2))
         then
             printf '%s' '*' >> "${buffer}"
         else
@@ -366,14 +366,14 @@ print_frame_stage3()
     } >> "${buffer}"
 
     # left rule
-    for ((i=0; i < (min_term_height - 5); i++))
+    for ((i=0; i < min_term_height - 5; i++))
     do
         tput cup                            \
             $((top_padding_height + i + 1)) \
             "${left_padding_width}"         \
             >> "${buffer}"
 
-        if (( $((i % 3)) == 0))
+        if ((i % 3 == 0))
         then
             printf '%s' '*' >> "${buffer}"
         else
@@ -400,14 +400,14 @@ print_frame_stage4()
     } >> "${buffer}"
 
     # right rule
-    for ((i=0; i < (min_term_height - 5); i++))
+    for ((i=0; i < min_term_height - 5; i++))
     do
         tput cup                                         \
             $((top_padding_height + i + 1))              \
             $((left_padding_width + min_term_width - 1)) \
             >> "${buffer}"
 
-        if (( $((i % 3)) == 0))
+        if ((i % 3 == 0))
         then
             printf '%s' '*' >> "${buffer}"
         else
@@ -426,14 +426,14 @@ print_frame_stage4()
     } >> "${buffer}"
 
     # left rule
-    for ((i=0; i < (min_term_height - 5); i++))
+    for ((i=0; i < min_term_height - 5; i++))
     do
         tput cup                            \
             $((top_padding_height + i + 1)) \
             "${left_padding_width}"         \
             >> "${buffer}"
 
-        if (( $((i % 3)) == 2))
+        if ((i % 3 == 2))
         then
             printf '%s' '*' >> "${buffer}"
         else
@@ -460,14 +460,14 @@ print_frame_stage5()
     } >> "${buffer}"
 
     # right rule
-    for ((i=0; i < (min_term_height - 5); i++))
+    for ((i=0; i < min_term_height - 5; i++))
     do
         tput cup                                         \
             $((top_padding_height + i + 1))              \
             $((left_padding_width + min_term_width - 1)) \
             >> "${buffer}"
 
-        if (( $((i % 3)) == 1))
+        if ((i % 3 == 1))
         then
             printf '%s' '*' >> "${buffer}"
         else
@@ -486,14 +486,14 @@ print_frame_stage5()
     } >> "${buffer}"
 
     # left rule
-    for ((i=0; i < (min_term_height - 5); i++))
+    for ((i=0; i < min_term_height - 5; i++))
     do
         tput cup                            \
             $((top_padding_height + i + 1)) \
             "${left_padding_width}"         \
             >> "${buffer}"
 
-        if (( $((i % 3)) == 1))
+        if ((i % 3 == 1))
         then
             printf '%s' '*' >> "${buffer}"
         else
@@ -785,15 +785,15 @@ generate_buildings()
     local current_building_height=''
 
     # Sets the height of the buildings which players stand on
-    player1_building_height="$((RANDOM % max_building_height))"
-    player2_building_height="$((RANDOM % max_building_height))"
+    player1_building_height=$((RANDOM % max_building_height))
+    player2_building_height=$((RANDOM % max_building_height))
 
     # If there are less than 16 buildings on the map
     if ((building_count <= 15))
     then
         # Create the bulding which player1 stands on
         # (the second building from the left edge of the screen)
-        for ((i=building_width; i < (2 * building_width); i++))
+        for ((i=building_width; i < 2 * building_width; i++))
         do
             for ((j=0; j < player1_building_height; j++))
             do
@@ -803,7 +803,7 @@ generate_buildings()
 
         # Create the bulding which player2 stands on
         # (the second building from the right edge of the screen)
-        for ((i=(grid_width - (2 * building_width)); i < (grid_width - building_width); i++))
+        for ((i=(grid_width - (2 * building_width)); i < grid_width - building_width; i++))
         do
             for ((j=0; j < player2_building_height; j++))
             do
@@ -815,15 +815,15 @@ generate_buildings()
         for ((i=0; i < building_count; i++))
         do
             # Always set a random value for the actually generated building
-            current_building_height="$((RANDOM % max_building_height))"
+            current_building_height=$((RANDOM % max_building_height))
 
-            if ((i != 1 && i != (building_count - 2)))
+            if ((i != 1 && i != building_count - 2))
             then
                 for ((j=0; j < building_width; j++))
                 do
                     for ((k=0; k < current_building_height; k++))
                     do
-                        grid["$(($((i * building_width)) + j)),${k}"]='X'
+                        grid["$(((i * building_width) + j)),${k}"]='X'
                     done
                 done
             fi
@@ -832,7 +832,7 @@ generate_buildings()
 
         # Create the bulding which player1 stands on
         # (the third building from the left edge of the screen)
-        for ((i=(2 * building_width); i < (3 * building_width); i++))
+        for ((i=(2 * building_width); i < 3 * building_width; i++))
         do
             for ((j=0; j < player1_building_height; j++))
             do
@@ -842,7 +842,7 @@ generate_buildings()
 
         # Create the bulding which player2 stands on
         # (the third building from the right edge of the screen)
-        for ((i=(grid_width - (3 * building_width)); i < (grid_width - (2 * building_width)); i++))
+        for ((i=(grid_width - (3 * building_width)); i < grid_width - (2 * building_width); i++))
         do
             for ((j=0; j < player2_building_height; j++))
             do
@@ -854,15 +854,15 @@ generate_buildings()
         for ((i=0; i < building_count; i++))
         do
             # Always set a random value for the actually generated building
-            current_building_height="$((RANDOM % max_building_height))"
+            current_building_height=$((RANDOM % max_building_height))
 
-            if ((i != 2 && i != (building_count - 3)))
+            if ((i != 2 && i != building_count - 3))
             then
                 for ((j=0; j < building_width; j++))
                 do
                     for ((k=0; k < current_building_height; k++))
                     do
-                        grid["$(($((i * building_width)) + j)),${k}"]='X'
+                        grid["$(((i * building_width) + j)),${k}"]='X'
                     done
                 done
             fi
@@ -911,9 +911,9 @@ init_players()
     # of the number of buildings on the playing field
     if ((building_count <= 15))
     then
-        i=$((building_width + $(($((building_width - 3)) / 2))))
+        i=$((building_width + ((building_width - 3) / 2)))
     else
-        i=$(($((building_width * 2)) + $(($((building_width - 3)) / 2))))
+        i=$(((building_width * 2) + ((building_width - 3) / 2)))
     fi
     # Set the initial vertical coordinate of player1
     j="${player1_building_height}"
@@ -1017,11 +1017,11 @@ init_players()
     # of the number of buildings on the playing field
     if ((building_count <= 15))
     then
-        i=$((grid_width - $((2 * building_width))))
-        i=$((i + $(($((building_width - 3)) / 2))))
+        i=$((grid_width - (2 * building_width)))
+        i=$((i + ((building_width - 3) / 2)))
     else
-        i=$((grid_width - $((3 * building_width))))
-        i=$((i + $(($((building_width - 3)) / 2))))
+        i=$((grid_width - (3 * building_width)))
+        i=$((i + ((building_width - 3) / 2)))
     fi
     # Set the initial vertical coordinate of player1
     j="${player2_building_height}"
@@ -1139,10 +1139,10 @@ init_game()
 
     # Set the maxmum height of buildings to
     # three fourth of the height of the terminal
-    max_building_height=$(($((term_height * 3)) / 4))
+    max_building_height=$(((term_height * 3) / 4))
 
     # Calculate $grid_width which will be the width of the playing field
-    grid_width=$(($((term_width / building_width)) * building_width))
+    grid_width=$(((term_width / building_width) * building_width))
     # Calculate $grid_height which will be the height of the playing field
     grid_height=$((term_height - 1))
 
@@ -1156,7 +1156,7 @@ init_game()
     # Set $left_padding_width for centering the playing field on the screen,
     # and set $top_padding_height to '0' since the game uses the whole
     # terminal in height
-    left_padding_width=$(($((term_width % building_width)) / 2))
+    left_padding_width=$(((term_width % building_width) / 2))
     top_padding_height=0
 
     # Initialize values of $grid
@@ -1639,7 +1639,7 @@ clear_player1_throw_speed()
         printf '%s' '               '
     } >> "${buffer}"
 
-    for ((i=0; i < (2 * ${#max_speed}); i++))
+    for ((i=0; i < 2 * ${#max_speed}; i++))
     do
         printf '%s' ' ' >> "${buffer}"
     done
@@ -1657,7 +1657,7 @@ clear_player2_throw_speed()
         printf '%s' '               '
     } >> "${buffer}"
 
-    for ((i=0; i < (2 * ${#max_speed}); i++))
+    for ((i=0; i < 2 * ${#max_speed}; i++))
     do
         printf '%s' ' ' >> "${buffer}"
     done
@@ -2105,7 +2105,7 @@ throw_banana()
 
     # Banana throw loop:
     #
-    for ((t=0; x >= 0 && x < grid_width && y >= 1 && y <= (grid_height * 5); ))
+    for ((t=0; x >= 0 && x < grid_width && y >= 1 && y <= grid_height * 5; ))
     do
         # Clear previous banana frame from screen,
         # if there was a banana printed to the
@@ -2142,7 +2142,7 @@ throw_banana()
         # Collision detection START --------------------------------------------
         # If the banana hits a building the building block
         # will be erased and then comes the next player
-        if [[ "${grid["${x},$((y - 1))"]}" == "X" ]]
+        if [[ "${grid["${x},$((y - 1))"]}" == 'X' ]]
         then
             # Erase block from 'grid'
             grid["${x},$((y - 1))"]=''
@@ -2242,8 +2242,8 @@ play_outro()
     left_padding=''
 
     # Calculate $left_padding_width and $top_padding_height
-    left_padding_width=$(($((term_width - min_term_width)) / 2))
-    top_padding_height=$(($((term_height - min_term_height)) / 2))
+    left_padding_width=$(((term_width - min_term_width) / 2))
+    top_padding_height=$(((term_height - min_term_height) / 2))
 
     # Set $left_padding from $left_padding_width
     # $left_padding will contain a number of
