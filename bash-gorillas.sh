@@ -523,7 +523,7 @@ print_frame_stage5()
 # then breaks out of outer construcions.
 read_intro_outro_continue_key()
 {
-    read -sn1 -t0.01
+    read -r -sn1 -t0.01
 
     if (($? == 0))
     then
@@ -688,7 +688,7 @@ read_player1_name()
 {
     local player1_tmp_name=""
 
-    read -n10 player1_name
+    read -r -n10 player1_name
 
     player1_tmp_name=${player1_name/ /}
 
@@ -702,7 +702,7 @@ read_player2_name()
 {
     local player2_tmp_name
 
-    read -n10 player2_name
+    read -r -n10 player2_name
 
     player2_tmp_name=${player2_name/ /}
 
@@ -714,7 +714,7 @@ read_player2_name()
 
 read_total_points()
 {
-    read -n2 total_points
+    read -r -n2 total_points
 
     case ${total_points} in
         ''|*[!0-9]*)
@@ -725,7 +725,7 @@ read_total_points()
 
 read_gravity_value()
 {
-    read -n3 gravity_value
+    read -r -n3 gravity_value
 
     case ${gravity_value} in
         ''|*[!0-9]*)
@@ -739,7 +739,7 @@ read_menu_choice()
     while [[ "${menu_choice}" != "p" && "${menu_choice}" != "P" && \
         "${menu_choice}" != "q" && "${menu_choice}" != "Q" ]]
     do
-        read -sn1 menu_choice
+        read -r -sn1 menu_choice
 
         case ${menu_choice} in
             'p'|'P')
@@ -1527,7 +1527,7 @@ print_player2_correct_throw_speed()
 
 read_player1_throw_angle()
 {
-    read -n2 player1_throw_angle
+    read -r -n2 player1_throw_angle
 
     case ${player1_throw_angle} in
         ''|*[!0-9]*)
@@ -1546,7 +1546,7 @@ read_player1_throw_angle()
 
 read_player2_throw_angle()
 {
-    read -n2 player2_throw_angle
+    read -r -n2 player2_throw_angle
 
     case ${player2_throw_angle} in
         ''|*[!0-9]*)
@@ -1565,7 +1565,7 @@ read_player2_throw_angle()
 
 read_player1_throw_speed()
 {
-    read -n3 player1_throw_speed
+    read -r -n3 player1_throw_speed
 
     case ${player1_throw_speed} in
         ''|*[!0-9]*)
@@ -1584,7 +1584,7 @@ read_player1_throw_speed()
 
 read_player2_throw_speed()
 {
-    read -n3 player2_throw_speed
+    read -r -n3 player2_throw_speed
 
     case ${player2_throw_speed} in
         ''|*[!0-9]*)
