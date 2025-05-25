@@ -144,7 +144,7 @@ ${min_term_height} lines)."
     fi
 }
 
-# Creates a 'screen buffer' file
+# Create a 'screen buffer' file
 create_buffer()
 {
     local buffer_name='bashgorillas-buffer'
@@ -179,23 +179,20 @@ create_buffer()
     fi
 }
 
-# Initializes variables and creates buffer
+# Create screen buffer, install signal handler, clear screen
 init_main()
 {
-    # Create the 'screen buffer'
     create_buffer
 
     # Capture Ctrl+C key combination to call the 'quit'
     # function when Ctrl+C key combination is pressed
     trap quit SIGINT
 
-    # Clear the terminal screen
     clear >> "${buffer}"
     refresh_screen
 }
 
-# Function that prints the buffer onto
-# the screen then empties the buffer
+# Print the buffer onto the screen then clear the buffer
 refresh_screen()
 {
     cat "${buffer}"
@@ -203,13 +200,9 @@ refresh_screen()
     printf '%s' '' > "${buffer}"
 }
 
-# Functions in this file each print a frame to the buffer
-#
-# Calling these funcions and refreshing the screen in order will
-# result in an animation
 print_frame_stage1()
 {
-    # top rule
+    # Top rule
     {
         tput cup                    \
             "${top_padding_height}" \
@@ -219,7 +212,7 @@ print_frame_stage1()
             '*    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    '
     } >> "${buffer}"
 
-    # right rule
+    # Right rule
     for ((i=0; i < min_term_height - 5; i++))
     do
         tput cup                                         \
@@ -235,7 +228,7 @@ print_frame_stage1()
         fi
     done
 
-    # bottom rule
+    # Bottom rule
     {
         tput cup                                          \
             $((top_padding_height + min_term_height - 5)) \
@@ -245,7 +238,7 @@ print_frame_stage1()
             '    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *'
     } >> "${buffer}"
 
-    # left rule
+    # Left rule
     for ((i=0; i < min_term_height - 5; i++))
     do
         tput cup                            \
@@ -269,7 +262,7 @@ print_frame_stage1()
 
 print_frame_stage2()
 {
-    # top rule
+    # Top rule
     {
         tput cup                    \
             "${top_padding_height}" \
@@ -279,7 +272,7 @@ print_frame_stage2()
             ' *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *   '
     }  >> "${buffer}"
 
-    # right rule
+    # Right rule
     for ((i=0; i < min_term_height - 5; i++))
     do
         tput cup                                         \
@@ -295,7 +288,7 @@ print_frame_stage2()
         fi
     done
 
-    # bottom rule
+    # Bottom rule
     {
         tput cup                                          \
             $((top_padding_height + min_term_height - 5)) \
@@ -305,7 +298,7 @@ print_frame_stage2()
             '   *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    * '
     } >> "${buffer}"
 
-    # left rule
+    # Left rule
     for ((i=0; i < min_term_height - 5; i++))
     do
         tput cup                            \
@@ -329,7 +322,7 @@ print_frame_stage2()
 
 print_frame_stage3()
 {
-    # top rule
+    # Top rule
     {
         tput cup                    \
             "${top_padding_height}" \
@@ -339,7 +332,7 @@ print_frame_stage3()
             '  *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *  '
     } >> "${buffer}"
 
-    # right rule
+    # Right rule
     for ((i=0; i < min_term_height - 5; i++))
     do
         tput cup                                         \
@@ -355,7 +348,7 @@ print_frame_stage3()
         fi
     done
 
-    # bottom rule
+    # Bottom rule
     {
         tput cup                                          \
             $((top_padding_height + min_term_height - 5)) \
@@ -365,7 +358,7 @@ print_frame_stage3()
             '  *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *  '
     } >> "${buffer}"
 
-    # left rule
+    # Left rule
     for ((i=0; i < min_term_height - 5; i++))
     do
         tput cup                            \
@@ -389,7 +382,7 @@ print_frame_stage3()
 
 print_frame_stage4()
 {
-    # top rule
+    # Top rule
     {
         tput cup                    \
             "${top_padding_height}" \
@@ -399,7 +392,7 @@ print_frame_stage4()
             '   *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    * '
     } >> "${buffer}"
 
-    # right rule
+    # Right rule
     for ((i=0; i < min_term_height - 5; i++))
     do
         tput cup                                         \
@@ -415,7 +408,7 @@ print_frame_stage4()
         fi
     done
 
-    # bottom rule
+    # Bottom rule
     {
         tput cup                                          \
             $((top_padding_height + min_term_height - 5)) \
@@ -425,7 +418,7 @@ print_frame_stage4()
             ' *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *   '
     } >> "${buffer}"
 
-    # left rule
+    # Left rule
     for ((i=0; i < min_term_height - 5; i++))
     do
         tput cup                            \
@@ -449,7 +442,7 @@ print_frame_stage4()
 
 print_frame_stage5()
 {
-    # top rule
+    # Top rule
     {
         tput cup                    \
             "${top_padding_height}" \
@@ -459,7 +452,7 @@ print_frame_stage5()
             '    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *'
     } >> "${buffer}"
 
-    # right rule
+    # Right rule
     for ((i=0; i < min_term_height - 5; i++))
     do
         tput cup                                         \
@@ -475,7 +468,7 @@ print_frame_stage5()
         fi
     done
 
-    # bottom rule
+    # Bottom rule
     {
         tput cup                                          \
             $((top_padding_height + min_term_height - 5)) \
@@ -485,7 +478,7 @@ print_frame_stage5()
             '*    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    '
     } >> "${buffer}"
 
-    # left rule
+    # Left rule
     for ((i=0; i < min_term_height - 5; i++))
     do
         tput cup                            \
@@ -507,26 +500,19 @@ print_frame_stage5()
         >> "${buffer}"
 }
 
-# Plays intro: prints animated frames and intro text to the screen
+# Print animated frames and intro text to the screen
 play_intro()
 {
-    # Set $left_padding from $left_padding_width
-    # $left_padding will contain a number of
-    # $left_padding_width space characters
     for ((i=0; i < left_padding_width; i++))
     do
         left_padding="${left_padding} "
     done
 
-    # Set $top_padding from $top_padding_height
-    # $top_padding will contain a number of
-    # $top_padding_height newline characters
     for ((i=0; i < top_padding_height; i++))
     do
         top_padding="${top_padding}\n"
     done
 
-    # Intro text
     local intro_text="\n\n${top_padding}${left_padding}                       \
     B a s h   G O R I L L A S\n\n\n${left_padding}            Copyright (C) \
 Istvan Szantai \x3c\x73\x7a\x61\x6e\x74\x61\x69\x69\x40\x73\x69\x64\x65\x6e\
@@ -540,7 +526,6 @@ directional arrow at the bottom\n${left_padding}            of the playing \
 field, its length relative to its strength.\n\n\n\n\n\n${left_padding}    \
                         Press any key to continue"
 
-    # Print intro text into the screen buffer
     printf '%s' "${intro_text}" >> "${buffer}"
 
     # Play animation, exit from loop when a key was pressed
@@ -587,25 +572,20 @@ field, its length relative to its strength.\n\n\n\n\n\n${left_padding}    \
         fi
     done
 
-    # Clear and refresh screen
     clear >> "${buffer}"
     refresh_screen
 }
 
-# Cleans up on quit, returns '0'
+# Cleanup and exit
 quit()
 {
-    # Delete screen buffer file
     rm "${buffer}"
 
     # Restore terminal screen
     tput rmcup
 
-    # Exit with status '0'
     exit 0
 }
-
-# Functions in this file prompt questions and read answers from player
 
 prompt_player1_name()
 {
@@ -779,20 +759,19 @@ read_player_data()
     refresh_screen
 }
 
-# Generates buildings into $grid
+# Generate buildings into $grid
 generate_buildings()
 {
     local current_building_height=''
 
-    # Sets the height of the buildings which players stand on
+    # Set the height of the buildings which players stand on
     player1_building_height=$((RANDOM % max_building_height))
     player2_building_height=$((RANDOM % max_building_height))
 
-    # If there are less than 16 buildings on the map
-    if ((building_count <= 15))
+    if ((building_count < 16))
     then
-        # Create the bulding which player1 stands on
-        # (the second building from the left edge of the screen)
+        # Create the bulding which player1 stands on (the second building from
+        # the left edge of the screen)
         for ((i=building_width; i < 2 * building_width; i++))
         do
             for ((j=0; j < player1_building_height; j++))
@@ -801,8 +780,8 @@ generate_buildings()
             done
         done
 
-        # Create the bulding which player2 stands on
-        # (the second building from the right edge of the screen)
+        # Create the bulding which player2 stands on (the second building from
+        # the right edge of the screen)
         for ((i=(grid_width - (2 * building_width)); i < grid_width - building_width; i++))
         do
             for ((j=0; j < player2_building_height; j++))
@@ -814,7 +793,6 @@ generate_buildings()
         # Create all the other buildings
         for ((i=0; i < building_count; i++))
         do
-            # Always set a random value for the actually generated building
             current_building_height=$((RANDOM % max_building_height))
 
             if ((i != 1 && i != building_count - 2))
@@ -828,10 +806,9 @@ generate_buildings()
                 done
             fi
         done
-    else # If there are more than 15 buildings on the map then
-
-        # Create the bulding which player1 stands on
-        # (the third building from the left edge of the screen)
+    else
+        # Create the bulding which player1 stands on (the third building from
+        # the left edge of the screen)
         for ((i=(2 * building_width); i < 3 * building_width; i++))
         do
             for ((j=0; j < player1_building_height; j++))
@@ -876,32 +853,27 @@ init_players()
     local i=''
     local j=''
 
-    # Remove elements of the $player1_coordinates array
     j="${#player1_coordinates[@]}"
     for ((i=0; i < j; i++))
     do
         unset 'player1_coordinates[${i}]'
     done
 
-    # Remove elements of $player1_throw_animation_frame1
     for key in "${!player1_throw_animation_frame1[@]}"
     do
         unset 'player1_throw_animation_frame1["${key}"]'
     done
 
-    # Remove elements of $player1_throw_animation_frame2
     for key in "${!player1_throw_animation_frame2[@]}"
     do
         unset 'player1_throw_animation_frame2["${key}"]'
     done
 
-    # Remove elements of $player1_victory_animation_frame1
     for key in "${!player1_victory_animation_frame1[@]}"
     do
         unset 'player1_victory_animation_frame1["${key}"]'
     done
 
-    # Remove elements of $player1_victory_animation_frame2
     for key in "${!player1_victory_animation_frame2[@]}"
     do
         unset 'player1_victory_animation_frame2["${key}"]'
@@ -909,7 +881,7 @@ init_players()
 
     # Set the initial horizontal coordinate of player1 depending
     # of the number of buildings on the playing field
-    if ((building_count <= 15))
+    if ((building_count < 16))
     then
         i=$((building_width + ((building_width - 3) / 2)))
     else
@@ -920,14 +892,12 @@ init_players()
     # Left leg of player1
     grid["${i},${j}"]='/'
 
-    # Add "${i},${j}" to the $player1_coordinates array
     player1_coordinates=("${player1_coordinates[@]}" "${i},${j}")
 
     # Right leg of player1
     i=$((i + 2))
     grid["${i},${j}"]="\\"
 
-    # Add "${i},${j}" to the $player1_coordinates array
     player1_coordinates=("${player1_coordinates[@]}" "${i},${j}")
 
     # Left arm of player1
@@ -939,14 +909,12 @@ init_players()
     player1_throw_animation_frame1["${i},${j}"]=' '
     player1_throw_animation_frame2["${i},${j}"]='('
 
-    # Add "${i},${j}" to the $player1_coordinates array
     player1_coordinates=("${player1_coordinates[@]}" "${i},${j}")
 
     # Belly of player1
     i=$((i + 1))
     grid["${i},${j}"]='G'
 
-    # Add "${i},${j}" to the $player1_coordinates array
     player1_coordinates=("${player1_coordinates[@]}" "${i},${j}")
 
     # Right arm of player1
@@ -957,7 +925,6 @@ init_players()
     player1_victory_animation_frame1["${i},${j}"]=')'
     player1_victory_animation_frame2["${i},${j}"]=' '
 
-    # Add "${i},${j}" to the $player1_coordinates array
     player1_coordinates=("${player1_coordinates[@]}" "${i},${j}")
 
     # Head of player1
@@ -971,7 +938,6 @@ init_players()
     player1_victory_animation_frame1["$((i + 1)),${j}"]=' '
     player1_victory_animation_frame2["$((i + 1)),${j}"]=')'
 
-    # Add "${i},${j}" to the $player1_coordinates array
     player1_coordinates=("${player1_coordinates[@]}" "${i},${j}")
 
     # Set the banana throw position for player1
@@ -982,32 +948,27 @@ init_players()
     i=''
     j=''
 
-    # Remove elements of the $player1_coordinates array
     j="${#player2_coordinates[@]}"
     for ((i=0; i < j; i++))
     do
         unset 'player2_coordinates[${i}]'
     done
 
-    # Remove elements of $player2_throw_animation_frame1
     for key in "${!player2_throw_animation_frame1[@]}"
     do
         unset 'player2_throw_animation_frame1["${key}"]'
     done
 
-    # Remove elements of $player2_throw_animation_frame2
     for key in "${!player2_throw_animation_frame2[@]}"
     do
         unset 'player2_throw_animation_frame2["${key}"]'
     done
 
-    # Remove elements of $player2_victory_animation_frame1
     for key in "${!player2_victory_animation_frame1[@]}"
     do
         unset 'player2_victory_animation_frame1["${key}"]'
     done
 
-    # Remove elements of $player2_victory_animation_frame2
     for key in "${!player2_victory_animation_frame2[@]}"
     do
         unset 'player2_victory_animation_frame2["${key}"]'
@@ -1015,7 +976,7 @@ init_players()
 
     # Set the initial horizontal coordinate of player2 depending
     # of the number of buildings on the playing field
-    if ((building_count <= 15))
+    if ((building_count < 16))
     then
         i=$((grid_width - (2 * building_width)))
         i=$((i + ((building_width - 3) / 2)))
@@ -1029,14 +990,12 @@ init_players()
     # Left leg of player2
     grid["${i},${j}"]='/'
 
-    # Add "${i},${j}" to the $player2_coordinates array
     player2_coordinates=("${player2_coordinates[@]}" "${i},${j}")
 
     # Right leg of player2
     i=$((i + 2))
     grid["${i},${j}"]="\\"
 
-    # Add "${i},${j}" to the $player2_coordinates array
     player2_coordinates=("${player2_coordinates[@]}" "${i},${j}")
 
     # Left arm of player2
@@ -1048,14 +1007,12 @@ init_players()
     player2_victory_animation_frame1["${i},${j}"]='('
     player2_victory_animation_frame2["${i},${j}"]=' '
 
-    # Add "${i},${j}" to the $player2_coordinates array
     player2_coordinates=("${player2_coordinates[@]}" "${i},${j}")
 
     # Belly of player2
     i=$((i + 1))
     grid["${i},${j}"]='G'
 
-    # Add "${i},${j}" to the $player2_coordinates array
     player2_coordinates=("${player2_coordinates[@]}" "${i},${j}")
 
     # Right arm of player2
@@ -1064,7 +1021,6 @@ init_players()
     player2_throw_animation_frame1["${i},${j}"]=' '
     player2_throw_animation_frame2["${i},${j}"]=')'
 
-    # Add "${i},${j}" to the $player2_coordinates array
     player2_coordinates=("${player2_coordinates[@]}" "${i},${j}")
 
     # Head of player2
@@ -1078,7 +1034,6 @@ init_players()
     player2_victory_animation_frame1["$((i - 1)),${j}"]=' '
     player2_victory_animation_frame2["$((i - 1)),${j}"]='('
 
-    # Add "${i},${j}" to the $player2_coordinates array
     player2_coordinates=("${player2_coordinates[@]}" "${i},${j}")
 
     # Set the banana throw position for player2
@@ -1086,7 +1041,7 @@ init_players()
     # Init player2 END ---------------------------------------------------------
 }
 
-# Initializes variables for a new game or new round in the game
+# Initialize variables for a new game/round
 init_game()
 {
     # Init player scores on new game
@@ -1102,26 +1057,22 @@ init_game()
         next_player=$(((RANDOM % 2) + 1))
     fi
 
-    # Set maximum throw velocity
     if [[ "${max_speed}" == '' ]]
     then
         max_speed=100
     fi
 
-    # Set maximum wind speed
     if [[ "${max_wind_value}" == '' ]]
     then
         max_wind_value=6
     fi
 
-    # Set wind value
     wind_value=$((RANDOM % max_wind_value))
     if ((wind_value != 0 && (RANDOM % 2) != 0))
     then
         wind_value="-${wind_value}"
     fi
 
-    # Print message to the screen to inform the user what is happening
     tput cup 0 0 >> "${buffer}"
 
     if ((player1_score == 0 && player2_score == 0))
@@ -1131,25 +1082,19 @@ init_game()
         printf '%s' 'Starting new round...' >> "${buffer}"
     fi
 
-    # Refresh the screen
     refresh_screen
 
-    # Set the width of a building (number of characters on the terminal screen)
     building_width=8
 
-    # Set the maxmum height of buildings to
-    # three fourth of the height of the terminal
+    # Set the maxmum height of buildings to three fourth of the height
+    # of the terminal
     max_building_height=$(((term_height * 3) / 4))
 
-    # Calculate $grid_width which will be the width of the playing field
     grid_width=$(((term_width / building_width) * building_width))
-    # Calculate $grid_height which will be the height of the playing field
     grid_height=$((term_height - 1))
 
-    # Calculate how many buildings can be placed into the playing field
     building_count=$((grid_width / building_width))
 
-    # Reset $left_padding and $top_padding
     left_padding=''
     top_padding=''
 
@@ -1159,7 +1104,7 @@ init_game()
     left_padding_width=$(((term_width % building_width) / 2))
     top_padding_height=0
 
-    # Initialize values of $grid
+    # Initialize $grid
     for ((i=0; i < grid_width; i++))
     do
         for ((j=0; j < grid_height; j++))
@@ -1168,28 +1113,22 @@ init_game()
         done
     done
 
-    # Generate the buildings, and save the buildings into $grid
     generate_buildings
 
-    # Initialize and place payers into $grid
     init_players
 }
 
-# Prints the Sun to the top center of the screen
+# Print the Sun to the top center of the screen
 print_sun()
 {
-    # Create a local array variable
     local sun_text=()
 
-    # Store the ASCII lines of the Sun
     sun_text[0]='    |'
     sun_text[1]="  \\ _ /"
     sun_text[2]='-= (_) =-'
     sun_text[3]="  /   \\"
     sun_text[4]='    |'
 
-    # Iterate through the local array $sun_text
-    # and print its contents to the screen
     for ((i=0; i < ${#sun_text[@]}; i++))
     do
         {
@@ -1200,16 +1139,14 @@ print_sun()
                 $((top_padding_height + i)) \
                 $((left_padding_width + (grid_width / 2) - (9 / 2)))
 
-            # Print the actual line to the screen buffer
             printf '%s' "${sun_text[${i}]}"
         } >> "${buffer}"
     done
 
-    # Refresh the screen
     refresh_screen
 }
 
-# Prints wind indicator arrow to the bottom row of the screen
+# Print the wind indicator arrow to the bottom row of the screen
 print_wind()
 {
     {
@@ -1226,13 +1163,12 @@ print_wind()
     then
         if ((wind_value < 0))
         then
+            # Wind blows to the left ($wind_value is negative)
             {
-                # If the wind blows to the left ($wind_value is negative)
                 tput cup             \
                     "${grid_height}" \
                     $((left_padding_width + (grid_width / 2) + wind_value - 1))
 
-                # Print wind indicator arrowhead
                 printf '%s' '<'
             } >> "${buffer}"
 
@@ -1242,23 +1178,20 @@ print_wind()
                 printf '%s' '-' >> "${buffer}"
             done
         else
-            # If the wind blows to the right ($wind_value is positive)
-            # then print the arrow with the length of $wind_value
+            # Wind blows to the right ($wind_value is positive)
             for ((i=0; i < wind_value; i++))
             do
                 printf '%s' '-' >> "${buffer}"
             done
 
-            # Print wind indicator arrowhead
             printf '%s' '>' >> "${buffer}"
         fi
     fi
 
-    # Refresh the screen
     refresh_screen
 }
 
-# Prints the name of players to the top left and right corners of the screen
+# Print the name of the players to the top left and right corners of the screen
 print_player_names()
 {
     {
@@ -1267,7 +1200,6 @@ print_player_names()
             "${top_padding_height}" \
             "${left_padding_width}"
 
-        # Print player1's name ($player1_name)
         printf '%s' "${player1_name}"
 
         # Position the cursor to the top right corner of the playing field
@@ -1275,15 +1207,13 @@ print_player_names()
             "${top_padding_height}" \
             $((left_padding_width + grid_width - ${#player2_name}))
 
-        # Print player2's name ($player2_name)
         printf '%s' "${player2_name}"
     } >> "${buffer}"
 
-    # Refresh the screen
     refresh_screen
 }
 
-# Clears the player names from the top left and right corners of the screen
+# Clear the player names from the top left and right corners of the screen
 clear_player_names()
 {
     # Position the cursor to the top left corner of the playing field
@@ -1292,29 +1222,27 @@ clear_player_names()
         "${left_padding_width}" \
         >> "${buffer}"
 
-    # Clear the name of player1 from the top left corner of the playing field
     for ((i=0; i < ${#player1_name}; i++))
     do
         printf '%s' ' ' >> "${buffer}"
     done
 
-    # Position the cursor to the top right corner of the playing field
+    # Position the cursor to the top right corner of the playing field right
+    # before player2's name
     tput cup                                                    \
         "${top_padding_height}"                                 \
         $((left_padding_width + grid_width - ${#player2_name})) \
         >> "${buffer}"
 
-    # Clear the name of player2 from the top right corner of the playing field
     for ((i=0; i < ${#player2_name}; i++))
     do
         printf '%s' ' ' >> "${buffer}"
     done
 
-    # Refresh the screen
     refresh_screen
 }
 
-# Prints the score of the players (overlaps buildings on the screen)
+# Print the score of the players (overlaps buildings on the screen)
 print_score()
 {
     local score_text=" ${player1_score}>SCORE<${player2_score} "
@@ -1326,22 +1254,17 @@ print_score()
             $((top_padding_height + grid_height - 2)) \
             $((left_padding_width + (grid_width / 2) - (${#score_text} / 2)))
 
-        # Print the score
         printf '%s' "${score_text}"
     } >> "${buffer}"
 
-    # Refresh the screen
     refresh_screen
 }
 
-# Prints the contents of 'grid' into the screen buffer,
-# then refreshes the screen
+# Print the contents of 'grid' into the screen buffer, then refresh the screen
 print_scene()
 {
-    # Clear screen
     clear >> "${buffer}"
 
-    # Print the contents of $grid to the buffer
     for((i=0; i < grid_width; i++))
     do
         for ((j=0; j < grid_height; j++))
@@ -1356,12 +1279,11 @@ print_scene()
         done
     done
 
-    # Refresh screen
     refresh_screen
 }
 
-# Prints a small help how to quit the game
-# into the right bottom part of the screen
+# Print a small help how to quit the game into the right bottom part
+# of the screen
 print_help()
 {
     local help_text='Quit: ^C'
@@ -1373,16 +1295,11 @@ print_help()
             "${grid_height}" \
             $((left_padding_width + grid_width - ${#help_text}))
 
-        # Print help
         printf '%s' "${help_text}"
     } >> "${buffer}"
 
-    # Refresh the screen
     refresh_screen
 }
-
-# Functions in this file prompt questions and read answers from player
-# regarding the angle and speed of throwing
 
 prompt_player1_throw_angle()
 {
@@ -1689,9 +1606,6 @@ read_throw_data()
     fi
 }
 
-# Functions in this file animates players
-# during banana throwing and victory dance
-
 print_player1_throw_frame1()
 {
     local i=''
@@ -1956,9 +1870,8 @@ clear_player2()
     refresh_screen
 }
 
-# Sets the first banana frame
-# depending which player throws
-init_banana()
+# Set the first banana frame
+init_banana_frame()
 {
     if ((next_player == 1))
     then
@@ -1968,8 +1881,7 @@ init_banana()
     fi
 }
 
-# Sets the next banana frame
-# depending which player throws
+# Set the next banana frame
 next_banana_frame()
 {
     if ((next_player == 1))
@@ -2006,7 +1918,7 @@ next_banana_frame()
     fi
 }
 
-# Swithes to the other player
+# Switch to the other player
 switch_player()
 {
     if ((next_player == 1))
@@ -2017,8 +1929,8 @@ switch_player()
     fi
 }
 
-# This fuction is responsible for banana throwing,
-# including physics, animation, etc.
+# This fuction is responsible for banana throwing, including physics,
+# animation, etc.
 throw_banana()
 {
     local pi=''
@@ -2036,12 +1948,10 @@ throw_banana()
         | bc -l                            \
     )"
 
-    # Initialize banana animation frame
-    init_banana
+    init_banana_frame
 
-    # Set $throw_angle, $throw_speed, banana throw
-    # start positions, etc. based on read values and
-    # current player
+    # Set $throw_angle, $throw_speed, banana throw start positions, etc.
+    # based on read values and current player
     if ((next_player == 1))
     then
         # Convert degrees to radians
@@ -2062,8 +1972,7 @@ throw_banana()
         # Start player1 throw animation
         print_player1_throw_frame1
     else
-        # Set correct angle for player2, and
-        # convert degrees to radians
+        # Set correct angle for player2, and convert degrees to radians
         throw_angle=$((180 - player2_throw_angle))
         throw_angle="$(                                            \
             printf '%s\n' "scale=20; ${throw_angle} * ${pi} / 180" \
@@ -2094,8 +2003,8 @@ throw_banana()
 
     refresh_screen
 
-    # Print player throw animation ending to the screen
-    # depending who is the current throwing player
+    # Print player throw animation ending to the screen depending who is the
+    # current throwing player
     if ((next_player == 1))
     then
         print_player1_throw_frame2
@@ -2103,13 +2012,11 @@ throw_banana()
         print_player2_throw_frame2
     fi
 
-    # Banana throw loop:
-    #
+    # Banana throw loop
     for ((t=0; x >= 0 && x < grid_width && y >= 1 && y <= grid_height * 5; ))
     do
-        # Clear previous banana frame from screen,
-        # if there was a banana printed to the
-        # screen in the previous iteration
+        # Clear previous banana frame from screen, if there was a banana
+        # printed to the screen in the previous iteration
         if [[ "${prev_x}" != '' && "${prev_y}" != '' ]] \
             && ((x >= 0 && x < grid_width && y >= 1 && y <= grid_height))
         then
@@ -2124,8 +2031,8 @@ throw_banana()
             refresh_screen
         fi
 
-        # Calculate next horizontal ($x) and
-        # vertical ($y) position of the banana
+        # Calculate next horizontal ($x) and vertical ($y) position
+        # of the banana
         x="$(                                                                                                        \
             printf '%s\n'                                                                                            \
                     "scale=20; ${x_0} + (${throw_speed} * ${t} * c(${throw_angle}) + (${wind_value} * ${t} * ${t}))" \
@@ -2140,8 +2047,8 @@ throw_banana()
         )"
 
         # Collision detection START --------------------------------------------
-        # If the banana hits a building the building block
-        # will be erased and then comes the next player
+        # If the banana hits a building the building block will be erased
+        # and then comes the next player
         if [[ "${grid["${x},$((y - 1))"]}" == 'X' ]]
         then
             # Erase block from 'grid'
@@ -2162,10 +2069,9 @@ throw_banana()
             break
         fi
 
-        # Banana hits player: check the current player,
-        # and increase score of the player who was not hit,
-        # clear the player who was hit from the screen,
-        # and set $next_player to the player who was hit
+        # Banana hits player: check the current player, and increase score
+        # of the player who was not hit, clear the player who was hit from
+        # the screen, and set $next_player to the player who was hit
         for ((i=0; i < ${#player1_coordinates[@]}; i++))
         do
             if [[ "${player1_coordinates[${i}]}" == "${x},$((y - 1))" ]]
@@ -2228,34 +2134,25 @@ throw_banana()
         )"
     done
 
-    # If the thrown banana gets out of boundaries
-    # or the banana hits a building then the next
-    # player can throw
+    # If the thrown banana gets out of boundaries or the banana hits a building
+    # then the next player can throw
     switch_player
 }
 
-# Plays outro: prints animated frames and outro text to the screen
+# Print animated frames and outro text to the screen
 play_outro()
 {
-    # Clear $top_padding and $left_padding
     top_padding=''
     left_padding=''
 
-    # Calculate $left_padding_width and $top_padding_height
     left_padding_width=$(((term_width - min_term_width) / 2))
     top_padding_height=$(((term_height - min_term_height) / 2))
 
-    # Set $left_padding from $left_padding_width
-    # $left_padding will contain a number of
-    # $left_padding_width space characters
     for ((i=0; i < left_padding_width; i++))
     do
         left_padding="${left_padding} "
     done
 
-    # Set $top_padding from $top_padding_height
-    # $top_padding will contain a number of
-    # $top_padding_height newline characters
     for ((i=0; i < top_padding_height; i++))
     do
         top_padding="${top_padding}\n"
@@ -2283,7 +2180,6 @@ play_outro()
     outro_text="${outro_text}     ${player2_score}\n\n\n\n\n\n\n\n\n\n\
 ${left_padding}                            Press any key to continue"
 
-    # Print outro text into the screen buffer
     printf '%s' "${outro_text}" >> "${buffer}"
 
     # Play animation, exit from loop when a key was pressed
@@ -2330,37 +2226,28 @@ ${left_padding}                            Press any key to continue"
         fi
     done
 
-    # Clear and refresh screen
     clear >> "${buffer}"
     refresh_screen
 }
 
-# Main loop of the game
+# Game main loop
 main_loop()
 {
-    # Initialize variables, create screen buffer for bash-gorillas
     init_main
 
-    # Play intro and wait for keypress
     play_intro
 
-    # Read players' names, max points, gravity
     read_player_data
 
     while [[ "${player1_score}" == '' && "${player2_score}" == '' ]] \
         || (((player1_score + player2_score) < total_points))
     do
-        # Initialize necessary variables before every round,
-        # generate buildings, place players on map, etc.
-        # (not everything implemented yet)
         init_game
 
-        # Display game on screen
         print_scene
         print_wind
         print_help
 
-        # Loop of players throwing bananas at each other
         while true
         do
             print_sun
@@ -2373,8 +2260,7 @@ main_loop()
             throw_banana
         done
 
-        # On player hit update the score
-        # and make the winner dance
+        # On player hit update the score and make the winner dance
         print_score
         print_player_victory_dance
     done
@@ -2386,7 +2272,6 @@ main_loop()
     # Play outro and wait for keypress
     play_outro
 
-    # Clean up and exit with 0
     quit
 }
 
