@@ -2065,7 +2065,6 @@ throw_banana()
 
             refresh_screen
 
-            # Exit the loop
             break
         fi
 
@@ -2084,7 +2083,7 @@ throw_banana()
                     switch_player
                 fi
 
-                break 3
+                return 1
 
             elif [[ "${player2_coordinates[${i}]}" == "${x},$((y - 1))" ]]
             then
@@ -2096,7 +2095,7 @@ throw_banana()
                     switch_player
                 fi
 
-                break 3
+                return 1
             fi
         done
 
@@ -2137,6 +2136,8 @@ throw_banana()
     # If the thrown banana gets out of boundaries or the banana hits a building
     # then the next player can throw
     switch_player
+
+    return 0
 }
 
 # Print animated frames and outro text to the screen
@@ -2257,7 +2258,7 @@ main_loop()
             read_throw_data
             clear_player_names
 
-            throw_banana
+            throw_banana || break
         done
 
         # On player hit update the score and make the winner dance
