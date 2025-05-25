@@ -29,8 +29,6 @@ term_height="$(tput lines)"
 min_term_width=80
 min_term_height=22
 
-buffer_name=''
-buffer_directory=''
 buffer=''
 
 left_padding=''
@@ -88,6 +86,17 @@ wind_value=''
 declare -A grid
 grid_width=''
 grid_height=''
+
+sun_text=(
+    '    |'
+    "  \\ _ /"
+    '-= (_) =-'
+    "  /   \\"
+    '    |'
+)
+sun_text_max_length=9
+help_text='Quit: ^C'
+angle_text='Angle [0-90]: '
 
 # Check availability of necessary programs and minimum terminal size
 check_prerequisites()
@@ -147,16 +156,17 @@ ${min_term_height} lines)."
 # Create a 'screen buffer' file
 create_buffer()
 {
-    local buffer_name='bashgorillas-buffer'
+    local _buffer_name='bashgorillas-buffer'
+    local _buffer_directory
 
     # Try to use /dev/shm if available
     # else use /tmp as the location of
     # the screen buffer file
     if [ -d '/dev/shm' ]
     then
-        local buffer_directory='/dev/shm'
+        _buffer_directory='/dev/shm'
     else
-        local buffer_directory='/tmp'
+        _buffer_directory='/tmp'
     fi
 
     # Try to use mktemp before using the unsafe method
@@ -164,7 +174,7 @@ create_buffer()
     then
         # If 'mktemp' is available for use,
         # then create the buffer file using it
-        buffer="$(mktemp --tmpdir="${buffer_directory}" "${buffer_name}-XXXXXXXXXX")"
+        buffer="$(mktemp --tmpdir="${_buffer_directory}" "${_buffer_name}-XXXXXXXXXX")"
     else
         # If 'mktemp' was not available for use,
         # then create the buffer file using $RANDOM
@@ -172,7 +182,7 @@ create_buffer()
         # Note this is an unsafe method to create the
         # screen buffer file!
         # TODO: check if buffer file already exists, if unsafe method is used
-        buffer="${buffer_directory}/${buffer_name}-${RANDOM}"
+        buffer="${_buffer_directory}/${_buffer_name}-${RANDOM}"
 
         # Create the buffer file
         printf '%s' '' > "${buffer}"
@@ -213,14 +223,14 @@ print_frame_stage1()
     } >> "${buffer}"
 
     # Right rule
-    for ((i=0; i < min_term_height - 5; i++))
+    for ((_i=0; _i < min_term_height - 5; _i++))
     do
         tput cup                                         \
-            $((top_padding_height + i + 1))              \
+            $((top_padding_height + _i + 1))             \
             $((left_padding_width + min_term_width - 1)) \
             >> "${buffer}"
 
-        if ((i % 3 == 0))
+        if ((_i % 3 == 0))
         then
             printf '%s' '*' >> "${buffer}"
         else
@@ -239,14 +249,14 @@ print_frame_stage1()
     } >> "${buffer}"
 
     # Left rule
-    for ((i=0; i < min_term_height - 5; i++))
+    for ((_i=0; _i < min_term_height - 5; _i++))
     do
-        tput cup                            \
-            $((top_padding_height + i + 1)) \
-            "${left_padding_width}"         \
+        tput cup                             \
+            $((top_padding_height + _i + 1)) \
+            "${left_padding_width}"          \
             >> "${buffer}"
 
-        if ((i % 3 == 2))
+        if ((_i % 3 == 2))
         then
             printf '%s' '*' >> "${buffer}"
         else
@@ -273,14 +283,14 @@ print_frame_stage2()
     }  >> "${buffer}"
 
     # Right rule
-    for ((i=0; i < min_term_height - 5; i++))
+    for ((_i=0; _i < min_term_height - 5; _i++))
     do
         tput cup                                         \
-            $((top_padding_height + i + 1))              \
+            $((top_padding_height + _i + 1))             \
             $((left_padding_width + min_term_width - 1)) \
             >> "${buffer}"
 
-        if ((i % 3 == 1))
+        if ((_i % 3 == 1))
         then
             printf '%s' '*' >> "${buffer}"
         else
@@ -299,14 +309,14 @@ print_frame_stage2()
     } >> "${buffer}"
 
     # Left rule
-    for ((i=0; i < min_term_height - 5; i++))
+    for ((_i=0; _i < min_term_height - 5; _i++))
     do
-        tput cup                            \
-            $((top_padding_height + i + 1)) \
-            "${left_padding_width}"         \
+        tput cup                             \
+            $((top_padding_height + _i + 1)) \
+            "${left_padding_width}"          \
             >> "${buffer}"
 
-        if ((i % 3 == 1))
+        if ((_i % 3 == 1))
         then
             printf '%s' '*' >> "${buffer}"
         else
@@ -333,14 +343,14 @@ print_frame_stage3()
     } >> "${buffer}"
 
     # Right rule
-    for ((i=0; i < min_term_height - 5; i++))
+    for ((_i=0; _i < min_term_height - 5; _i++))
     do
         tput cup                                         \
-            $((top_padding_height + i + 1))              \
+            $((top_padding_height + _i + 1))             \
             $((left_padding_width + min_term_width - 1)) \
             >> "${buffer}"
 
-        if ((i % 3 == 2))
+        if ((_i % 3 == 2))
         then
             printf '%s' '*' >> "${buffer}"
         else
@@ -359,14 +369,14 @@ print_frame_stage3()
     } >> "${buffer}"
 
     # Left rule
-    for ((i=0; i < min_term_height - 5; i++))
+    for ((_i=0; _i < min_term_height - 5; _i++))
     do
-        tput cup                            \
-            $((top_padding_height + i + 1)) \
-            "${left_padding_width}"         \
+        tput cup                             \
+            $((top_padding_height + _i + 1)) \
+            "${left_padding_width}"          \
             >> "${buffer}"
 
-        if ((i % 3 == 0))
+        if ((_i % 3 == 0))
         then
             printf '%s' '*' >> "${buffer}"
         else
@@ -393,14 +403,14 @@ print_frame_stage4()
     } >> "${buffer}"
 
     # Right rule
-    for ((i=0; i < min_term_height - 5; i++))
+    for ((_i=0; _i < min_term_height - 5; _i++))
     do
         tput cup                                         \
-            $((top_padding_height + i + 1))              \
+            $((top_padding_height + _i + 1))             \
             $((left_padding_width + min_term_width - 1)) \
             >> "${buffer}"
 
-        if ((i % 3 == 0))
+        if ((_i % 3 == 0))
         then
             printf '%s' '*' >> "${buffer}"
         else
@@ -419,14 +429,14 @@ print_frame_stage4()
     } >> "${buffer}"
 
     # Left rule
-    for ((i=0; i < min_term_height - 5; i++))
+    for ((_i=0; _i < min_term_height - 5; _i++))
     do
-        tput cup                            \
-            $((top_padding_height + i + 1)) \
-            "${left_padding_width}"         \
+        tput cup                             \
+            $((top_padding_height + _i + 1)) \
+            "${left_padding_width}"          \
             >> "${buffer}"
 
-        if ((i % 3 == 2))
+        if ((_i % 3 == 2))
         then
             printf '%s' '*' >> "${buffer}"
         else
@@ -453,14 +463,14 @@ print_frame_stage5()
     } >> "${buffer}"
 
     # Right rule
-    for ((i=0; i < min_term_height - 5; i++))
+    for ((_i=0; _i < min_term_height - 5; _i++))
     do
         tput cup                                         \
-            $((top_padding_height + i + 1))              \
+            $((top_padding_height + _i + 1))             \
             $((left_padding_width + min_term_width - 1)) \
             >> "${buffer}"
 
-        if ((i % 3 == 1))
+        if ((_i % 3 == 1))
         then
             printf '%s' '*' >> "${buffer}"
         else
@@ -479,14 +489,14 @@ print_frame_stage5()
     } >> "${buffer}"
 
     # Left rule
-    for ((i=0; i < min_term_height - 5; i++))
+    for ((_i=0; _i < min_term_height - 5; _i++))
     do
-        tput cup                            \
-            $((top_padding_height + i + 1)) \
-            "${left_padding_width}"         \
+        tput cup                             \
+            $((top_padding_height + _i + 1)) \
+            "${left_padding_width}"          \
             >> "${buffer}"
 
-        if ((i % 3 == 1))
+        if ((_i % 3 == 1))
         then
             printf '%s' '*' >> "${buffer}"
         else
@@ -503,6 +513,8 @@ print_frame_stage5()
 # Print animated frames and intro text to the screen
 play_intro()
 {
+    local _intro_text
+
     for ((i=0; i < left_padding_width; i++))
     do
         left_padding="${left_padding} "
@@ -513,7 +525,7 @@ play_intro()
         top_padding="${top_padding}\n"
     done
 
-    local intro_text="\n\n${top_padding}${left_padding}                       \
+    _intro_text="\n\n${top_padding}${left_padding}                       \
     B a s h   G O R I L L A S\n\n\n${left_padding}            Copyright (C) \
 Istvan Szantai \x3c\x73\x7a\x61\x6e\x74\x61\x69\x69\x40\x73\x69\x64\x65\x6e\
 \x6f\x74\x65\x2e\x68\x75\x3e 2013\n\n${left_padding}     This game \
@@ -526,7 +538,7 @@ directional arrow at the bottom\n${left_padding}            of the playing \
 field, its length relative to its strength.\n\n\n\n\n\n${left_padding}    \
                         Press any key to continue"
 
-    printf '%s' "${intro_text}" >> "${buffer}"
+    printf '%s' "${_intro_text}" >> "${buffer}"
 
     # Play animation, exit from loop when a key was pressed
     while true
@@ -666,13 +678,13 @@ prompt_menu_choice()
 
 read_player1_name()
 {
-    local player1_tmp_name=''
+    local _player1_tmp_name=''
 
     read -r -n10 player1_name
 
-    player1_tmp_name="${player1_name/ /}"
+    _player1_tmp_name="${player1_name/ /}"
 
-    if [[ "${player1_tmp_name}" == '' ]]
+    if [[ "${_player1_tmp_name}" == '' ]]
     then
         player1_name='Player 1'
     fi
@@ -680,13 +692,13 @@ read_player1_name()
 
 read_player2_name()
 {
-    local player2_tmp_name
+    local _player2_tmp_name
 
     read -r -n10 player2_name
 
-    player2_tmp_name="${player2_name/ /}"
+    _player2_tmp_name="${player2_name/ /}"
 
-    if [[ "${player2_tmp_name}" == '' ]]
+    if [[ "${_player2_tmp_name}" == '' ]]
     then
         player2_name='Player 2'
     fi
@@ -762,7 +774,7 @@ read_player_data()
 # Generate buildings into $grid
 generate_buildings()
 {
-    local current_building_height=''
+    local _current_building_height
 
     # Set the height of the buildings which players stand on
     player1_building_height=$((RANDOM % max_building_height))
@@ -772,36 +784,36 @@ generate_buildings()
     then
         # Create the bulding which player1 stands on (the second building from
         # the left edge of the screen)
-        for ((i=building_width; i < 2 * building_width; i++))
+        for ((_i=building_width; _i < 2 * building_width; _i++))
         do
-            for ((j=0; j < player1_building_height; j++))
+            for ((_j=0; _j < player1_building_height; _j++))
             do
-                grid["${i},${j}"]='X'
+                grid["${_i},${_j}"]='X'
             done
         done
 
         # Create the bulding which player2 stands on (the second building from
         # the right edge of the screen)
-        for ((i=(grid_width - (2 * building_width)); i < grid_width - building_width; i++))
+        for ((_i=grid_width - (2 * building_width); _i < grid_width - building_width; _i++))
         do
-            for ((j=0; j < player2_building_height; j++))
+            for ((_j=0; _j < player2_building_height; _j++))
             do
-                grid["${i},${j}"]='X'
+                grid["${_i},${_j}"]='X'
             done
         done
 
         # Create all the other buildings
-        for ((i=0; i < building_count; i++))
+        for ((_i=0; _i < building_count; _i++))
         do
-            current_building_height=$((RANDOM % max_building_height))
+            _current_building_height=$((RANDOM % max_building_height))
 
-            if ((i != 1 && i != building_count - 2))
+            if ((_i != 1 && _i != building_count - 2))
             then
-                for ((j=0; j < building_width; j++))
+                for ((_j=0; _j < building_width; _j++))
                 do
-                    for ((k=0; k < current_building_height; k++))
+                    for ((_k=0; _k < _current_building_height; _k++))
                     do
-                        grid["$(((i * building_width) + j)),${k}"]='X'
+                        grid["$(((_i * building_width) + _j)),${_k}"]='X'
                     done
                 done
             fi
@@ -809,37 +821,37 @@ generate_buildings()
     else
         # Create the bulding which player1 stands on (the third building from
         # the left edge of the screen)
-        for ((i=(2 * building_width); i < 3 * building_width; i++))
+        for ((_i=building_width * 2; _i < building_width * 3; _i++))
         do
-            for ((j=0; j < player1_building_height; j++))
+            for ((_j=0; _j < player1_building_height; _j++))
             do
-                grid["${i},${j}"]='X'
+                grid["${_i},${_j}"]='X'
             done
         done
 
         # Create the bulding which player2 stands on
         # (the third building from the right edge of the screen)
-        for ((i=(grid_width - (3 * building_width)); i < grid_width - (2 * building_width); i++))
+        for ((_i=grid_width - (3 * building_width); _i < grid_width - (2 * building_width); _i++))
         do
-            for ((j=0; j < player2_building_height; j++))
+            for ((_j=0; _j < player2_building_height; _j++))
             do
-                grid["${i},${j}"]='X'
+                grid["${_i},${_j}"]='X'
             done
         done
 
         # Create all the other buildings
-        for ((i=0; i < building_count; i++))
+        for ((_i=0; _i < building_count; _i++))
         do
             # Always set a random value for the actually generated building
-            current_building_height=$((RANDOM % max_building_height))
+            _current_building_height=$((RANDOM % max_building_height))
 
-            if ((i != 2 && i != building_count - 3))
+            if ((_i != 2 && _i != building_count - 3))
             then
-                for ((j=0; j < building_width; j++))
+                for ((_j=0; _j < building_width; _j++))
                 do
-                    for ((k=0; k < current_building_height; k++))
+                    for ((_k=0; _k < _current_building_height; _k++))
                     do
-                        grid["$(((i * building_width) + j)),${k}"]='X'
+                        grid["$(((_i * building_width) + _j)),${_k}"]='X'
                     done
                 done
             fi
@@ -849,195 +861,193 @@ generate_buildings()
 
 init_players()
 {
+    local _i
+    local _j
+
     # Init player1 START -------------------------------------------------------
-    local i=''
-    local j=''
-
-    j="${#player1_coordinates[@]}"
-    for ((i=0; i < j; i++))
+    _j="${#player1_coordinates[@]}"
+    for ((_i=0; _i < _j; _i++))
     do
-        unset 'player1_coordinates[${i}]'
+        unset 'player1_coordinates[${_i}]'
     done
 
-    for key in "${!player1_throw_animation_frame1[@]}"
+    for _key in "${!player1_throw_animation_frame1[@]}"
     do
-        unset 'player1_throw_animation_frame1["${key}"]'
+        unset 'player1_throw_animation_frame1["${_key}"]'
     done
 
-    for key in "${!player1_throw_animation_frame2[@]}"
+    for _key in "${!player1_throw_animation_frame2[@]}"
     do
-        unset 'player1_throw_animation_frame2["${key}"]'
+        unset 'player1_throw_animation_frame2["${_key}"]'
     done
 
-    for key in "${!player1_victory_animation_frame1[@]}"
+    for _key in "${!player1_victory_animation_frame1[@]}"
     do
-        unset 'player1_victory_animation_frame1["${key}"]'
+        unset 'player1_victory_animation_frame1["${_key}"]'
     done
 
-    for key in "${!player1_victory_animation_frame2[@]}"
+    for _key in "${!player1_victory_animation_frame2[@]}"
     do
-        unset 'player1_victory_animation_frame2["${key}"]'
+        unset 'player1_victory_animation_frame2["${_key}"]'
     done
 
     # Set the initial horizontal coordinate of player1 depending
     # of the number of buildings on the playing field
     if ((building_count < 16))
     then
-        i=$((building_width + ((building_width - 3) / 2)))
+        _i=$((building_width + ((building_width - 3) / 2)))
     else
-        i=$(((building_width * 2) + ((building_width - 3) / 2)))
+        _i=$(((building_width * 2) + ((building_width - 3) / 2)))
     fi
     # Set the initial vertical coordinate of player1
-    j="${player1_building_height}"
+    _j="${player1_building_height}"
     # Left leg of player1
-    grid["${i},${j}"]='/'
+    grid["${_i},${_j}"]='/'
 
-    player1_coordinates=("${player1_coordinates[@]}" "${i},${j}")
+    player1_coordinates=("${player1_coordinates[@]}" "${_i},${_j}")
 
     # Right leg of player1
-    i=$((i + 2))
-    grid["${i},${j}"]="\\"
+    _i=$((_i + 2))
+    grid["${_i},${_j}"]="\\"
 
-    player1_coordinates=("${player1_coordinates[@]}" "${i},${j}")
+    player1_coordinates=("${player1_coordinates[@]}" "${_i},${_j}")
 
     # Left arm of player1
-    i=$((i - 2))
-    j=$((j + 1))
-    grid["${i},${j}"]='('
+    _i=$((_i - 2))
+    _j=$((_j + 1))
+    grid["${_i},${_j}"]='('
 
     # Set animation frames for player1 banana throw and victory dance
-    player1_throw_animation_frame1["${i},${j}"]=' '
-    player1_throw_animation_frame2["${i},${j}"]='('
+    player1_throw_animation_frame1["${_i},${_j}"]=' '
+    player1_throw_animation_frame2["${_i},${_j}"]='('
 
-    player1_coordinates=("${player1_coordinates[@]}" "${i},${j}")
+    player1_coordinates=("${player1_coordinates[@]}" "${_i},${_j}")
 
     # Belly of player1
-    i=$((i + 1))
-    grid["${i},${j}"]='G'
+    _i=$((_i + 1))
+    grid["${_i},${_j}"]='G'
 
-    player1_coordinates=("${player1_coordinates[@]}" "${i},${j}")
+    player1_coordinates=("${player1_coordinates[@]}" "${_i},${_j}")
 
     # Right arm of player1
-    i=$((i + 1))
-    grid["${i},${j}"]=')'
+    _i=$((_i + 1))
+    grid["${_i},${_j}"]=')'
 
     # Set animation frames for player1 victory dance
-    player1_victory_animation_frame1["${i},${j}"]=')'
-    player1_victory_animation_frame2["${i},${j}"]=' '
+    player1_victory_animation_frame1["${_i},${_j}"]=')'
+    player1_victory_animation_frame2["${_i},${_j}"]=' '
 
-    player1_coordinates=("${player1_coordinates[@]}" "${i},${j}")
+    player1_coordinates=("${player1_coordinates[@]}" "${_i},${_j}")
 
     # Head of player1
-    i=$((i - 1))
-    j=$((j + 1))
-    grid["${i},${j}"]='o'
+    _i=$((_i - 1))
+    _j=$((_j + 1))
+    grid["${_i},${_j}"]='o'
 
     # Set animation frames for player1 banana throw and victory dance
-    player1_throw_animation_frame1["$((i - 1)),${j}"]='('
-    player1_throw_animation_frame2["$((i - 1)),${j}"]=' '
-    player1_victory_animation_frame1["$((i + 1)),${j}"]=' '
-    player1_victory_animation_frame2["$((i + 1)),${j}"]=')'
+    player1_throw_animation_frame1["$((_i - 1)),${_j}"]='('
+    player1_throw_animation_frame2["$((_i - 1)),${_j}"]=' '
+    player1_victory_animation_frame1["$((_i + 1)),${_j}"]=' '
+    player1_victory_animation_frame2["$((_i + 1)),${_j}"]=')'
 
-    player1_coordinates=("${player1_coordinates[@]}" "${i},${j}")
+    player1_coordinates=("${player1_coordinates[@]}" "${_i},${_j}")
 
     # Set the banana throw position for player1
-    player1_throw_start_coordinates="${i},$((j + 2))"
+    player1_throw_start_coordinates="${_i},$((_j + 2))"
     # Init player1 END ---------------------------------------------------------
 
     # Init player2 START -------------------------------------------------------
-    i=''
-    j=''
-
-    j="${#player2_coordinates[@]}"
-    for ((i=0; i < j; i++))
+    _j="${#player2_coordinates[@]}"
+    for ((_i=0; _i < _j; _i++))
     do
-        unset 'player2_coordinates[${i}]'
+        unset 'player2_coordinates[${_i}]'
     done
 
-    for key in "${!player2_throw_animation_frame1[@]}"
+    for _key in "${!player2_throw_animation_frame1[@]}"
     do
-        unset 'player2_throw_animation_frame1["${key}"]'
+        unset 'player2_throw_animation_frame1["${_key}"]'
     done
 
-    for key in "${!player2_throw_animation_frame2[@]}"
+    for _key in "${!player2_throw_animation_frame2[@]}"
     do
-        unset 'player2_throw_animation_frame2["${key}"]'
+        unset 'player2_throw_animation_frame2["${_key}"]'
     done
 
-    for key in "${!player2_victory_animation_frame1[@]}"
+    for _key in "${!player2_victory_animation_frame1[@]}"
     do
-        unset 'player2_victory_animation_frame1["${key}"]'
+        unset 'player2_victory_animation_frame1["${_key}"]'
     done
 
-    for key in "${!player2_victory_animation_frame2[@]}"
+    for _key in "${!player2_victory_animation_frame2[@]}"
     do
-        unset 'player2_victory_animation_frame2["${key}"]'
+        unset 'player2_victory_animation_frame2["${_key}"]'
     done
 
     # Set the initial horizontal coordinate of player2 depending
     # of the number of buildings on the playing field
     if ((building_count < 16))
     then
-        i=$((grid_width - (2 * building_width)))
-        i=$((i + ((building_width - 3) / 2)))
+        _i=$((grid_width - (2 * building_width)))
+        _i=$((_i + ((building_width - 3) / 2)))
     else
-        i=$((grid_width - (3 * building_width)))
-        i=$((i + ((building_width - 3) / 2)))
+        _i=$((grid_width - (3 * building_width)))
+        _i=$((_i + ((building_width - 3) / 2)))
     fi
+
     # Set the initial vertical coordinate of player1
-    j="${player2_building_height}"
+    _j="${player2_building_height}"
 
     # Left leg of player2
-    grid["${i},${j}"]='/'
+    grid["${_i},${_j}"]='/'
 
-    player2_coordinates=("${player2_coordinates[@]}" "${i},${j}")
+    player2_coordinates=("${player2_coordinates[@]}" "${_i},${_j}")
 
     # Right leg of player2
-    i=$((i + 2))
-    grid["${i},${j}"]="\\"
+    _i=$((_i + 2))
+    grid["${_i},${_j}"]="\\"
 
-    player2_coordinates=("${player2_coordinates[@]}" "${i},${j}")
+    player2_coordinates=("${player2_coordinates[@]}" "${_i},${_j}")
 
     # Left arm of player2
-    i=$((i - 2))
-    j=$((j + 1))
-    grid["${i},${j}"]='('
+    _i=$((_i - 2))
+    _j=$((_j + 1))
+    grid["${_i},${_j}"]='('
 
     # Set animation frames for player2 banana throw and victory dance
-    player2_victory_animation_frame1["${i},${j}"]='('
-    player2_victory_animation_frame2["${i},${j}"]=' '
+    player2_victory_animation_frame1["${_i},${_j}"]='('
+    player2_victory_animation_frame2["${_i},${_j}"]=' '
 
-    player2_coordinates=("${player2_coordinates[@]}" "${i},${j}")
+    player2_coordinates=("${player2_coordinates[@]}" "${_i},${_j}")
 
     # Belly of player2
-    i=$((i + 1))
-    grid["${i},${j}"]='G'
+    _i=$((_i + 1))
+    grid["${_i},${_j}"]='G'
 
-    player2_coordinates=("${player2_coordinates[@]}" "${i},${j}")
+    player2_coordinates=("${player2_coordinates[@]}" "${_i},${_j}")
 
     # Right arm of player2
-    i=$((i + 1))
-    grid["${i},${j}"]=')'
-    player2_throw_animation_frame1["${i},${j}"]=' '
-    player2_throw_animation_frame2["${i},${j}"]=')'
+    _i=$((_i + 1))
+    grid["${_i},${_j}"]=')'
+    player2_throw_animation_frame1["${_i},${_j}"]=' '
+    player2_throw_animation_frame2["${_i},${_j}"]=')'
 
-    player2_coordinates=("${player2_coordinates[@]}" "${i},${j}")
+    player2_coordinates=("${player2_coordinates[@]}" "${_i},${_j}")
 
     # Head of player2
-    i=$((i - 1))
-    j=$((j + 1))
-    grid["${i},${j}"]='o'
+    _i=$((_i - 1))
+    _j=$((_j + 1))
+    grid["${_i},${_j}"]='o'
 
     # Set animation frames for player2 banana throw and victory dance
-    player2_throw_animation_frame1["$((i + 1)),${j}"]=')'
-    player2_throw_animation_frame2["$((i + 1)),${j}"]=' '
-    player2_victory_animation_frame1["$((i - 1)),${j}"]=' '
-    player2_victory_animation_frame2["$((i - 1)),${j}"]='('
+    player2_throw_animation_frame1["$((_i + 1)),${_j}"]=')'
+    player2_throw_animation_frame2["$((_i + 1)),${_j}"]=' '
+    player2_victory_animation_frame1["$((_i - 1)),${_j}"]=' '
+    player2_victory_animation_frame2["$((_i - 1)),${_j}"]='('
 
-    player2_coordinates=("${player2_coordinates[@]}" "${i},${j}")
+    player2_coordinates=("${player2_coordinates[@]}" "${_i},${_j}")
 
     # Set the banana throw position for player2
-    player2_throw_start_coordinates="${i},$((j + 2))"
+    player2_throw_start_coordinates="${_i},$((_j + 2))"
     # Init player2 END ---------------------------------------------------------
 }
 
@@ -1121,25 +1131,17 @@ init_game()
 # Print the Sun to the top center of the screen
 print_sun()
 {
-    local sun_text=()
-
-    sun_text[0]='    |'
-    sun_text[1]="  \\ _ /"
-    sun_text[2]='-= (_) =-'
-    sun_text[3]="  /   \\"
-    sun_text[4]='    |'
-
-    for ((i=0; i < ${#sun_text[@]}; i++))
+    for ((_i=0; _i < ${#sun_text[@]}; _i++))
     do
         {
             # Position the cursor to the top of the screen + i lines
             # and horizontally center of the screen minus the width
             # of the ASCII Sun
-            tput cup                        \
-                $((top_padding_height + i)) \
-                $((left_padding_width + (grid_width / 2) - (9 / 2)))
+            tput cup                         \
+                $((top_padding_height + _i)) \
+                $((left_padding_width + (grid_width / 2) - (sun_text_max_length / 2)))
 
-            printf '%s' "${sun_text[${i}]}"
+            printf '%s' "${sun_text[${_i}]}"
         } >> "${buffer}"
     done
 
@@ -1173,13 +1175,13 @@ print_wind()
             } >> "${buffer}"
 
             # Print arrow with the length of $wind_value
-            for ((i=wind_value; i < 0; i++))
+            for ((_i=wind_value; _i < 0; _i++))
             do
                 printf '%s' '-' >> "${buffer}"
             done
         else
             # Wind blows to the right ($wind_value is positive)
-            for ((i=0; i < wind_value; i++))
+            for ((_i=0; _i < wind_value; _i++))
             do
                 printf '%s' '-' >> "${buffer}"
             done
@@ -1245,16 +1247,16 @@ clear_player_names()
 # Print the score of the players (overlaps buildings on the screen)
 print_score()
 {
-    local score_text=" ${player1_score}>SCORE<${player2_score} "
+    local _score_text=" ${player1_score}>SCORE<${player2_score} "
 
     {
         # Position the cursor into the third row from the bottom of the screen,
-        # and center with length of $score_text taken into account
+        # and center with length of $_score_text taken into account
         tput cup                                      \
             $((top_padding_height + grid_height - 2)) \
-            $((left_padding_width + (grid_width / 2) - (${#score_text} / 2)))
+            $((left_padding_width + (grid_width / 2) - (${#_score_text} / 2)))
 
-        printf '%s' "${score_text}"
+        printf '%s' "${_score_text}"
     } >> "${buffer}"
 
     refresh_screen
@@ -1265,16 +1267,16 @@ print_scene()
 {
     clear >> "${buffer}"
 
-    for((i=0; i < grid_width; i++))
+    for((_i=0; _i < grid_width; _i++))
     do
-        for ((j=0; j < grid_height; j++))
+        for ((_j=0; _j < grid_height; _j++))
         do
             {
-                tput cup                                          \
-                    $((top_padding_height + grid_height - j - 1)) \
-                    $((left_padding_width + i))
+                tput cup                                           \
+                    $((top_padding_height + grid_height - _j - 1)) \
+                    $((left_padding_width + _i))
 
-                printf '%s' "${grid["${i},${j}"]}"
+                printf '%s' "${grid["${_i},${_j}"]}"
             } >> "${buffer}"
         done
     done
@@ -1286,8 +1288,6 @@ print_scene()
 # of the screen
 print_help()
 {
-    local help_text='Quit: ^C'
-
     {
         # Position the cursor to the bottom row of the screen,
         # and to the right side of the $grid
@@ -1303,8 +1303,6 @@ print_help()
 
 prompt_player1_throw_angle()
 {
-    local angle_text='Angle [0-90]: '
-
     {
         tput cup                        \
             $((top_padding_height + 1)) \
@@ -1318,8 +1316,6 @@ prompt_player1_throw_angle()
 
 prompt_player2_throw_angle()
 {
-    local angle_text='Angle [0-90]: '
-
     {
         tput cup                        \
             $((top_padding_height + 1)) \
@@ -1333,14 +1329,14 @@ prompt_player2_throw_angle()
 
 prompt_player1_throw_speed()
 {
-    local speed_text="Velocity [0-${max_speed}]: "
+    local _speed_text="Velocity [0-${max_speed}]: "
 
     {
         tput cup                        \
             $((top_padding_height + 2)) \
             "${left_padding_width}"
 
-        printf '%s' "${speed_text}"
+        printf '%s' "${_speed_text}"
     } >> "${buffer}"
 
     refresh_screen
@@ -1348,14 +1344,14 @@ prompt_player1_throw_speed()
 
 prompt_player2_throw_speed()
 {
-    local speed_text="Velocity [0-${max_speed}]: "
+    local _speed_text="Velocity [0-${max_speed}]: "
 
     {
         tput cup                        \
             $((top_padding_height + 2)) \
-            $((left_padding_width + grid_width - (${#speed_text} + ${#max_speed})))
+            $((left_padding_width + grid_width - (${#_speed_text} + ${#max_speed})))
 
-        printf '%s' "${speed_text}"
+        printf '%s' "${_speed_text}"
     } >> "${buffer}"
 
     refresh_screen
@@ -1608,20 +1604,20 @@ read_throw_data()
 
 print_player1_throw_frame1()
 {
-    local i=''
-    local j=''
+    local _i
+    local _j
 
-    for key in "${!player1_throw_animation_frame1[@]}"
+    for _key in "${!player1_throw_animation_frame1[@]}"
     do
-        i="${key%","*}"
-        j="${key#*","}"
+        _i="${_key%","*}"
+        _j="${_key#*","}"
 
         {
-            tput cup                                          \
-                $((top_padding_height + grid_height - j - 1)) \
-                $((left_padding_width + i))
+            tput cup                                           \
+                $((top_padding_height + grid_height - _j - 1)) \
+                $((left_padding_width + _i))
 
-            printf '%s' "${player1_throw_animation_frame1["${key}"]}"
+            printf '%s' "${player1_throw_animation_frame1["${_key}"]}"
         } >> "${buffer}"
     done
 
@@ -1632,20 +1628,20 @@ print_player1_throw_frame1()
 
 print_player1_throw_frame2()
 {
-    local i=''
-    local j=''
+    local _i
+    local _j
 
-    for key in "${!player1_throw_animation_frame2[@]}"
+    for _key in "${!player1_throw_animation_frame2[@]}"
     do
-        i="${key%","*}"
-        j="${key#*","}"
+        _i="${_key%","*}"
+        _j="${_key#*","}"
 
         {
-            tput cup                                          \
-                $((top_padding_height + grid_height - j - 1)) \
-                $((left_padding_width + i))
+            tput cup                                           \
+                $((top_padding_height + grid_height - _j - 1)) \
+                $((left_padding_width + _i))
 
-            printf '%s' "${player1_throw_animation_frame2["${key}"]}"
+            printf '%s' "${player1_throw_animation_frame2["${_key}"]}"
         } >> "${buffer}"
     done
 
@@ -1656,20 +1652,20 @@ print_player1_throw_frame2()
 
 print_player2_throw_frame1()
 {
-    local i=''
-    local j=''
+    local _i
+    local _j
 
-    for key in "${!player2_throw_animation_frame1[@]}"
+    for _key in "${!player2_throw_animation_frame1[@]}"
     do
-        i="${key%","*}"
-        j="${key#*","}"
+        _i="${_key%","*}"
+        _j="${_key#*","}"
 
         {
-            tput cup                                          \
-                $((top_padding_height + grid_height - j - 1)) \
-                $((left_padding_width + i))
+            tput cup                                           \
+                $((top_padding_height + grid_height - _j - 1)) \
+                $((left_padding_width + _i))
 
-            printf '%s' "${player2_throw_animation_frame1["${key}"]}"
+            printf '%s' "${player2_throw_animation_frame1["${_key}"]}"
         } >> "${buffer}"
     done
 
@@ -1680,20 +1676,20 @@ print_player2_throw_frame1()
 
 print_player2_throw_frame2()
 {
-    local i=''
-    local j=''
+    local _i
+    local _j
 
-    for key in "${!player2_throw_animation_frame2[@]}"
+    for _key in "${!player2_throw_animation_frame2[@]}"
     do
-        i="${key%","*}"
-        j="${key#*","}"
+        _i="${_key%","*}"
+        _j="${_key#*","}"
 
         {
-            tput cup                                          \
-                $((top_padding_height + grid_height - j - 1)) \
-                $((left_padding_width + i))
+            tput cup                                           \
+                $((top_padding_height + grid_height - _j - 1)) \
+                $((left_padding_width + _i))
 
-            printf '%s' "${player2_throw_animation_frame2["${key}"]}"
+            printf '%s' "${player2_throw_animation_frame2["${_key}"]}"
         } >> "${buffer}"
     done
 
@@ -1704,20 +1700,20 @@ print_player2_throw_frame2()
 
 print_player1_victory_frame1()
 {
-    local i=''
-    local j=''
+    local _i
+    local _j
 
-    for key in "${!player1_victory_animation_frame1[@]}"
+    for _key in "${!player1_victory_animation_frame1[@]}"
     do
-        i="${key%","*}"
-        j="${key#*","}"
+        _i="${_key%","*}"
+        _j="${_key#*","}"
 
         {
-            tput cup                                          \
-                $((top_padding_height + grid_height - j - 1)) \
-                $((left_padding_width + i))
+            tput cup                                           \
+                $((top_padding_height + grid_height - _j - 1)) \
+                $((left_padding_width + _i))
 
-            printf '%s' "${player1_victory_animation_frame1["${key}"]}"
+            printf '%s' "${player1_victory_animation_frame1["${_key}"]}"
         } >> "${buffer}"
     done
 
@@ -1728,20 +1724,20 @@ print_player1_victory_frame1()
 
 print_player1_victory_frame2()
 {
-    local i=''
-    local j=''
+    local _i
+    local _j
 
-    for key in "${!player1_victory_animation_frame2[@]}"
+    for _key in "${!player1_victory_animation_frame2[@]}"
     do
-        i="${key%","*}"
-        j="${key#*","}"
+        _i="${_key%","*}"
+        _j="${_key#*","}"
 
         {
-            tput cup                                          \
-                $((top_padding_height + grid_height - j - 1)) \
-                $((left_padding_width + i))
+            tput cup                                           \
+                $((top_padding_height + grid_height - _j - 1)) \
+                $((left_padding_width + _i))
 
-            printf '%s' "${player1_victory_animation_frame2["${key}"]}"
+            printf '%s' "${player1_victory_animation_frame2["${_key}"]}"
         } >> "${buffer}"
     done
 
@@ -1752,20 +1748,20 @@ print_player1_victory_frame2()
 
 print_player2_victory_frame1()
 {
-    local i=''
-    local j=''
+    local _i
+    local _j
 
-    for key in "${!player2_victory_animation_frame1[@]}"
+    for _key in "${!player2_victory_animation_frame1[@]}"
     do
-        i="${key%","*}"
-        j="${key#*","}"
+        _i="${_key%","*}"
+        _j="${_key#*","}"
 
         {
-            tput cup                                          \
-                $((top_padding_height + grid_height - j - 1)) \
-                $((left_padding_width + i))
+            tput cup                                           \
+                $((top_padding_height + grid_height - _j - 1)) \
+                $((left_padding_width + _i))
 
-            printf '%s' "${player2_victory_animation_frame1["${key}"]}"
+            printf '%s' "${player2_victory_animation_frame1["${_key}"]}"
         } >> "${buffer}"
     done
 
@@ -1776,20 +1772,20 @@ print_player2_victory_frame1()
 
 print_player2_victory_frame2()
 {
-    local i=''
-    local j=''
+    local _i
+    local _j
 
-    for key in "${!player2_victory_animation_frame2[@]}"
+    for _key in "${!player2_victory_animation_frame2[@]}"
     do
-        i="${key%","*}"
-        j="${key#*","}"
+        _i="${_key%","*}"
+        _j="${_key#*","}"
 
         {
-            tput cup                                          \
-                $((top_padding_height + grid_height - j - 1)) \
-                $((left_padding_width + i))
+            tput cup                                           \
+                $((top_padding_height + grid_height - _j - 1)) \
+                $((left_padding_width + _i))
 
-            printf '%s' "${player2_victory_animation_frame2["${key}"]}"
+            printf '%s' "${player2_victory_animation_frame2["${_key}"]}"
         } >> "${buffer}"
     done
 
@@ -1826,19 +1822,18 @@ print_player_victory_dance()
 
 clear_player1()
 {
-    local i=''
-    local j=''
-    local value=''
+    local _i
+    local _j
 
-    for value in "${player1_coordinates[@]}"
+    for _key in "${player1_coordinates[@]}"
     do
-        i="${value%","*}"
-        j="${value#*","}"
+        _i="${_key%","*}"
+        _j="${_key#*","}"
 
         {
-            tput cup                                          \
-                $((top_padding_height + grid_height - j - 1)) \
-                $((left_padding_width + i))
+            tput cup                                           \
+                $((top_padding_height + grid_height - _j - 1)) \
+                $((left_padding_width + _i))
 
             printf '%s' ' '
         } >> "${buffer}"
@@ -1849,19 +1844,18 @@ clear_player1()
 
 clear_player2()
 {
-    local i=''
-    local j=''
-    local value=''
+    local _i
+    local _j
 
-    for value in "${player2_coordinates[@]}"
+    for _key in "${player2_coordinates[@]}"
     do
-        i="${value%","*}"
-        j="${value#*","}"
+        _i="${_key%","*}"
+        _j="${_key#*","}"
 
         {
-            tput cup                                          \
-                $((top_padding_height + grid_height - j - 1)) \
-                $((left_padding_width + i))
+            tput cup                                           \
+                $((top_padding_height + grid_height - _j - 1)) \
+                $((left_padding_width + _i))
 
             printf '%s' ' '
         } >> "${buffer}"
@@ -1933,60 +1927,60 @@ switch_player()
 # animation, etc.
 throw_banana()
 {
-    local pi=''
-    local x=''
-    local y=''
-    local x_0=''
-    local y_0=''
-    local prev_x=''
-    local prev_y=''
-    local throw_angle=''
-    local throw_speed=''
+    local _pi
+    local _x
+    local _y
+    local _x_0
+    local _y_0
+    local _prev_x
+    local _prev_y
+    local _throw_angle
+    local _throw_speed
 
-    pi="$(                                 \
+    _pi="$(                                \
         printf '%s\n' 'scale=20; 4 * a(1)' \
         | bc -l                            \
     )"
 
     init_banana_frame
 
-    # Set $throw_angle, $throw_speed, banana throw start positions, etc.
+    # Set $_throw_angle, $_throw_speed, banana throw start positions, etc.
     # based on read values and current player
     if ((next_player == 1))
     then
         # Convert degrees to radians
-        throw_angle="$(                                                    \
-            printf '%s\n' "scale=20; ${player1_throw_angle} * ${pi} / 180" \
-            | bc -l                                                        \
+        _throw_angle="$(                                                    \
+            printf '%s\n' "scale=20; ${player1_throw_angle} * ${_pi} / 180" \
+            | bc -l                                                         \
         )"
 
-        # Set $throw_speed of player1
-        throw_speed="${player1_throw_speed}"
+        # Set $_throw_speed of player1
+        _throw_speed="${player1_throw_speed}"
 
         # Set throw start coordinates of player1
-        x="${player1_throw_start_coordinates%","*}"
-        y="${player1_throw_start_coordinates#*","}"
-        x_0="${x}"
-        y_0="${y}"
+        _x="${player1_throw_start_coordinates%","*}"
+        _y="${player1_throw_start_coordinates#*","}"
+        _x_0="${_x}"
+        _y_0="${_y}"
 
         # Start player1 throw animation
         print_player1_throw_frame1
     else
         # Set correct angle for player2, and convert degrees to radians
-        throw_angle=$((180 - player2_throw_angle))
-        throw_angle="$(                                            \
-            printf '%s\n' "scale=20; ${throw_angle} * ${pi} / 180" \
-            | bc -l                                                \
+        _throw_angle=$((180 - player2_throw_angle))
+        _throw_angle="$(                                             \
+            printf '%s\n' "scale=20; ${_throw_angle} * ${_pi} / 180" \
+            | bc -l                                                  \
         )"
 
-        # Set $throw_speed of player2
-        throw_speed="${player2_throw_speed}"
+        # Set $_throw_speed of player2
+        _throw_speed="${player2_throw_speed}"
 
         # Set throw start coordinates of player2
-        x="${player2_throw_start_coordinates%","*}"
-        y="${player2_throw_start_coordinates#*","}"
-        x_0="${x}"
-        y_0="${y}"
+        _x="${player2_throw_start_coordinates%","*}"
+        _y="${player2_throw_start_coordinates#*","}"
+        _x_0="${_x}"
+        _y_0="${_y}"
 
         # Start player2 throw animation
         print_player2_throw_frame1
@@ -1994,9 +1988,9 @@ throw_banana()
 
     # Print first banana frame to the screen
     {
-        tput cup                                      \
-            $((top_padding_height + grid_height - y)) \
-            $((left_padding_width + x))
+        tput cup                                       \
+            $((top_padding_height + grid_height - _y)) \
+            $((left_padding_width + _x))
 
         printf '%s' "${banana}"
     } >> "${buffer}"
@@ -2013,17 +2007,17 @@ throw_banana()
     fi
 
     # Banana throw loop
-    for ((t=0; x >= 0 && x < grid_width && y >= 1 && y <= grid_height * 5; ))
+    for ((_t=0; _x >= 0 && _x < grid_width && _y >= 1 && _y <= grid_height * 5; ))
     do
         # Clear previous banana frame from screen, if there was a banana
         # printed to the screen in the previous iteration
-        if [[ "${prev_x}" != '' && "${prev_y}" != '' ]] \
-            && ((x >= 0 && x < grid_width && y >= 1 && y <= grid_height))
+        if [[ "${_prev_x}" != '' && "${_prev_y}" != '' ]] \
+            && ((_x >= 0 && _x < grid_width && _y >= 1 && _y <= grid_height))
         then
             {
-                tput cup                                      \
-                    $((top_padding_height + grid_height - y)) \
-                    $((left_padding_width + x))
+                tput cup                                       \
+                    $((top_padding_height + grid_height - _y)) \
+                    $((left_padding_width + _x))
 
                 printf '%s' ' '
             } >> "${buffer}"
@@ -2031,34 +2025,34 @@ throw_banana()
             refresh_screen
         fi
 
-        # Calculate next horizontal ($x) and vertical ($y) position
+        # Calculate next horizontal ($_x) and vertical ($_y) position
         # of the banana
-        x="$(                                                                                                        \
-            printf '%s\n'                                                                                            \
-                    "scale=20; ${x_0} + (${throw_speed} * ${t} * c(${throw_angle}) + (${wind_value} * ${t} * ${t}))" \
-                | bc -l                                                                                              \
-                | xargs printf '%1.0f\n'                                                                             \
+        _x="$(                                                                                                             \
+            printf '%s\n'                                                                                                  \
+                    "scale=20; ${_x_0} + (${_throw_speed} * ${_t} * c(${_throw_angle}) + (${wind_value} * ${_t} * ${_t}))" \
+                | bc -l                                                                                                    \
+                | xargs printf '%1.0f\n'                                                                                   \
         )"
-        y="$(                                                                                                                   \
-            printf '%s\n'                                                                                                       \
-                    "scale=20; ${y_0} + (${throw_speed} * ${t} * s(${throw_angle}) - (2 * ${gravity_value} / 2) * ${t} * ${t})" \
-                | bc -l                                                                                                         \
-                | xargs printf '%1.0f\n'                                                                                        \
+        _y="$(                                                                                                                        \
+            printf '%s\n'                                                                                                             \
+                    "scale=20; ${_y_0} + (${_throw_speed} * ${_t} * s(${_throw_angle}) - (2 * ${gravity_value} / 2) * ${_t} * ${_t})" \
+                | bc -l                                                                                                               \
+                | xargs printf '%1.0f\n'                                                                                              \
         )"
 
         # Collision detection START --------------------------------------------
         # If the banana hits a building the building block will be erased
         # and then comes the next player
-        if [[ "${grid["${x},$((y - 1))"]}" == 'X' ]]
+        if [[ "${grid["${_x},$((_y - 1))"]}" == 'X' ]]
         then
             # Erase block from 'grid'
-            grid["${x},$((y - 1))"]=''
+            grid["${_x},$((_y - 1))"]=''
 
             # Erase block from screen
             {
-                tput cup                                      \
-                    $((top_padding_height + grid_height - y)) \
-                    $((left_padding_width + x))
+                tput cup                                       \
+                    $((top_padding_height + grid_height - _y)) \
+                    $((left_padding_width + _x))
 
                 printf '%s' ' '
             } >> "${buffer}"
@@ -2071,9 +2065,9 @@ throw_banana()
         # Banana hits player: check the current player, and increase score
         # of the player who was not hit, clear the player who was hit from
         # the screen, and set $next_player to the player who was hit
-        for ((i=0; i < ${#player1_coordinates[@]}; i++))
+        for ((_i=0; _i < ${#player1_coordinates[@]}; _i++))
         do
-            if [[ "${player1_coordinates[${i}]}" == "${x},$((y - 1))" ]]
+            if [[ "${player1_coordinates[${_i}]}" == "${_x},$((_y - 1))" ]]
             then
                 clear_player1
                 player2_score=$((player2_score + 1))
@@ -2085,7 +2079,7 @@ throw_banana()
 
                 return 1
 
-            elif [[ "${player2_coordinates[${i}]}" == "${x},$((y - 1))" ]]
+            elif [[ "${player2_coordinates[${_i}]}" == "${_x},$((_y - 1))" ]]
             then
                 clear_player2
                 player1_score=$((player1_score + 1))
@@ -2100,19 +2094,19 @@ throw_banana()
         done
 
         # Change banana character only if cursor is moved to another place
-        if ((prev_x != x || prev_y != y))
+        if ((_prev_x != _x || _prev_y != _y))
         then
             next_banana_frame
         fi
         # Collision detection END ----------------------------------------------
 
         # Print banana to screen
-        if ((x >= 0 && x < grid_width && y >= 1 && y <= grid_height))
+        if ((_x >= 0 && _x < grid_width && _y >= 1 && _y <= grid_height))
         then
             {
-                tput cup                                      \
-                    $((top_padding_height + grid_height - y)) \
-                    $((left_padding_width + x))
+                tput cup                                       \
+                    $((top_padding_height + grid_height - _y)) \
+                    $((left_padding_width + _x))
 
                 printf '%s' "${banana}"
             }>> "${buffer}"
@@ -2122,14 +2116,14 @@ throw_banana()
             sleep 0.05
         fi
 
-        # Set previous horizontal ($prev_x) and vertical ($prev_y) coordinates
-        prev_x="${x}"
-        prev_y="${y}"
+        # Set previous horizontal ($_prev_x) and vertical ($_prev_y) coordinates
+        _prev_x="${_x}"
+        _prev_y="${_y}"
 
         # Step time
-        t="$(                                      \
-            printf '%s\n' "scale=20; ${t} + 0.005" \
-            | bc -l                                \
+        _t="$(                                      \
+            printf '%s\n' "scale=20; ${_t} + 0.005" \
+            | bc -l                                 \
         )"
     done
 
@@ -2143,45 +2137,47 @@ throw_banana()
 # Print animated frames and outro text to the screen
 play_outro()
 {
+    local _outro_text
+
     top_padding=''
     left_padding=''
 
     left_padding_width=$(((term_width - min_term_width) / 2))
     top_padding_height=$(((term_height - min_term_height) / 2))
 
-    for ((i=0; i < left_padding_width; i++))
+    for ((_i=0; _i < left_padding_width; _i++))
     do
         left_padding="${left_padding} "
     done
 
-    for ((i=0; i < top_padding_height; i++))
+    for ((_i=0; _i < top_padding_height; _i++))
     do
         top_padding="${top_padding}\n"
     done
 
-    # Set $outro_text which contains player scores, etc.
-    local outro_text="\n\n\n\n\n\n${top_padding}${left_padding}         \
+    # Set $_outro_text which contains player scores, etc.
+    _outro_text="\n\n\n\n\n\n${top_padding}${left_padding}         \
                           GAME OVER!\n\n${left_padding}        \
                              Score:\n${left_padding}          \
                      ${player1_name}"
 
-    for ((i=${#player1_name}; i <= 10; i++))
+    for ((_i=${#player1_name}; _i <= 10; _i++))
     do
-        outro_text="${outro_text} "
+        _outro_text="${_outro_text} "
     done
 
-    outro_text="${outro_text}     ${player1_score}\n${left_padding}\
+    _outro_text="${_outro_text}     ${player1_score}\n${left_padding}\
                                ${player2_name}"
 
-    for ((i=${#player2_name}; i <= 10; i++))
+    for ((_i=${#player2_name}; _i <= 10; _i++))
     do
-        outro_text="${outro_text} "
+        _outro_text="${_outro_text} "
     done
 
-    outro_text="${outro_text}     ${player2_score}\n\n\n\n\n\n\n\n\n\n\
+    _outro_text="${_outro_text}     ${player2_score}\n\n\n\n\n\n\n\n\n\n\
 ${left_padding}                            Press any key to continue"
 
-    printf '%s' "${outro_text}" >> "${buffer}"
+    printf '%s' "${_outro_text}" >> "${buffer}"
 
     # Play animation, exit from loop when a key was pressed
     while true
@@ -2279,9 +2275,9 @@ main_loop()
 check_prerequisites "${term_width}" "${term_height}"
 
 # Parse option flags and their arguments
-while getopts ":w:s:h" option
+while getopts ":w:s:h" _option
 do
-    case ${option} in
+    case "${_option}" in
         h)
             tput rmcup
 
