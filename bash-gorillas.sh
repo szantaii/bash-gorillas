@@ -156,37 +156,14 @@ ${min_term_height} lines)."
 # Create a 'screen buffer' file
 create_buffer()
 {
-    local _buffer_name='bashgorillas-buffer'
-    local _buffer_directory
+    local _buffer_directory='/tmp'
+    local _buffer_name_template='bash-gorillas-buffer-XXXXXXXXXX'
 
-    # Try to use /dev/shm if available
-    # else use /tmp as the location of
-    # the screen buffer file
-    if [ -d '/dev/shm' ]
-    then
-        _buffer_directory='/dev/shm'
-    else
-        _buffer_directory='/tmp'
-    fi
-
-    # Try to use mktemp before using the unsafe method
-    if which mktemp > /dev/null 2>&1
-    then
-        # If 'mktemp' is available for use,
-        # then create the buffer file using it
-        buffer="$(mktemp --tmpdir="${_buffer_directory}" "${_buffer_name}-XXXXXXXXXX")"
-    else
-        # If 'mktemp' was not available for use,
-        # then create the buffer file using $RANDOM
-        #
-        # Note this is an unsafe method to create the
-        # screen buffer file!
-        # TODO: check if buffer file already exists, if unsafe method is used
-        buffer="${_buffer_directory}/${_buffer_name}-${RANDOM}"
-
-        # Create the buffer file
-        printf '%s' '' > "${buffer}"
-    fi
+    buffer="$(                              \
+        mktemp                              \
+            --tmpdir="${_buffer_directory}" \
+            "${_buffer_name_template}"      \
+        )"
 }
 
 # Create screen buffer, install signal handler, clear screen
