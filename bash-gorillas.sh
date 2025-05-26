@@ -1994,12 +1994,14 @@ throw_banana()
                     "scale=20; ${_x_0} + (${_throw_speed} * ${_t} * c(${_throw_angle}) + (${wind_value} * ${_t} * ${_t}))" \
                 | bc -l                                                                                                    \
                 | xargs printf '%1.0f\n'                                                                                   \
+                || true                                                                                                    \
         )"
         _y="$(                                                                                                                        \
             printf '%s\n'                                                                                                             \
                     "scale=20; ${_y_0} + (${_throw_speed} * ${_t} * s(${_throw_angle}) - (2 * ${gravity_value} / 2) * ${_t} * ${_t})" \
                 | bc -l                                                                                                               \
                 | xargs printf '%1.0f\n'                                                                                              \
+                || true                                                                                                               \
         )"
 
         # Collision detection START --------------------------------------------
