@@ -145,6 +145,20 @@ create_buffer()
         )"
 }
 
+# Print the buffer onto the screen then clear the buffer
+refresh_screen()
+{
+    cat "${buffer}"
+
+    printf '%s' '' > "${buffer}"
+}
+
+clear_screen()
+{
+    clear >> "${buffer}"
+    refresh_screen
+}
+
 # Create screen buffer, install signal handler, clear screen
 init_main()
 {
@@ -154,16 +168,7 @@ init_main()
     # function when Ctrl+C key combination is pressed
     trap quit SIGINT
 
-    clear >> "${buffer}"
-    refresh_screen
-}
-
-# Print the buffer onto the screen then clear the buffer
-refresh_screen()
-{
-    cat "${buffer}"
-
-    printf '%s' '' > "${buffer}"
+    clear_screen
 }
 
 print_frame_stage1()
@@ -540,8 +545,7 @@ field, its length relative to its strength.\n\n\n\n\n\n${left_padding}    \
         fi
     done
 
-    clear >> "${buffer}"
-    refresh_screen
+    clear_screen
 }
 
 # Cleanup and exit
@@ -723,8 +727,7 @@ read_player_data()
     refresh_screen
     read_menu_choice
 
-    clear >> "${buffer}"
-    refresh_screen
+    clear_screen
 }
 
 # Generate buildings into $grid
@@ -2179,8 +2182,7 @@ ${left_padding}                            Press any key to continue"
         fi
     done
 
-    clear >> "${buffer}"
-    refresh_screen
+    clear_screen
 }
 
 # Game main loop
@@ -2218,9 +2220,7 @@ main_loop()
         print_player_victory_dance
     done
 
-    # Clear the screen
-    clear >> "${buffer}"
-    refresh_screen
+    clear_screen
 
     # Play outro and wait for keypress
     play_outro
