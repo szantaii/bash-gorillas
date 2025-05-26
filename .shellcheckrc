@@ -1,0 +1,39 @@
+# Suggest explicitly using -n in `[ $var ]`
+#   example: [ "$var" ]
+#   fix:     [ -n "$var" ]
+enable=avoid-nullary-conditions
+
+# Check for additional cases where exit codes are masked
+#   example: rm -r "$(get_chroot_dir)/home"
+#   fix:     set -e; dir="$(get_chroot_dir)"; rm -r "$dir/home"
+enable=check-extra-masked-returns
+
+# Notify when set -e is suppressed during function invocation
+#   example: set -e; func() { cp *.txt ~/backup; rm *.txt; }; func && echo ok
+#   fix:     set -e; func() { cp *.txt ~/backup; rm *.txt; }; func; echo ok
+enable=check-set-e-suppressed
+
+# Warn when uppercase variables are unassigned
+#   example: echo $VAR
+#   fix:     VAR=hello; echo $VAR
+enable=check-unassigned-uppercase
+
+# Suggest 'command -v' instead of 'which'
+#   example: which javac
+#   fix:     command -v javac
+enable=deprecate-which
+
+# Suggest quoting variables without metacharacters
+#   example: var=hello; echo $var
+#   fix:     var=hello; echo "$var"
+enable=quote-safe-variables
+
+# Require [[ and warn about [ in Bash/Ksh
+#   example: [ -e /etc/issue ]
+#   fix:     [[ -e /etc/issue ]]
+enable=require-double-brackets
+
+# Suggest putting braces around all variable references
+#   example: var=hello; echo $var
+#   fix:     var=hello; echo ${var}
+enable=require-variable-braces
