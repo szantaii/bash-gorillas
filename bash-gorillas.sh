@@ -103,8 +103,11 @@ check_required_commands()
     local _required_commands=(
         'bc'
         'cat'
+        'clear'
         'mktemp'
+        'printf'
         'rm'
+        'sleep'
         'tput'
         'xargs'
     )
