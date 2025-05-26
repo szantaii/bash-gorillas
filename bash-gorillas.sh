@@ -554,7 +554,7 @@ play_intro()
 # Cleanup and exit
 quit()
 {
-    rm "${buffer}"
+    rm -f "${buffer}"
 
     # Restore terminal screen
     tput rmcup
