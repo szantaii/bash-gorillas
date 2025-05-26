@@ -18,9 +18,6 @@
 # along with this program (LICENSE).
 # If not, see <http://www.gnu.org/licenses/>.
 
-# Save terminal screen
-tput smcup
-
 IFS=''
 
 term_width=''
@@ -2170,6 +2167,9 @@ play_outro()
 # Game main loop
 main_loop()
 {
+    # Save terminal screen
+    tput smcup
+
     init_main
 
     play_intro
@@ -2225,8 +2225,6 @@ while getopts ":w:s:h" _option
 do
     case "${_option}" in
         h)
-            tput rmcup
-
             printf '%sbash-gorillas Copyright (C) Istvan Szantai \x3c\x73\x7a\x61\x6e\x74\x61\x69\x69\x40\x73\x69\x64\x65\x6e\x6f\x74\x65\x2e\x68\x75\x3e 2025\n' \
                 ''
             printf '%s\n' "For more detailed help please see the file 'README.md'."
@@ -2240,8 +2238,6 @@ do
                     max_wind_value=${OPTARG}
                     ;;
                 *)
-                    tput rmcup
-
                     printf '%s\n' \
                         'Invalid argument for option: -w. Specify a number between 0 and 10.'
 
@@ -2250,8 +2246,6 @@ do
 
             if ((max_wind_value < 0 || max_wind_value > 10))
             then
-                tput rmcup
-
                 printf '%s\n' \
                     'Invalid argument for option: -w. Specify a number between 0 and 10.'
 
@@ -2268,8 +2262,6 @@ do
 
                     ;;
                 *)
-                    tput rmcup
-
                     printf '%s\n' \
                         'Invalid argument for option: -s. Specify a number between 100 and 200.'
 
@@ -2280,8 +2272,6 @@ do
 
             if ((max_speed < 100 || max_speed > 200))
             then
-                tput rmcup
-
                 printf '%s\n' \
                     'Invalid argument for option: -s. Specify a number between 100 and 200.'
 
@@ -2290,8 +2280,6 @@ do
 
             ;;
         :)
-            tput rmcup
-
             if [[ "${OPTARG}" == 'w' ]]
             then
                 printf '%s\n' \
@@ -2306,8 +2294,6 @@ do
 
             ;;
         \?)
-            tput rmcup
-
             printf '%s\n' "Invalid option: -${OPTARG}."
 
             exit 1
