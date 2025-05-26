@@ -114,7 +114,7 @@ check_required_commands()
 
     for _required_command in "${_required_commands[@]}"
     do
-        if ! which "${_required_command}" > /dev/null 2>&1
+        if ! command -v "${_required_command}" > /dev/null 2>&1
         then
             printf '%s\n' \
                 "Your system is missing the program '${_required_command}' which is necessary for ${script_name} to run."
