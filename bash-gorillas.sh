@@ -20,6 +20,9 @@
 
 IFS=''
 
+script_name='bash-gorillas'
+copyright_text='Copyright (C) 2013, 2025 Istvan Szantai <szantaii@gmail.com>'
+
 term_width=''
 term_height=''
 
@@ -111,7 +114,7 @@ check_required_commands()
         if ! which "${_required_command}" > /dev/null 2>&1
         then
             printf '%s\n' \
-                "Your system is missing the program '${_required_command}' which is necessary for bash-gorillas to run."
+                "Your system is missing the program '${_required_command}' which is necessary for ${script_name} to run."
 
             exit 2
         fi
@@ -123,7 +126,7 @@ check_terminal_size()
     if ((term_width < min_term_width || term_height < min_term_height))
     then
         printf '%s\n' \
-            "bash-gorillas needs a terminal with size of at least ${min_term_width}x${min_term_height} (${min_term_width} columns, ${min_term_height} rows)."
+            "${script_name} needs a terminal with size of at least ${min_term_width}x${min_term_height} (${min_term_width} columns, ${min_term_height} rows)."
 
         exit 3
     fi
@@ -133,7 +136,7 @@ check_terminal_size()
 create_buffer()
 {
     local _buffer_directory='/tmp'
-    local _buffer_name_template='bash-gorillas-buffer-XXXXXXXXXX'
+    local _buffer_name_template="${script_name}-buffer-XXXXXXXXXX"
 
     buffer="$(                              \
         mktemp                              \
@@ -497,7 +500,7 @@ play_intro()
         "${top_padding}${left_padding}                           B a s h   G O R I L L A S"
         ''
         ''
-        "${left_padding}         Copyright (C) 2013, 2025 Istvan Szantai <szantaii@gmail.com>"
+        "${left_padding}         ${copyright_text}"
         ''
         ''
         "${left_padding}     This game is a demake of QBasic GORILLAS rewritten completely in Bash."
@@ -2225,9 +2228,9 @@ while getopts ":w:s:h" _option
 do
     case "${_option}" in
         h)
-            printf '%sbash-gorillas Copyright (C) Istvan Szantai \x3c\x73\x7a\x61\x6e\x74\x61\x69\x69\x40\x73\x69\x64\x65\x6e\x6f\x74\x65\x2e\x68\x75\x3e 2025\n' \
-                ''
-            printf '%s\n' "For more detailed help please see the file 'README.md'."
+            printf '%s\n'                          \
+                "${script_name} ${copyright_text}" \
+                "For more detailed help, see 'README.md'."
 
             exit 0
 
