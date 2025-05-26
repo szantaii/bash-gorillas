@@ -471,10 +471,18 @@ print_frame_stage5()
         >> "${buffer}"
 }
 
+# Read a key from keyboard
+read_intro_outro_continue_key()
+{
+    read -r -sn1 -t0.01
+
+    return $?
+}
+
 # Print animated frames and intro text to the screen
 play_intro()
 {
-    local _intro_text
+    local _intro_lines=()
 
     for ((i=0; i < left_padding_width; i++))
     do
@@ -486,63 +494,55 @@ play_intro()
         top_padding="${top_padding}\n"
     done
 
-    _intro_text="\n\n${top_padding}${left_padding}                       \
-    B a s h   G O R I L L A S\n\n\n${left_padding}            Copyright (C) \
-Istvan Szantai \x3c\x73\x7a\x61\x6e\x74\x61\x69\x69\x40\x73\x69\x64\x65\x6e\
-\x6f\x74\x65\x2e\x68\x75\x3e 2013\n\n${left_padding}     This game \
-is a demake of QBasic GORILLAS rewritten completely in Bash.\n\n\n${left_padding}\
-             Your mission is to hit your opponent with the exploding\n\
-${left_padding}           banana by varying the angle and power of your \
-throw, taking\n${left_padding}             into account wind speed, gravity, \
-and the city skyline.\n${left_padding}*          The wind speed is show by a \
-directional arrow at the bottom\n${left_padding}            of the playing \
-field, its length relative to its strength.\n\n\n\n\n\n${left_padding}    \
-                        Press any key to continue"
+    _intro_lines=(
+        ''
+        ''
+        "${top_padding}${left_padding}                           B a s h   G O R I L L A S"
+        ''
+        ''
+        "${left_padding}         Copyright (C) 2013, 2025 Istvan Szantai <szantaii@gmail.com>"
+        ''
+        ''
+        "${left_padding}     This game is a demake of QBasic GORILLAS rewritten completely in Bash."
+        ''
+        ''
+        "${left_padding}             Your mission is to hit your opponent with the exploding"
+        "${left_padding}           banana by varying the angle and power of your throw, taking"
+        "${left_padding}             into account wind speed, gravity, and the city skyline."
+        "${left_padding}           The wind speed is show by a directional arrow at the bottom"
+        "${left_padding}            of the playing field, its length relative to its strength."
+        ''
+        ''
+        ''
+        ''
+        ''
+        "${left_padding}                            Press any key to continue"
+    )
 
-    printf '%s' "${_intro_text}" >> "${buffer}"
+    # Print intro into the screen buffer
+    for _intro_line in "${_intro_lines[@]}"
+    do
+        printf '%b\n' "${_intro_line}" >> "${buffer}"
+    done
 
     # Play animation, exit from loop when a key was pressed
     for ((;;))
     do
         print_frame_stage1
         refresh_screen
-
-        if read -r -sn1 -t0.01
-        then
-            break
-        fi
-
+        read_intro_outro_continue_key && break
         print_frame_stage2
         refresh_screen
-
-        if read -r -sn1 -t0.01
-        then
-            break
-        fi
-
+        read_intro_outro_continue_key && break
         print_frame_stage3
         refresh_screen
-
-        if read -r -sn1 -t0.01
-        then
-            break
-        fi
-
+        read_intro_outro_continue_key && break
         print_frame_stage4
         refresh_screen
-
-        if read -r -sn1 -t0.01
-        then
-            break
-        fi
-
+        read_intro_outro_continue_key && break
         print_frame_stage5
         refresh_screen
-
-        if read -r -sn1 -t0.01
-        then
-            break
-        fi
+        read_intro_outro_continue_key && break
     done
 
     clear_screen
@@ -2096,7 +2096,7 @@ throw_banana()
 # Print animated frames and outro text to the screen
 play_outro()
 {
-    local _outro_text
+    local _outro_lines
 
     top_padding=''
     left_padding=''
@@ -2114,72 +2114,54 @@ play_outro()
         top_padding="${top_padding}\n"
     done
 
-    # Set $_outro_text which contains player scores, etc.
-    _outro_text="\n\n\n\n\n\n${top_padding}${left_padding}         \
-                          GAME OVER!\n\n${left_padding}        \
-                             Score:\n${left_padding}          \
-                     ${player1_name}"
+    _outro_lines=(
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        "${top_padding}${left_padding}                                   GAME OVER!"
+        ''
+        "${left_padding}                                     Score:"
+        "${left_padding}                               $(printf '%-10s' "${player1_name}")${player1_score}"
+        "${left_padding}                               $(printf '%-10s' "${player2_name}")${player2_score}"
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        ''
+        "${left_padding}                            Press any key to continue"
+    )
 
-    for ((_i=${#player1_name}; _i <= 10; _i++))
+    # Print outro text into the screen buffer
+    for _outro_line in "${_outro_lines[@]}"
     do
-        _outro_text="${_outro_text} "
+        printf '%b\n' "${_outro_line}" >> "${buffer}"
     done
-
-    _outro_text="${_outro_text}     ${player1_score}\n${left_padding}\
-                               ${player2_name}"
-
-    for ((_i=${#player2_name}; _i <= 10; _i++))
-    do
-        _outro_text="${_outro_text} "
-    done
-
-    _outro_text="${_outro_text}     ${player2_score}\n\n\n\n\n\n\n\n\n\n\
-${left_padding}                            Press any key to continue"
-
-    printf '%s' "${_outro_text}" >> "${buffer}"
 
     # Play animation, exit from loop when a key was pressed
     for ((;;))
     do
         print_frame_stage1
         refresh_screen
-
-        if read -r -sn1 -t0.01
-        then
-            break
-        fi
-
+        read_intro_outro_continue_key && break
         print_frame_stage2
         refresh_screen
-
-        if read -r -sn1 -t0.01
-        then
-            break
-        fi
-
+        read_intro_outro_continue_key && break
         print_frame_stage3
         refresh_screen
-
-        if read -r -sn1 -t0.01
-        then
-            break
-        fi
-
+        read_intro_outro_continue_key && break
         print_frame_stage4
         refresh_screen
-
-        if read -r -sn1 -t0.01
-        then
-            break
-        fi
-
+        read_intro_outro_continue_key && break
         print_frame_stage5
         refresh_screen
-
-        if read -r -sn1 -t0.01
-        then
-            break
-        fi
+        read_intro_outro_continue_key && break
     done
 
     clear_screen
