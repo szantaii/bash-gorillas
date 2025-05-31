@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # bash-gorillas is a demake of QBasic GORILLAS completely rewritten
 # in Bash.
