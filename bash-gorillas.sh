@@ -556,6 +556,9 @@ quit()
 {
     rm -f "${buffer}"
 
+    # Make cursor visible
+    tput cnorm
+
     # Restore terminal screen
     tput rmcup
 
@@ -571,7 +574,11 @@ prompt_player1_name()
 
         printf '%s' \
             'Name of Player 1 (Default = '"'"'Player 1'"'"'): '
+
+        tput cnorm
     } >> "${buffer}"
+
+    refresh_screen
 }
 
 prompt_player2_name()
@@ -583,7 +590,11 @@ prompt_player2_name()
 
         printf '%s' \
             'Name of Player 2 (Default = '"'"'Player 2'"'"'): '
+
+        tput cnorm
     } >> "${buffer}"
+
+    refresh_screen
 }
 
 prompt_max_points_num()
@@ -595,7 +606,11 @@ prompt_max_points_num()
 
     printf '%s' \
         'Play to how many total points (Default = 3)? '
+
+    tput cnorm
     } >> "${buffer}"
+
+    refresh_screen
 }
 
 prompt_gravity_value()
@@ -607,7 +622,11 @@ prompt_gravity_value()
 
         printf '%s' \
             'Gravity in Meters/Sec^2 (Earth = ~10)? '
+
+        tput cnorm
     } >> "${buffer}"
+
+    refresh_screen
 }
 
 prompt_menu_choice()
@@ -637,6 +656,8 @@ prompt_menu_choice()
 
         printf '%s' 'Your Choice?'
     } >> "${buffer}"
+
+    refresh_screen
 }
 
 read_player1_name()
@@ -644,6 +665,10 @@ read_player1_name()
     local _player1_tmp_name=''
 
     read -r -n10 player1_name
+
+    tput civis >> "${buffer}"
+
+    refresh_screen
 
     _player1_tmp_name="${player1_name/ /}"
 
@@ -659,6 +684,10 @@ read_player2_name()
 
     read -r -n10 player2_name
 
+    tput civis >> "${buffer}"
+
+    refresh_screen
+
     _player2_tmp_name="${player2_name/ /}"
 
     if [[ "${_player2_tmp_name}" == '' ]]
@@ -671,6 +700,10 @@ read_total_points()
 {
     read -r -n2 total_points
 
+    tput civis >> "${buffer}"
+
+    refresh_screen
+
     case ${total_points} in
         ''|*[!0-9]*)
             total_points=3
@@ -681,6 +714,10 @@ read_total_points()
 read_gravity_value()
 {
     read -r -n3 gravity_value
+
+    tput civis >> "${buffer}"
+
+    refresh_screen
 
     case ${gravity_value} in
         ''|*[!0-9]*)
@@ -711,23 +748,18 @@ read_menu_choice()
 read_player_data()
 {
     prompt_player1_name
-    refresh_screen
     read_player1_name
 
     prompt_player2_name
-    refresh_screen
     read_player2_name
 
     prompt_max_points_num
-    refresh_screen
     read_total_points
 
     prompt_gravity_value
-    refresh_screen
     read_gravity_value
 
     prompt_menu_choice
-    refresh_screen
     read_menu_choice
 
     clear_screen
@@ -1045,14 +1077,24 @@ init_game()
         wind_value="-${wind_value}"
     fi
 
-    tput cup 0 0 >> "${buffer}"
+    {
+        tput cup 0 0
+
+        printf '%s' 'Starting new '
+    }  >> "${buffer}"
 
     if ((player1_score == 0 && player2_score == 0))
     then
-        printf '%s' 'Starting new game...' >> "${buffer}"
+        printf '%s' 'game' >> "${buffer}"
     else
-        printf '%s' 'Starting new round...' >> "${buffer}"
+        printf '%s' 'round' >> "${buffer}"
     fi
+
+    {
+        printf '%s' '...'
+
+        tput cnorm
+    } >> "${buffer}"
 
     refresh_screen
 
@@ -1077,11 +1119,11 @@ init_game()
     top_padding_height=0
 
     # Initialize $grid
-    for ((i=0; i < grid_width; i++))
+    for ((_i=0; _i < grid_width; _i++))
     do
-        for ((j=0; j < grid_height; j++))
+        for ((_j=0; _j < grid_height; _j++))
         do
-            grid["${i},${j}"]=''
+            grid["${_i},${_j}"]=''
         done
     done
 
@@ -1271,6 +1313,8 @@ prompt_player1_throw_angle()
             "${left_padding_width}"
 
         printf '%s' "${angle_text}"
+
+        tput cnorm
     } >> "${buffer}"
 
     refresh_screen
@@ -1284,6 +1328,8 @@ prompt_player2_throw_angle()
             $((left_padding_width + grid_width - (${#angle_text} + 2)))
 
         printf '%s' "${angle_text}"
+
+        tput cnorm
     } >> "${buffer}"
 
     refresh_screen
@@ -1299,6 +1345,8 @@ prompt_player1_throw_speed()
             "${left_padding_width}"
 
         printf '%s' "${_speed_text}"
+
+        tput cnorm
     } >> "${buffer}"
 
     refresh_screen
@@ -1314,6 +1362,8 @@ prompt_player2_throw_speed()
             $((left_padding_width + grid_width - (${#_speed_text} + ${#max_speed})))
 
         printf '%s' "${_speed_text}"
+
+        tput cnorm
     } >> "${buffer}"
 
     refresh_screen
@@ -1406,6 +1456,10 @@ read_player1_throw_angle()
 {
     read -r -n2 player1_throw_angle
 
+    tput civis >> "${buffer}"
+
+    refresh_screen
+
     case ${player1_throw_angle} in
         ''|*[!0-9]*)
             player1_throw_angle=0
@@ -1424,6 +1478,10 @@ read_player1_throw_angle()
 read_player2_throw_angle()
 {
     read -r -n2 player2_throw_angle
+
+    tput civis >> "${buffer}"
+
+    refresh_screen
 
     case ${player2_throw_angle} in
         ''|*[!0-9]*)
@@ -1444,6 +1502,10 @@ read_player1_throw_speed()
 {
     read -r -n3 player1_throw_speed
 
+    tput civis >> "${buffer}"
+
+    refresh_screen
+
     case ${player1_throw_speed} in
         ''|*[!0-9]*)
             player1_throw_speed=0
@@ -1462,6 +1524,10 @@ read_player1_throw_speed()
 read_player2_throw_speed()
 {
     read -r -n3 player2_throw_speed
+
+    tput civis >> "${buffer}"
+
+    refresh_screen
 
     case ${player2_throw_speed} in
         ''|*[!0-9]*)
@@ -2178,6 +2244,9 @@ main_loop()
     # Save terminal screen
     tput smcup
 
+    # Make cursor invisible
+    tput civis
+
     init_main
 
     play_intro
@@ -2192,6 +2261,10 @@ main_loop()
         print_scene
         print_wind
         print_help
+
+        tput civis >> "${buffer}"
+
+        refresh_screen
 
         for ((;;))
         do
